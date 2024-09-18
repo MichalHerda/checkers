@@ -9,14 +9,14 @@ find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 qt_standard_project_setup()
 
 qt_add_executable(appCheckers
-    main.cpp
+    src/main.cpp
 )
 
 qt_add_qml_module(appCheckers
     URI Checkers
     VERSION 1.0
     QML_FILES
-        Main.qml
+        gui/Main.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
