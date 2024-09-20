@@ -11,6 +11,11 @@ qt_standard_project_setup()
 qt_add_executable(appCheckers
     src/main.cpp
 )
+list(APPEND QML_IMPORT_PATH gui/Singleton/CheckersTheme.qml)
+set(QML_IMPORT_PATH ${CMAKE_SOURCE_DIR}/qml ${CMAKE_BINARY_DIR}/imports CACHE STRING "" FORCE)
+
+set_source_files_properties(gui/Singleton/CheckersTheme.qml
+    PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 qt_add_qml_module(appCheckers
     URI Checkers
@@ -18,6 +23,7 @@ qt_add_qml_module(appCheckers
     QML_FILES
         gui/Main.qml
         QML_FILES gui/Singleton/CheckersTheme.qml
+        RESOURCES
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
