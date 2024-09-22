@@ -45,6 +45,18 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
     return true;
 }
 
+QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent) const
+{
+    if(!CheckersModel::hasIndex(row, column)) {
+        qDebug() << "index is not valid";
+        return QModelIndex();
+    }
+    else {
+        qDebug() << "index is valid";
+        return CheckersModel::createIndex(row, column);
+    }
+}
+
 void CheckersModel::setTurn()
 {
     m_turn == Player::black ? m_turn = Player::white : m_turn = Player::black;

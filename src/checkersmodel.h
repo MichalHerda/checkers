@@ -40,6 +40,7 @@ public:
     explicit CheckersModel(int rows = 8, int columns = 8);
 
     Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+    Q_INVOKABLE QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     Q_INVOKABLE void setTurn();
     Q_INVOKABLE Player getTurn();
 signals:
