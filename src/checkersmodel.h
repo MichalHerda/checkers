@@ -7,6 +7,7 @@
 class CheckersModel : public QStandardItemModel
 {
     Q_OBJECT
+
 public:
     explicit CheckersModel(int rows = 8, int columns = 8);
 
@@ -27,10 +28,12 @@ public:
         Type type;
     };
 
+    void setTurn();
+    Player getTurn();
 signals:
 
 private:
-
+    Player m_turn;
 };
 
 #endif // CHECKERSMODEL_H

@@ -7,4 +7,5 @@ Window {
     visible: true
     title: qsTr("Checkers")
     color: CheckersTheme.backgroundColor
+
 }
