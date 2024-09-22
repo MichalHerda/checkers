@@ -21,6 +21,7 @@ Window {
         text: "TEST BUTTON"
         x: parent.width * 0.05
         y: parent.height - ( parent.height * 0.15 )
+
         background: Rectangle {
             anchors.fill: parent
             color: CheckersTheme.buttonColor

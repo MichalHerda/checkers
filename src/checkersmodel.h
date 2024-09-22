@@ -9,7 +9,16 @@ class CheckersModel : public QStandardItemModel
     Q_OBJECT
 
 public:
-    explicit CheckersModel(int rows = 8, int columns = 8);
+    enum class CheckersRoles {
+        CoordinatesRole = Qt::UserRole + 1,
+        IsPlayableRole,
+        PieceRole,
+        RangeRole,
+        CaptureAvailableRole,
+        MultiCaptureRole,
+        IsSelectedRole
+    };
+    Q_ENUM(CheckersRoles)
 
     enum class Player {
         white,
@@ -22,6 +31,8 @@ public:
         king
     };
     Q_ENUM(Type)
+
+    explicit CheckersModel(int rows = 8, int columns = 8);
 
     struct Piece {
         Player player;
