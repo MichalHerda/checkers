@@ -9,7 +9,7 @@ class CheckersModel : public QStandardItemModel
     Q_OBJECT
 
 public:
-    enum class CheckersRoles {
+    enum CheckersRoles {
         CoordinatesRole = Qt::UserRole + 1,
         IsPlayableRole,
         PieceRole,
@@ -32,13 +32,14 @@ public:
     };
     Q_ENUM(Type)
 
-    explicit CheckersModel(int rows = 8, int columns = 8);
-
     struct Piece {
         Player player;
         Type type;
     };
 
+    explicit CheckersModel(int rows = 8, int columns = 8);
+
+    Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     Q_INVOKABLE void setTurn();
     Q_INVOKABLE Player getTurn();
 signals:
