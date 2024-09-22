@@ -2,7 +2,8 @@
 
 CheckersModel::CheckersModel(int rows, int columns)
 {
-
+    this->CheckersModel::setRowCount(rows);
+    this->CheckersModel::setColumnCount(columns);
 }
 
 bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int role)
