@@ -28,8 +28,8 @@ public:
         Type type;
     };
 
-    void setTurn();
-    Player getTurn();
+    Q_INVOKABLE void setTurn();
+    Q_INVOKABLE Player getTurn();
 signals:
 
 private:
