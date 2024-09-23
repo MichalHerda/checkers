@@ -1,16 +1,30 @@
 #include "checkersmodel.h"
 
-CheckersModel::CheckersModel(int rows, int columns)
+CheckersModel::CheckersModel()
+{
+
+}
+
+void CheckersModel::resetModel(int columns, int rows)
 {
     this->CheckersModel::setRowCount(rows);
     this->CheckersModel::setColumnCount(columns);
-}
 
+    for(char col = 0 ; col < columns; col++) {
+        char column = 'A' + col;
+        for(int row = 1; row <= rows; row++) {
+            qDebug() << "column: " << column << ", row: " << row;
+            QModelIndex indexToGet = index(row, col);
+            QPair<char, int> coordinates(column, row);
+            setData(indexToGet, QVariant::fromValue(coordinates), CoordinatesRole);
+        }
+    }
+}
 bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     switch(role) {
         case CheckersRoles::CoordinatesRole: {
-            qDebug() << "CoordinateRole";
+            qDebug() << "CoordinateRole:" << value;
             break;
         }
         case CheckersRoles::IsPlayableRole: {
@@ -30,7 +44,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
             break;
         }
         case CheckersRoles::MultiCaptureRole: {
-            qDebug() << "CaptureAvailableRole";
+            qDebug() << "MultiCaptureRole";
             break;
         }
         case CheckersRoles::IsSelectedRole: {

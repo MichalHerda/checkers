@@ -12,6 +12,10 @@ Window {
 
     CheckersModel {
         id: checkersModelInstance
+
+        Component.onCompleted: {
+            checkersModelInstance.resetModel()
+        }
     }
 
     Button {
