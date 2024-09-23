@@ -32,8 +32,9 @@ Window {
         }
 
         onClicked: {
-            checkersModelInstance.setTurn()
-            console.log("value: ", checkersModelInstance.getTurn())
+            //checkersModelInstance.setTurn()
+            //console.log("value: ", checkersModelInstance.getTurn())
+            checkersModelInstance.printModel()
         }
     }
 }
