@@ -16,7 +16,9 @@ void CheckersModel::resetModel(int columns, int rows)
             qDebug() << "column: " << column << ", row: " << row;
             QModelIndex indexToGet = index(row, col);
             QPair<char, int> coordinates(column, row);
+            bool playable = (col + row) % 2 != 0;
             setData(indexToGet, QVariant::fromValue(coordinates), CoordinatesRole);
+            setData(indexToGet, QVariant::fromValue(playable), IsPlayableRole);
         }
     }
 }
@@ -29,7 +31,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
             break;
         }
         case CheckersRoles::IsPlayableRole: {
-            qDebug() << "IsPlayableRole";
+            qDebug() << "IsPlayableRole" << value;
             break;
         }
         case CheckersRoles::PieceRole: {
@@ -115,8 +117,9 @@ void CheckersModel::printModel() {
         char column = 'A' + col;
         for (int row = 0; row < rowCount; row++) {
             QModelIndex index = this->index(row, col);
-            QVariant data = this->data(index, CheckersRoles::CoordinatesRole); // Użyj odpowiedniej roli
-            qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Data:" << data;
+            QVariant coordinate = this->data(index, CheckersRoles::CoordinatesRole);
+            QVariant playable = this->data(index, CheckersRoles::IsPlayableRole);
+            qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Coordinate: " << coordinate << ", Playable: " << playable;
         }
     }
 }
