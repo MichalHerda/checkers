@@ -28,7 +28,8 @@ public:
 
     enum class Type {
         man,
-        king
+        king,
+        null
     };
     Q_ENUM(Type)
 
@@ -36,6 +37,8 @@ public:
         Player player;
         Type type;
     };
+
+
 
     explicit CheckersModel();
 

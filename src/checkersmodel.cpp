@@ -25,33 +25,52 @@ void CheckersModel::resetModel(int columns, int rows)
 
 bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    if (!index.isValid()) {
+        qDebug() << "setData() !index.isValid()";
+        return false;
+    }
+
+    QStandardItem *item = itemFromIndex(index);
+
+    if (!item) {
+        qDebug() << "!item";
+        return false;
+    }
+
     switch(role) {
         case CheckersRoles::CoordinatesRole: {
             qDebug() << "CoordinateRole:" << value;
+            item->setData(value, CoordinatesRole);
             break;
         }
         case CheckersRoles::IsPlayableRole: {
             qDebug() << "IsPlayableRole" << value;
+            item->setData(value, IsPlayableRole);
             break;
         }
         case CheckersRoles::PieceRole: {
             qDebug() << "PieceRole";
+            item->setData(value, PieceRole);
             break;
         }
         case CheckersRoles::RangeRole: {
             qDebug() << "RangeRole";
+            item->setData(value, RangeRole);
             break;
         }
         case CheckersRoles::CaptureAvailableRole: {
             qDebug() << "CaptureAvailableRole";
+            item->setData(value, CaptureAvailableRole);
             break;
         }
         case CheckersRoles::MultiCaptureRole: {
             qDebug() << "MultiCaptureRole";
+            item->setData(value, MultiCaptureRole);
             break;
         }
         case CheckersRoles::IsSelectedRole: {
             qDebug() << "IsSelectedRole";
+            item->setData(value, IsSelectedRole);
             break;
         }
         default: {
@@ -59,6 +78,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
             break;
         }
     }
+    emit dataChanged(index, index, {role});
     return true;
 }
 
@@ -66,29 +86,37 @@ QVariant CheckersModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid()) {
         qDebug() << "function CheckersModel::data: index is not valid";
+        return QVariant();
+    }
+
+    const QStandardItem *item = itemFromIndex(index);
+
+    if (!item) {
+        return QVariant();
     }
 
     switch(role) {
         case CheckersRoles::CoordinatesRole: {
-            return QVariant::fromValue(QPair<char, int>('A' + index.column(), index.row() + 1));
+            //return QVariant::fromValue(QPair<char, int>('A' + index.column(), index.row() + 1));
+            return item->data(CoordinatesRole);
         }
         case CheckersRoles::IsPlayableRole: {
-            return QVariant();
+            return item->data(IsPlayableRole);
         }
         case CheckersRoles::PieceRole: {
-            return QVariant();
+            return item->data(PieceRole);
         }
         case CheckersRoles::RangeRole: {
-            return QVariant();
+            return item->data(RangeRole);
         }
         case CheckersRoles::CaptureAvailableRole: {
-            return QVariant();
+            return item->data(CaptureAvailableRole);
         }
         case CheckersRoles::MultiCaptureRole: {
-            return QVariant();
+            return item->data(MultiCaptureRole);
         }
         case CheckersRoles::IsSelectedRole: {
-            return QVariant();
+            return item->data(IsSelectedRole);
         }
         default: {
              return QVariant();
