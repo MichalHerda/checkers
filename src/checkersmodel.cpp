@@ -12,10 +12,10 @@ void CheckersModel::resetModel(int columns, int rows)
 
     for(char col = 0 ; col < columns; col++) {
         char column = 'A' + col;
-        for(int row = 1; row <= rows; row++) {
-            qDebug() << "column: " << column << ", row: " << row;
+        for(int row = 0; row < rows; row++) {
+            qDebug() << "column: " << column << ", row: " << row + 1;
             QModelIndex indexToGet = index(row, col);
-            QPair<char, int> coordinates(column, row);
+            QPair<char, int> coordinates(column, row + 1);
             bool playable = (col + row) % 2 != 0;
             setData(indexToGet, QVariant::fromValue(coordinates), CoordinatesRole);
             setData(indexToGet, QVariant::fromValue(playable), IsPlayableRole);
@@ -30,6 +30,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
         return false;
     }
 
+    qDebug() << "index: " << index;
     QStandardItem *item = itemFromIndex(index);
 
     if (!item) {
