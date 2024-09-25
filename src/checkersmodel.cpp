@@ -10,10 +10,15 @@ void CheckersModel::resetModel(int columns, int rows)
     this->CheckersModel::setRowCount(rows);
     this->CheckersModel::setColumnCount(columns);
 
-    for(char col = 0 ; col < columns; col++) {
+    for(int col = 0 ; col < columns; col++) {
         char column = 'A' + col;
         for(int row = 0; row < rows; row++) {
             qDebug() << "column: " << column << ", row: " << row + 1;
+
+            QStandardItem* item = new QStandardItem();
+            qDebug()<<"item (resetModel): " << item;
+            this->setItem(row, col, item);
+
             QModelIndex indexToGet = index(row, col);
             QPair<char, int> coordinates(column, row + 1);
             bool playable = (col + row) % 2 != 0;
