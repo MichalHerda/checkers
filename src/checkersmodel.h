@@ -22,7 +22,8 @@ public:
 
     enum class Player {
         white,
-        black
+        black,
+        null
     };
     Q_ENUM(Player)
 
@@ -64,6 +65,8 @@ private:
     void setPieceRows(int row);                         // set custom rows number for piece (on game start)
 
     void initializePieces();
+    void setPiece(QModelIndex idx, Player player, Type type = Type::man); //function for initialization for board area with pieces
+    void setEmptyField(QModelIndex idx);                                  //<---as in the function name
 };
 
 #endif // CHECKERSMODEL_H

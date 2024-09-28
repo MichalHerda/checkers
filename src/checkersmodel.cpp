@@ -23,8 +23,11 @@ void CheckersModel::resetModel()
             qDebug() << "index got: " << indexToGet;
             QPair<char, int> coordinates(column, row + 1);
             bool playable = (col + row) % 2 == 0;
+
             setData(indexToGet, QVariant::fromValue(coordinates), CoordinatesRole);
             setData(indexToGet, QVariant::fromValue(playable), IsPlayableRole);
+
+            CheckersModel::initializePieces();
         }
     }
 }
@@ -153,7 +156,9 @@ void CheckersModel::printModel() {
             QModelIndex index = m_model.index(row, col);
             QVariant coordinate = m_model.data(index, CheckersRoles::CoordinatesRole);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
-            qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Coordinate: " << coordinate << ", Playable: " << playable;
+            QVariant piece = m_model.data(index, CheckersRoles::PieceRole);
+            qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Coordinate: " << coordinate << ", Playable: " << playable
+                     << "Piece" << piece;
         }
     }
 }
@@ -208,5 +213,81 @@ void CheckersModel::setPieceRows(int row)
 
 void CheckersModel::initializePieces()
 {
-    //for(int i = )
+    //SET WHITE PIECES:
+    for(int row = 0; row < m_pieceRows; row++ ) {
+        for(int col = 0; col < m_columns; col++) {
+            QModelIndex index = m_model.index(col, row);
+            QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
+            if(playable.toBool()){
+                CheckersModel::setPiece(index, Player::white);
+                //Player player = Player::white;
+                //Type type = Type::man;
+                //QPair<Player, Type> piece(player, type);
+                //QModelIndex indexToGet = m_model.index(col, row);
+                //setData(indexToGet, QVariant::fromValue(piece), PieceRole);
+            }
+            else {
+                Player player = Player::null;
+                Type type = Type::null;
+                QPair<Player, Type> piece(player, type);
+                //QModelIndex indexToGet = m_model.index(col, row);
+                setData(index, QVariant::fromValue(piece), PieceRole);
+            }
+        }
+    }
+
+    //SET BLACK PIECES:
+    for(int row = m_rows - 1; row >= m_rows - m_pieceRows; row--){
+        for(int col = 0; col < m_columns; col++) {
+            QModelIndex index = m_model.index(col, row);
+            QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
+            //QModelIndex indexToGet = m_model.index(col, row);
+            if(playable.toBool()){
+                CheckersModel::setPiece(index, Player::black);
+                //Player player = Player::black;
+                //Type type = Type::man;
+                //QPair<Player, Type> piece(player, type);
+                //setData(indexToGet, QVariant::fromValue(piece), PieceRole);
+            }
+            else {
+                CheckersModel::setEmptyField(index);
+                //Player player = Player::null;
+                //Type type = Type::null;
+                //QPair<Player, Type> piece(player, type);
+                //QModelIndex indexToGet = m_model.index(col, row);
+                //setData(index, QVariant::fromValue(piece), PieceRole);
+            }
+        }
+    }
+    //SET EMPTY PIECES:
+    for(int row = m_pieceRows; row < m_rows - m_pieceRows; row++) {
+        for(int col = 0; col < m_columns; col++) {
+            QModelIndex index = m_model.index(col, row);
+            CheckersModel::setEmptyField(index);
+            //Player player = Player::null;
+            //Type type = Type::null;
+            //QPair<Player, Type> piece(player, type);
+            //setData(index, QVariant::fromValue(piece), PieceRole);
+        }
+    }
+}
+
+void CheckersModel::setPiece(QModelIndex idx, Player player, Type type)
+{
+    Player playerToSet = player;
+    Type typeToSet = type;
+
+    QPair<Player, Type> piece(playerToSet, typeToSet);
+
+    setData(idx, QVariant::fromValue(piece), PieceRole);
+}
+
+void CheckersModel::setEmptyField(QModelIndex idx)
+{
+    Player player = Player::null;
+    Type type = Type::null;
+
+    QPair<Player, Type> piece(player, type);
+
+    setData(idx, QVariant::fromValue(piece), PieceRole);
 }
