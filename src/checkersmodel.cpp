@@ -7,22 +7,22 @@ CheckersModel::CheckersModel()
 
 void CheckersModel::resetModel(int columns, int rows)
 {
-    //m_model(columns, rows);
     m_model.setRowCount(rows);
     m_model.setColumnCount(columns);
 
     for(int col = 0 ; col < columns; col++) {
         char column = 'A' + col;
         for(int row = 0; row < rows; row++) {
-            qDebug() << "column: " << column << ", row: " << row + 1;
+            qDebug() << "column: " << column << "row: " << row + 1;
 
             QStandardItem* item = new QStandardItem();
             qDebug()<<"item (resetModel): " << item;
             m_model.setItem(row, col, item);
 
             QModelIndex indexToGet = m_model.index(row, col);
+            qDebug() << "index got: " << indexToGet;
             QPair<char, int> coordinates(column, row + 1);
-            bool playable = (col + row) % 2 != 0;
+            bool playable = (col + row) % 2 == 0;
             setData(indexToGet, QVariant::fromValue(coordinates), CoordinatesRole);
             setData(indexToGet, QVariant::fromValue(playable), IsPlayableRole);
         }
@@ -104,7 +104,6 @@ QVariant CheckersModel::data(const QModelIndex &index, int role) const
 
     switch(role) {
         case CheckersRoles::CoordinatesRole: {
-            //return QVariant::fromValue(QPair<char, int>('A' + index.column(), index.row() + 1));
             return item->data(CoordinatesRole);
         }
         case CheckersRoles::IsPlayableRole: {
@@ -134,7 +133,7 @@ QVariant CheckersModel::data(const QModelIndex &index, int role) const
 
 QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if(!CheckersModel::hasIndex(row, column)) {
+    if(!m_model.hasIndex(row, column)) {
         qDebug() << "index is not valid";
         return QModelIndex();
     }

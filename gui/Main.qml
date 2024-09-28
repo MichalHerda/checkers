@@ -35,6 +35,7 @@ Window {
             //checkersModelInstance.setTurn()
             //console.log("value: ", checkersModelInstance.getTurn())
             checkersModelInstance.printModel()
+            //console.log("rows: ", checkersModelInstance.rowCount(), "columns: ", checkersModelInstance.columnCount())
         }
     }
 }
