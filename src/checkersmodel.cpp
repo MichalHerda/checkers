@@ -187,7 +187,26 @@ void CheckersModel::setRows(int row)
         row++;
         CheckersModel::setRows(row);
     }
-    else {
+    else {        
         m_rows = row;
     }
+}
+
+void CheckersModel::setPieceRows(int row)
+{
+    int maxPieceRows = (m_rows - 2) / 2;
+
+    if(row > maxPieceRows) {
+        qDebug() << "to many piece rows. Setting to maximum allowed: " << maxPieceRows;
+        m_pieceRows = maxPieceRows;
+    }
+    else {
+        qDebug() << "set " << row << " pieces rows";
+        m_pieceRows = row;
+    }
+}
+
+void CheckersModel::initializePieces()
+{
+    //for(int i = )
 }

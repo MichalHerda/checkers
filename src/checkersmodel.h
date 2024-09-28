@@ -48,16 +48,22 @@ public:
     Q_INVOKABLE QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     Q_INVOKABLE void setTurn();
     Q_INVOKABLE Player getTurn();
+
 signals:
 
 private:
     int m_columns = 8;
     int m_rows = 8;
+    int m_pieceRows = 3;
+
     QStandardItemModel m_model;
     Player m_turn;
 
-    void setColumns(int col);
+    void setColumns(int col);                           // set custom board size
     void setRows(int row);
+    void setPieceRows(int row);                         // set custom rows number for piece (on game start)
+
+    void initializePieces();
 };
 
 #endif // CHECKERSMODEL_H
