@@ -7,8 +7,9 @@ CheckersModel::CheckersModel()
 
 void CheckersModel::resetModel(int columns, int rows)
 {
-    this->CheckersModel::setRowCount(rows);
-    this->CheckersModel::setColumnCount(columns);
+    //m_model(columns, rows);
+    m_model.setRowCount(rows);
+    m_model.setColumnCount(columns);
 
     for(int col = 0 ; col < columns; col++) {
         char column = 'A' + col;
@@ -17,9 +18,9 @@ void CheckersModel::resetModel(int columns, int rows)
 
             QStandardItem* item = new QStandardItem();
             qDebug()<<"item (resetModel): " << item;
-            this->setItem(row, col, item);
+            m_model.setItem(row, col, item);
 
-            QModelIndex indexToGet = index(row, col);
+            QModelIndex indexToGet = m_model.index(row, col);
             QPair<char, int> coordinates(column, row + 1);
             bool playable = (col + row) % 2 != 0;
             setData(indexToGet, QVariant::fromValue(coordinates), CoordinatesRole);
@@ -36,7 +37,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
     }
 
     qDebug() << "index: " << index;
-    QStandardItem *item = itemFromIndex(index);
+    QStandardItem *item = m_model.itemFromIndex(index);
 
     if (!item) {
         qDebug() << "!item";
@@ -144,15 +145,15 @@ QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent)
 }
 
 void CheckersModel::printModel() {
-    int rowCount = this->rowCount();
-    int columnCount = this->columnCount();
+    int rowCount = m_model.rowCount();
+    int columnCount = m_model.columnCount();
 
     for (int col = 0; col < columnCount; col++) {
         char column = 'A' + col;
         for (int row = 0; row < rowCount; row++) {
-            QModelIndex index = this->index(row, col);
-            QVariant coordinate = this->data(index, CheckersRoles::CoordinatesRole);
-            QVariant playable = this->data(index, CheckersRoles::IsPlayableRole);
+            QModelIndex index = m_model.index(row, col);
+            QVariant coordinate = m_model.data(index, CheckersRoles::CoordinatesRole);
+            QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Coordinate: " << coordinate << ", Playable: " << playable;
         }
     }

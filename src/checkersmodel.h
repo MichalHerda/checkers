@@ -38,8 +38,6 @@ public:
         Type type;
     };
 
-
-
     explicit CheckersModel();
 
     Q_INVOKABLE void resetModel(int columns = 8,  int rows = 8);
@@ -53,6 +51,7 @@ public:
 signals:
 
 private:
+    QStandardItemModel m_model;
     Player m_turn;
 };
 
