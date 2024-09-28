@@ -40,7 +40,7 @@ public:
 
     explicit CheckersModel();
 
-    Q_INVOKABLE void resetModel(int columns = 8,  int rows = 8);
+    Q_INVOKABLE void resetModel();
     Q_INVOKABLE void printModel();
 
     Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role) override;
@@ -51,8 +51,13 @@ public:
 signals:
 
 private:
+    int m_columns = 8;
+    int m_rows = 8;
     QStandardItemModel m_model;
     Player m_turn;
+
+    void setColumns(int col);
+    void setRows(int row);
 };
 
 #endif // CHECKERSMODEL_H

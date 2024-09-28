@@ -5,14 +5,14 @@ CheckersModel::CheckersModel()
 
 }
 
-void CheckersModel::resetModel(int columns, int rows)
+void CheckersModel::resetModel()
 {
-    m_model.setRowCount(rows);
-    m_model.setColumnCount(columns);
+    m_model.setRowCount(m_rows);
+    m_model.setColumnCount(m_columns);
 
-    for(int col = 0 ; col < columns; col++) {
+    for(int col = 0 ; col < m_columns; col++) {
         char column = 'A' + col;
-        for(int row = 0; row < rows; row++) {
+        for(int row = 0; row < m_rows; row++) {
             qDebug() << "column: " << column << "row: " << row + 1;
 
             QStandardItem* item = new QStandardItem();
@@ -168,3 +168,26 @@ CheckersModel::Player CheckersModel::getTurn()
     return m_turn;
 }
 
+void CheckersModel::setColumns(int col)
+{
+    if(col % 2 != 0) {
+        qDebug() << "the number of columns must be even. Added col + 1";
+        col++;
+        CheckersModel::setColumns(col);
+    }
+    else {
+        m_columns = col;
+    }
+}
+
+void CheckersModel::setRows(int row)
+{
+    if(row % 2 != 0) {
+        qDebug() << "the number of rows must be even. Added row + 1";
+        row++;
+        CheckersModel::setRows(row);
+    }
+    else {
+        m_rows = row;
+    }
+}
