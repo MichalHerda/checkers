@@ -41,6 +41,9 @@ public:
 
     explicit CheckersModel();
 
+    Q_INVOKABLE int getColumnsNo();
+    Q_INVOKABLE int getRowsNo();
+
     Q_INVOKABLE void resetModel();
     Q_INVOKABLE void printModel();
 

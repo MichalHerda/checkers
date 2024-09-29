@@ -5,6 +5,16 @@ CheckersModel::CheckersModel()
 
 }
 
+int CheckersModel::getColumnsNo()
+{
+    return m_columns;
+}
+
+int CheckersModel::getRowsNo()
+{
+    return m_rows;
+}
+
 void CheckersModel::resetModel()
 {
     m_model.setRowCount(m_rows);

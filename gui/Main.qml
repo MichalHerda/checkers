@@ -3,6 +3,7 @@ import QtQuick.Controls
 import Checkers 1.0
 import checkers.model
 
+
 Window {
     width: 640
     height: 480
@@ -10,12 +11,19 @@ Window {
     title: qsTr("Checkers")
     color: CheckersTheme.backgroundColor
 
-    CheckersModel {
-        id: checkersModelInstance
+    //CheckersModel {
+    //    id: checkersModelInstance
+    //
+    //    Component.onCompleted: {
+    //        checkersModelInstance.resetModel()
+    //    }
+    //}
 
-        Component.onCompleted: {
-            checkersModelInstance.resetModel()
-        }
+    GameBoard {
+        id: checkersGameBoard
+        anchors.centerIn: parent
+        width: parent.width * 0.5
+        height: parent.height * 0.5
     }
 
     Button {
@@ -32,7 +40,7 @@ Window {
         }
 
         onClicked: {
-            checkersModelInstance.printModel()
+            checkersGameBoard.checkersModelInstance.printModel()
         }
     }
 }
