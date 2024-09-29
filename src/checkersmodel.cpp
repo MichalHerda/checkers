@@ -28,6 +28,7 @@ void CheckersModel::resetModel()
             setData(indexToGet, QVariant::fromValue(playable), IsPlayableRole);
 
             CheckersModel::initializePieces();
+            CheckersModel::selectField(indexToGet, false);
         }
     }
 }
@@ -157,8 +158,9 @@ void CheckersModel::printModel() {
             QVariant coordinate = m_model.data(index, CheckersRoles::CoordinatesRole);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             QVariant piece = m_model.data(index, CheckersRoles::PieceRole);
+            QVariant selected = m_model.data(index, CheckersRoles::IsSelectedRole);
             qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Coordinate: " << coordinate << ", Playable: " << playable
-                     << "Piece" << piece;
+                     << "Piece:" << piece << "Selected: " << selected;
         }
     }
 }
@@ -176,7 +178,7 @@ CheckersModel::Player CheckersModel::getTurn()
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {
-        qDebug() << "the number of columns must be even. Added col + 1";
+        qDebug() << "the number of columns must be even. Added col + 1";                    // needs create even validation
         col++;
         CheckersModel::setColumns(col);
     }
@@ -290,4 +292,9 @@ void CheckersModel::setEmptyField(QModelIndex idx)
     QPair<Player, Type> piece(player, type);
 
     setData(idx, QVariant::fromValue(piece), PieceRole);
+}
+
+void CheckersModel::selectField(QModelIndex idx, bool selected)
+{
+    setData(idx, QVariant::fromValue(selected), IsSelectedRole);
 }

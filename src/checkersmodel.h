@@ -60,13 +60,15 @@ private:
     QStandardItemModel m_model;
     Player m_turn;
 
-    void setColumns(int col);                           // set custom board size
+    void setColumns(int col);                                             // set custom board size
     void setRows(int row);
-    void setPieceRows(int row);                         // set custom rows number for piece (on game start)
+    void setPieceRows(int row);                                           // set custom rows number for piece (on game start)
 
     void initializePieces();
-    void setPiece(QModelIndex idx, Player player, Type type = Type::man); //function for initialization for board area with pieces
-    void setEmptyField(QModelIndex idx);                                  //<---as in the function name
+    void setPiece(QModelIndex idx, Player player, Type type = Type::man); // function for initialization for board area with pieces
+    void setEmptyField(QModelIndex idx);                                  // <---as in the function name
+
+    void selectField(QModelIndex idx, bool selected = true);
 };
 
 #endif // CHECKERSMODEL_H
