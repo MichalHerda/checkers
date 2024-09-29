@@ -10,27 +10,30 @@ void CheckersModel::resetModel()
     m_model.setRowCount(m_rows);
     m_model.setColumnCount(m_columns);
 
+    //Initialize board coordinates and 'black' and 'white fields
     for(int col = 0 ; col < m_columns; col++) {
         char column = 'A' + col;
         for(int row = 0; row < m_rows; row++) {
             qDebug() << "column: " << column << "row: " << row + 1;
 
             QStandardItem* item = new QStandardItem();
-            qDebug()<<"item (resetModel): " << item;
+            qDebug()<<"item: " << item;
             m_model.setItem(row, col, item);
 
-            QModelIndex indexToGet = m_model.index(row, col);
-            qDebug() << "index got: " << indexToGet;
+            QModelIndex idx= m_model.index(row, col);
+            qDebug() << "index got: " << idx;
             QPair<char, int> coordinates(column, row + 1);
             bool playable = (col + row) % 2 == 0;
 
-            setData(indexToGet, QVariant::fromValue(coordinates), CoordinatesRole);
-            setData(indexToGet, QVariant::fromValue(playable), IsPlayableRole);
+            setData(idx, QVariant::fromValue(coordinates), CoordinatesRole);
+            setData(idx, QVariant::fromValue(playable), IsPlayableRole);
 
-            CheckersModel::initializePieces();
-            CheckersModel::selectField(indexToGet, false);
+            //set all fields as not selected
+            CheckersModel::selectField(idx, false);
         }
     }
+    // place the pieces on the board
+    CheckersModel::initializePieces();
 }
 
 bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -40,7 +43,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
         return false;
     }
 
-    qDebug() << "index: " << index;
+    //qDebug() << "index: " << index;
     QStandardItem *item = m_model.itemFromIndex(index);
 
     if (!item) {
