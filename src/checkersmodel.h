@@ -18,7 +18,7 @@ public:
         MultiCaptureRole,
         IsSelectedRole
     };
-    Q_ENUM(CheckersRoles)
+    Q_ENUMS(CheckersRoles)
 
     enum class Player {
         white,

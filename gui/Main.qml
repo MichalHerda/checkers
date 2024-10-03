@@ -40,7 +40,7 @@ Window {
         }
 
         onClicked: {
-            checkersGameBoard.checkersModelInstance.printModel()
+            checkersModelInstance.printModel()
         }
     }
 }
