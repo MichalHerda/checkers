@@ -9,8 +9,8 @@ Item {
     function getFieldIndex(row, column) {
         console.log("getFieldFoo, row: ", row, "column: ", column)
         //console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), checkersModelInstance.IsPlayableRole))
-        console.log("getIdx: ", checkersModelInstance.index(row, column))
-        return checkersModelInstance.index(row, column)
+        console.log("getIdx: ", checkersModelInstance.getIndex(row, column))
+        return checkersModelInstance.getIndex(row, column)
     }
 
     //CheckersModel {
@@ -65,6 +65,7 @@ Item {
                 Component.onCompleted: {
                     console.log("Rectangle idx: ", index, "column: ", column, "row: ", row)
                     console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
+                    //console.log("item: " << checkersModelInstance.item
                 }
 
             }

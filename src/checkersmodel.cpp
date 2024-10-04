@@ -160,6 +160,11 @@ QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent)
     }
 }
 
+QModelIndex CheckersModel::getIndex(int row, int column)
+{
+    return m_model.index(row, column);
+}
+
 void CheckersModel::printModel() {
     int rowCount = m_model.rowCount();
     int columnCount = m_model.columnCount();
