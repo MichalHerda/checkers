@@ -53,7 +53,6 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
         return false;
     }
 
-    //qDebug() << "index: " << index;
     QStandardItem *item = m_model.itemFromIndex(index);
 
     if (!item) {
@@ -183,6 +182,22 @@ void CheckersModel::printModel() {
     }
 }
 
+QHash<int, QByteArray> CheckersModel::roleNames() const
+{
+    qDebug() << "roleNames called";
+
+    QHash<int, QByteArray> roles;
+    roles[CoordinatesRole] = "coordinatesRole";
+    roles[IsPlayableRole] = "isPlayableRole";
+    roles[PieceRole] = "pieceRole";
+    roles[RangeRole] = "rangeRole";
+    roles[CaptureAvailableRole] = "captureAvailableRole";
+    roles[MultiCaptureRole] = "multiCaptureRole";
+    roles[IsSelectedRole] = "isSelectedRole";
+
+    return roles;
+}
+
 void CheckersModel::setTurn()
 {
     m_turn == Player::black ? m_turn = Player::white : m_turn = Player::black;
@@ -240,17 +255,11 @@ void CheckersModel::initializePieces()
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             if(playable.toBool()){
                 CheckersModel::setPiece(index, Player::white);
-                //Player player = Player::white;
-                //Type type = Type::man;
-                //QPair<Player, Type> piece(player, type);
-                //QModelIndex indexToGet = m_model.index(col, row);
-                //setData(indexToGet, QVariant::fromValue(piece), PieceRole);
             }
             else {
                 Player player = Player::null;
                 Type type = Type::null;
                 QPair<Player, Type> piece(player, type);
-                //QModelIndex indexToGet = m_model.index(col, row);
                 setData(index, QVariant::fromValue(piece), PieceRole);
             }
         }
@@ -261,21 +270,11 @@ void CheckersModel::initializePieces()
         for(int col = 0; col < m_columns; col++) {
             QModelIndex index = m_model.index(col, row);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
-            //QModelIndex indexToGet = m_model.index(col, row);
             if(playable.toBool()){
                 CheckersModel::setPiece(index, Player::black);
-                //Player player = Player::black;
-                //Type type = Type::man;
-                //QPair<Player, Type> piece(player, type);
-                //setData(indexToGet, QVariant::fromValue(piece), PieceRole);
             }
             else {
                 CheckersModel::setEmptyField(index);
-                //Player player = Player::null;
-                //Type type = Type::null;
-                //QPair<Player, Type> piece(player, type);
-                //QModelIndex indexToGet = m_model.index(col, row);
-                //setData(index, QVariant::fromValue(piece), PieceRole);
             }
         }
     }
@@ -284,10 +283,6 @@ void CheckersModel::initializePieces()
         for(int col = 0; col < m_columns; col++) {
             QModelIndex index = m_model.index(col, row);
             CheckersModel::setEmptyField(index);
-            //Player player = Player::null;
-            //Type type = Type::null;
-            //QPair<Player, Type> piece(player, type);
-            //setData(index, QVariant::fromValue(piece), PieceRole);
         }
     }
 }

@@ -8,18 +8,9 @@ Item {
 
     function getFieldIndex(row, column) {
         console.log("getFieldFoo, row: ", row, "column: ", column)
-        //console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), checkersModelInstance.IsPlayableRole))
         console.log("getIdx: ", checkersModelInstance.getIndex(row, column))
         return checkersModelInstance.getIndex(row, column)
     }
-
-    //CheckersModel {
-    //    id: checkersModelInstance
-    //
-    //    Component.onCompleted: {
-    //        checkersModelInstance.resetModel()
-    //    }
-    //}
 
     Grid {
         anchors.fill: parent
@@ -37,11 +28,10 @@ Item {
                 border.width: rec.width * 0.05
                 border.color: 'black'
 
-                // Właściwe użycie index wewnątrz komponentu
                 property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
                 property int column: index % checkersModelInstance.getColumnsNo()
 
-                color: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole === true ) ? "blue" : "white"
+                color: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole) === true  ? "blue" : "white"
 
                 Text {
                     anchors.centerIn: parent
@@ -57,17 +47,16 @@ Item {
                     onClicked: {
                         //checkersModelInstance.printModel()
                         console.log("row: ", row, "column: ", column)
-                        console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
+                        console.log("role: ", CheckersModel.IsPlayableRole);
+                        //console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
                     }
                 }
 
 
                 Component.onCompleted: {
                     console.log("Rectangle idx: ", index, "column: ", column, "row: ", row)
-                    console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
-                    //console.log("item: " << checkersModelInstance.item
+                    console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.isPlayableRole))
                 }
-
             }
         }
     }

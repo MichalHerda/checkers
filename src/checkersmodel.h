@@ -47,6 +47,8 @@ public:
     Q_INVOKABLE void resetModel();
     Q_INVOKABLE void printModel();
 
+    QHash<int, QByteArray> roleNames() const override;
+
     Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     Q_INVOKABLE QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     Q_INVOKABLE QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
