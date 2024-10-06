@@ -2,7 +2,16 @@
 
 CheckersModel::CheckersModel()
 {
+    m_rolesMetaEnum = QMetaEnum::fromType<CheckersRoles>();
 
+    for(int i = 0; i < m_rolesMetaEnum.keyCount(); i++) {
+        auto s = QString(m_rolesMetaEnum.key(i));
+        qDebug() << "roles map: " << QByteArray(s.replace(0,1,s[0].toLower()).toUtf8());
+        m_rolesMap.insert(
+            m_rolesMetaEnum.value(i),
+            QByteArray(s.replace(0,1,s[0].toLower()).toUtf8())
+        );
+    }
 }
 
 int CheckersModel::getColumnsNo()
@@ -185,7 +194,7 @@ void CheckersModel::printModel() {
 QHash<int, QByteArray> CheckersModel::roleNames() const
 {
     qDebug() << "roleNames called";
-
+    /*
     QHash<int, QByteArray> roles;
     roles[CoordinatesRole] = "coordinatesRole";
     roles[IsPlayableRole] = "isPlayableRole";
@@ -194,8 +203,8 @@ QHash<int, QByteArray> CheckersModel::roleNames() const
     roles[CaptureAvailableRole] = "captureAvailableRole";
     roles[MultiCaptureRole] = "multiCaptureRole";
     roles[IsSelectedRole] = "isSelectedRole";
-
-    return roles;
+    */
+    return m_rolesMap;
 }
 
 void CheckersModel::setTurn()

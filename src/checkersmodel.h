@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QStandardItemModel>
+#include <QMetaEnum>
 
 class CheckersModel : public QStandardItemModel
 {
@@ -18,7 +19,7 @@ public:
         MultiCaptureRole,
         IsSelectedRole
     };
-    Q_ENUMS(CheckersRoles)
+    Q_ENUM(CheckersRoles)
 
     enum class Player {
         white,
@@ -62,6 +63,9 @@ private:
     int m_columns = 8;
     int m_rows = 8;
     int m_pieceRows = 3;
+
+    QMetaEnum m_rolesMetaEnum;
+    QHash<int, QByteArray> m_rolesMap;
 
     QStandardItemModel m_model;
     Player m_turn;

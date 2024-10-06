@@ -30,8 +30,9 @@ Item {
 
                 property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
                 property int column: index % checkersModelInstance.getColumnsNo()
+                property var modelIndex: getFieldIndex(row, column)
 
-                color: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole) === true  ? "blue" : "white"
+                color: checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole) === true  ? "blue" : "white"
 
                 Text {
                     anchors.centerIn: parent
@@ -49,6 +50,7 @@ Item {
                         console.log("row: ", row, "column: ", column)
                         console.log("role: ", CheckersModel.IsPlayableRole);
                         //console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
+                        console.log("model index: ", modelIndex)
                     }
                 }
 
