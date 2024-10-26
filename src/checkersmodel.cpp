@@ -110,18 +110,25 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
             break;
         }
     }
+    qDebug() << "emit data changed";
     emit dataChanged(index, index, {role});
     return true;
 }
 
 QVariant CheckersModel::data(const QModelIndex &index, int role) const
 {
+    qDebug() << "index in data function: " << index;
     if (!index.isValid()) {
         qDebug() << "function CheckersModel::data: index is not valid";
         return QVariant();
     }
+    else {
+        qDebug() << "index is valid";
+    }
 
-    const QStandardItem *item = itemFromIndex(index);
+    const QStandardItem *item = m_model.itemFromIndex(index);
+
+    qDebug() << "itemFromIndex: " << item;
 
     if (!item) {
         return QVariant();

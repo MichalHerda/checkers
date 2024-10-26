@@ -47,10 +47,17 @@ Item {
                     opacity: 0
                     onClicked: {
                         //checkersModelInstance.printModel()
-                        console.log("row: ", row, "column: ", column)
-                        console.log("role: ", CheckersModel.IsPlayableRole);
+                        //console.log("row: ", row, "column: ", column)
+                        //console.log("role: ", CheckersModel.IsPlayableRole);
                         //console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
                         console.log("model index: ", modelIndex)
+                        console.log("CoordinatesRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.CoordinatesRole))
+                        console.log("IsPlayableRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
+                        console.log("PieceRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole))
+                        console.log("RangeRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.RangeRole))
+                        console.log("CaptureAvailableRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.CaptureAvailableRole))
+                        console.log("MultiCaptureRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.MultiCaptureRole))
+                        console.log("IsSelectedRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsSelectedRole))
                     }
                 }
 
