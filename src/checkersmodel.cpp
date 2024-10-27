@@ -19,16 +19,16 @@ CheckersModel::CheckersModel()
 bool CheckersModel::isPiecePresent(const QModelIndex &index)
 {
     auto pieceRole = data(index, PieceRole);
-    qDebug() << "isPiecePresent function, pieceRole: " << pieceRole;
+    //qDebug() << "isPiecePresent function, pieceRole: " << pieceRole;
 
     auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
-    qDebug() << "isPiecePresent function, piecePair: " << piecePair;
+    //qDebug() << "isPiecePresent function, piecePair: " << piecePair;
 
     CheckersModel::Player player = piecePair.first;
     CheckersModel::Type type = piecePair.second;
 
-    qDebug() << "isPiecePresent function, player:" << player;
-    qDebug() << "isPiecePresent function, type:" << type;
+    //qDebug() << "isPiecePresent function, player:" << player;
+    //qDebug() << "isPiecePresent function, type:" << type;
 
     //return player != CheckersModel::Type::null;
     return type != CheckersModel::Type::null;
@@ -37,14 +37,14 @@ bool CheckersModel::isPiecePresent(const QModelIndex &index)
 bool CheckersModel::getPieceColor(const QModelIndex &index)
 {
     auto pieceRole = data(index, PieceRole);
-    qDebug() << "GetPieceColor function, pieceRole: " << pieceRole;
+    //qDebug() << "GetPieceColor function, pieceRole: " << pieceRole;
 
     auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
-    qDebug() << "isPiecePresent function, piecePair: " << piecePair;
+    //qDebug() << "isPiecePresent function, piecePair: " << piecePair;
 
     CheckersModel::Player player = piecePair.first;
 
-    qDebug() << "isPiecePresent function, player:" << player;
+    //qDebug() << "isPiecePresent function, player:" << player;
 
     return player == CheckersModel::Player::white;
 }
@@ -74,7 +74,7 @@ void CheckersModel::resetModel()
             qDebug()<<"item: " << item;
             m_model.setItem(row, col, item);
 
-            QModelIndex idx= m_model.index(row, col);
+            QModelIndex idx = m_model.index(row, col);
             qDebug() << "index got: " << idx;
             QPair<char, int> coordinates(column, row + 1);
             bool playable = (col + row) % 2 == 0;
@@ -93,14 +93,14 @@ void CheckersModel::resetModel()
 bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid()) {
-        qDebug() << "setData() !index.isValid()";
+        //qDebug() << "setData() !index.isValid()";
         return false;
     }
 
     QStandardItem *item = m_model.itemFromIndex(index);
 
     if (!item) {
-        qDebug() << "!item";
+        //qDebug() << "!item";
         return false;
     }
 
@@ -111,59 +111,60 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
             break;
         }
         case CheckersRoles::IsPlayableRole: {
-            qDebug() << "IsPlayableRole" << value;
+            //qDebug() << "IsPlayableRole" << value;
             item->setData(value, IsPlayableRole);
             break;
         }
         case CheckersRoles::PieceRole: {
-            qDebug() << "PieceRole";
+            //qDebug() << "PieceRole";
             item->setData(value, PieceRole);
             break;
         }
         case CheckersRoles::RangeRole: {
-            qDebug() << "RangeRole";
+            //qDebug() << "RangeRole";
             item->setData(value, RangeRole);
             break;
         }
         case CheckersRoles::CaptureAvailableRole: {
-            qDebug() << "CaptureAvailableRole";
+            //qDebug() << "CaptureAvailableRole";
             item->setData(value, CaptureAvailableRole);
             break;
         }
         case CheckersRoles::MultiCaptureRole: {
-            qDebug() << "MultiCaptureRole";
+            //qDebug() << "MultiCaptureRole";
             item->setData(value, MultiCaptureRole);
             break;
         }
         case CheckersRoles::IsSelectedRole: {
-            qDebug() << "IsSelectedRole";
+            //qDebug() << "IsSelectedRole";
             item->setData(value, IsSelectedRole);
             break;
         }
         default: {
-            qDebug() << "Default Role";
+            //qDebug() << "Default Role";
             break;
         }
     }
-    qDebug() << "emit data changed";
+    //qDebug() << "emit data changed";
     emit dataChanged(index, index, {role});
     return true;
 }
 
 QVariant CheckersModel::data(const QModelIndex &index, int role) const
 {
-    qDebug() << "index in data function: " << index;
+    //qDebug() << "index in data function: " << index;
+
     if (!index.isValid()) {
-        qDebug() << "function CheckersModel::data: index is not valid";
+        //qDebug() << "function CheckersModel::data: index is not valid";
         return QVariant();
     }
     else {
-        qDebug() << "index is valid";
+        //qDebug() << "index is valid";
     }
 
     const QStandardItem *item = m_model.itemFromIndex(index);
 
-    qDebug() << "itemFromIndex: " << item;
+    //qDebug() << "itemFromIndex: " << item;
 
     if (!item) {
         return QVariant();
@@ -201,11 +202,11 @@ QVariant CheckersModel::data(const QModelIndex &index, int role) const
 QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent) const
 {
     if(!m_model.hasIndex(row, column)) {
-        qDebug() << "index is not valid";
+        //qDebug() << "index is not valid";
         return QModelIndex();
     }
     else {
-        qDebug() << "index is valid";
+        //qDebug() << "index is valid";
         return CheckersModel::createIndex(row, column);
     }
 }
@@ -264,7 +265,7 @@ CheckersModel::Player CheckersModel::getTurn()
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {
-        qDebug() << "the number of columns must be even. Added col + 1";                    // needs create even validation
+        //qDebug() << "the number of columns must be even. Added col + 1";                    // needs create even validation
         col++;
         CheckersModel::setColumns(col);
     }
@@ -276,7 +277,7 @@ void CheckersModel::setColumns(int col)
 void CheckersModel::setRows(int row)
 {
     if(row % 2 != 0) {
-        qDebug() << "the number of rows must be even. Added row + 1";
+        //qDebug() << "the number of rows must be even. Added row + 1";
         row++;
         CheckersModel::setRows(row);
     }
@@ -290,11 +291,11 @@ void CheckersModel::setPieceRows(int row)
     int maxPieceRows = (m_rows - 2) / 2;
 
     if(row > maxPieceRows) {
-        qDebug() << "to many piece rows. Setting to maximum allowed: " << maxPieceRows;
+        //qDebug() << "to many piece rows. Setting to maximum allowed: " << maxPieceRows;
         m_pieceRows = maxPieceRows;
     }
     else {
-        qDebug() << "set " << row << " pieces rows";
+        //qDebug() << "set " << row << " pieces rows";
         m_pieceRows = row;
     }
 }
