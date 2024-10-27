@@ -8,4 +8,6 @@ Item {
     property color playableFieldColor: "yellow"
     property color notPlayableFieldColor: "white"
     property color fieldBorderColor: "black"
+    property color blackPlayerColor: "black"
+    property color whitePlayerColor: "white"
 }

@@ -16,6 +16,24 @@ CheckersModel::CheckersModel()
     */
 }
 
+bool CheckersModel::isPiecePresent(const QModelIndex &index)
+{
+    auto pieceRole = data(index, PieceRole);
+    qDebug() << "isPiecePresent function, pieceRole: " << pieceRole;
+
+    auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
+    qDebug() << "isPiecePresent function, piecePair: " << piecePair;
+
+    CheckersModel::Player player = piecePair.first;
+    CheckersModel::Type type = piecePair.second;
+
+    qDebug() << "isPiecePresent function, player:" << player;
+    qDebug() << "isPiecePresent function, type:" << type;
+
+    //return player != CheckersModel::Type::null;
+    return type != CheckersModel::Type::null;
+}
+
 int CheckersModel::getColumnsNo()
 {
     return m_columns;

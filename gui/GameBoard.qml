@@ -61,7 +61,7 @@ Item {
 
                 Piece {
                     property var pieceStatus: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole) ;
-                    visible: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole) !==  null;
+                    visible: checkersModelInstance.isPiecePresent(getFieldIndex(row, column))
                     color: "black"
 
                     Component.onCompleted: {

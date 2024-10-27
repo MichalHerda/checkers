@@ -42,6 +42,8 @@ public:
 
     explicit CheckersModel();
 
+    Q_INVOKABLE bool isPiecePresent(const QModelIndex &index);
+
     Q_INVOKABLE int getColumnsNo();
     Q_INVOKABLE int getRowsNo();
 
