@@ -59,6 +59,17 @@ Item {
                     }
                 }
 
+                Piece {
+                    property var pieceStatus: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole) ;
+                    visible: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole) !==  null;
+                    color: "black"
+
+                    Component.onCompleted: {
+                        console.log("piece on completed: ", pieceStatus)
+                    }
+                }
+
+
                 Component.onCompleted: {
                     console.log("Rectangle idx: ", index, "column: ", column, "row: ", row)
                     console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.isPlayableRole))

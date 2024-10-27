@@ -48,7 +48,7 @@ public:
     Q_INVOKABLE void resetModel();
     Q_INVOKABLE void printModel();
 
-    QHash<int, QByteArray> roleNames() const override;
+//    QHash<int, QByteArray> roleNames() const override;
 
     Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     Q_INVOKABLE QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -64,8 +64,8 @@ private:
     int m_rows = 8;
     int m_pieceRows = 3;
 
-    QMetaEnum m_rolesMetaEnum;
-    QHash<int, QByteArray> m_rolesMap;
+//    QMetaEnum m_rolesMetaEnum;
+//    QHash<int, QByteArray> m_rolesMap;
 
     QStandardItemModel m_model;
     Player m_turn;
