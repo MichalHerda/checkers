@@ -34,6 +34,21 @@ bool CheckersModel::isPiecePresent(const QModelIndex &index)
     return type != CheckersModel::Type::null;
 }
 
+bool CheckersModel::getPieceColor(const QModelIndex &index)
+{
+    auto pieceRole = data(index, PieceRole);
+    qDebug() << "GetPieceColor function, pieceRole: " << pieceRole;
+
+    auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
+    qDebug() << "isPiecePresent function, piecePair: " << piecePair;
+
+    CheckersModel::Player player = piecePair.first;
+
+    qDebug() << "isPiecePresent function, player:" << player;
+
+    return player == CheckersModel::Player::white;
+}
+
 int CheckersModel::getColumnsNo()
 {
     return m_columns;

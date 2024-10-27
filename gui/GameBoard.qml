@@ -62,7 +62,7 @@ Item {
                 Piece {
                     property var pieceStatus: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole) ;
                     visible: checkersModelInstance.isPiecePresent(getFieldIndex(row, column))
-                    color: "black"
+                    color: checkersModelInstance.getPieceColor(getFieldIndex(row, column)) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
 
                     Component.onCompleted: {
                         console.log("piece on completed: ", pieceStatus)
