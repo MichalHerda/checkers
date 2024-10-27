@@ -306,7 +306,7 @@ void CheckersModel::initializePieces()
     //SET WHITE PIECES:
     for(int row = 0; row < m_pieceRows; row++ ) {
         for(int col = 0; col < m_columns; col++) {
-            QModelIndex index = m_model.index(col, row);
+            QModelIndex index = m_model.index(row, col);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             if(playable.toBool()){
                 CheckersModel::setPiece(index, Player::white);
@@ -323,7 +323,7 @@ void CheckersModel::initializePieces()
     //SET BLACK PIECES:
     for(int row = m_rows - 1; row >= m_rows - m_pieceRows; row--){
         for(int col = 0; col < m_columns; col++) {
-            QModelIndex index = m_model.index(col, row);
+            QModelIndex index = m_model.index(row, col);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             if(playable.toBool()){
                 CheckersModel::setPiece(index, Player::black);
@@ -336,7 +336,7 @@ void CheckersModel::initializePieces()
     //SET EMPTY PIECES:
     for(int row = m_pieceRows; row < m_rows - m_pieceRows; row++) {
         for(int col = 0; col < m_columns; col++) {
-            QModelIndex index = m_model.index(col, row);
+            QModelIndex index = m_model.index(row, col);
             CheckersModel::setEmptyField(index);
         }
     }
