@@ -28,7 +28,9 @@ Item {
                 border.width: rec.width * 0.025
                 border.color: CheckersTheme.fieldBorderColor
 
-                property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
+                //property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
+                property int row: checkersModelInstance.getRowsNo() - 1 - Math.floor(index / checkersModelInstance.getColumnsNo())
+
                 property int column: index % checkersModelInstance.getColumnsNo()
                 property var modelIndex: getFieldIndex(row, column)
 
@@ -49,6 +51,7 @@ Item {
                     opacity: 0
                     onClicked: {
                         //console.log("model index: ", modelIndex)
+                        console.log("index: ", index)
                         console.log("CoordinatesRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.CoordinatesRole))
                         //console.log("IsPlayableRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
                         //console.log("PieceRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole))

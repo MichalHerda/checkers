@@ -65,9 +65,10 @@ void CheckersModel::resetModel()
     m_model.setColumnCount(m_columns);
 
     //Initialize board coordinates and 'black' and 'white fields
-    for(int col = 0 ; col < m_columns; col++) {
-        char column = 'A' + col;
-        for(int row = 0; row < m_rows; row++) {
+    for(int row = m_rows - 1; row >= 0; row--) {
+        for(int col = 0 ; col < m_columns; col++) {
+            char column = 'A' + col;
+
             qDebug() << "column: " << column << "row: " << row + 1;
 
             QStandardItem* item = new QStandardItem();
