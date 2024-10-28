@@ -51,21 +51,21 @@ Item {
                     opacity: 0
                     onClicked: {
                         //console.log("model index: ", modelIndex)
-                        console.log("index: ", index)
-                        console.log("CoordinatesRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.CoordinatesRole))
-                        //console.log("IsPlayableRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsPlayableRole))
-                        //console.log("PieceRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole))
-                        //console.log("RangeRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.RangeRole))
-                        //console.log("CaptureAvailableRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.CaptureAvailableRole))
-                        //console.log("MultiCaptureRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.MultiCaptureRole))
-                        //console.log("IsSelectedRole: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.IsSelectedRole))
+                        //console.log("index: ", index)
+                        //console.log("CoordinatesRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
+                        //console.log("IsPlayableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
+                        //console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
+                        //console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
+                        //console.log("CaptureAvailableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
+                        //console.log("MultiCaptureRole: ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
+                        //console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
                     }
                 }
 
                 Piece {
-                    property var pieceStatus: checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.PieceRole) ;
-                    visible: checkersModelInstance.isPiecePresent(getFieldIndex(row, column))
-                    color: checkersModelInstance.getPieceColor(getFieldIndex(row, column)) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
+                    property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole) ;
+                    visible: checkersModelInstance.isPiecePresent(modelIndex)
+                    color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
 
                     Component.onCompleted: {
                         //console.log("piece on completed: ", pieceStatus)
@@ -75,7 +75,7 @@ Item {
 
                 Component.onCompleted: {
                     //console.log("Rectangle idx: ", index, "column: ", column, "row: ", row)
-                    //console.log("role: ", checkersModelInstance.data(getFieldIndex(row, column), CheckersModel.isPlayableRole))
+                    //console.log("role: ", checkersModelInstance.data(modelIndex, CheckersModel.isPlayableRole))
                 }
             }
         }
