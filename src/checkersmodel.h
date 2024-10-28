@@ -60,6 +60,9 @@ public:
     Q_INVOKABLE void setTurn();
     Q_INVOKABLE Player getTurn();
 
+    Q_INVOKABLE void deselectAllFields();
+    Q_INVOKABLE void selectField(QModelIndex idx, bool selected = true);
+
 signals:
 
 private:
@@ -81,7 +84,7 @@ private:
     void setPiece(QModelIndex idx, Player player, Type type = Type::man); // function for initialization for board area with pieces
     void setEmptyField(QModelIndex idx);                                  // <---as in the function name
 
-    void selectField(QModelIndex idx, bool selected = true);
+
 };
 
 #endif // CHECKERSMODEL_H

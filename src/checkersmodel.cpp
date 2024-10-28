@@ -84,9 +84,10 @@ void CheckersModel::resetModel()
             setData(idx, QVariant::fromValue(playable), IsPlayableRole);
 
             //set all fields as not selected
-            CheckersModel::selectField(idx, false);
+            //CheckersModel::selectField(idx, false);
         }
     }
+    CheckersModel::deselectAllFields();
     // place the pieces on the board
     CheckersModel::initializePieces();
 }
@@ -263,6 +264,21 @@ CheckersModel::Player CheckersModel::getTurn()
     return m_turn;
 }
 
+void CheckersModel::selectField(QModelIndex idx, bool selected)
+{
+    setData(idx, QVariant::fromValue(selected), IsSelectedRole);
+}
+
+void CheckersModel::deselectAllFields()
+{
+    for(int i = 0; i < m_columns; i++) {
+        for(int j = 0; j < m_rows; j++) {
+            QModelIndex index = m_model.index(j, i);
+            m_model.setData(index, false, IsSelectedRole);
+        }
+    }
+}
+
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {
@@ -362,7 +378,3 @@ void CheckersModel::setEmptyField(QModelIndex idx)
     setData(idx, QVariant::fromValue(piece), PieceRole);
 }
 
-void CheckersModel::selectField(QModelIndex idx, bool selected)
-{
-    setData(idx, QVariant::fromValue(selected), IsSelectedRole);
-}

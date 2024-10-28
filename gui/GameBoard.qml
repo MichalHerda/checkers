@@ -25,8 +25,8 @@ Item {
                 id: rec
                 width: parent.width / checkersModelInstance.getColumnsNo()
                 height: parent.height / checkersModelInstance.getRowsNo()
-                border.width: rec.width * 0.025
-                border.color: CheckersTheme.fieldBorderColor
+                border.width: !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole) ? rec.width * 0.025 : rec.width * 0.5
+                border.color: !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole) ? CheckersTheme.fieldBorderColor : CheckersTheme.selectedBorderColor
 
                 //property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
                 property int row: checkersModelInstance.getRowsNo() - 1 - Math.floor(index / checkersModelInstance.getColumnsNo())
@@ -50,6 +50,22 @@ Item {
                     anchors.fill: parent
                     opacity: 0
                     onClicked: {
+                        checkersModelInstance.deselectAllFields()
+                        checkersModelInstance.setData(modelIndex, !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole), CheckersModel.IsSelectedRole)
+
+                        /*
+                        if(checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole)) {
+                                                                                            rec.border.color = CheckersTheme.selectedBorderColor
+                                                                                            rec.border.width = rec.width * 0.05
+                        }
+                        else {
+                                                                                            rec.border.color = CheckersTheme.fieldBorderColor
+                                                                                            rec.border.width = rec.width * 0.025
+                        }
+                        */
+
+
+
                         //console.log("model index: ", modelIndex)
                         //console.log("index: ", index)
                         //console.log("CoordinatesRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
