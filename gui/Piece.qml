@@ -1,10 +1,15 @@
 import QtQuick 2.15
 
 Rectangle {
-    anchors.centerIn: parent
-    width: parent.width * 0.75
-    height: parent.height * 0.75
+    id: piece
+    anchors.centerIn: parent    
+    height: parent.height * 0.7
+    width: height
     radius: 180
     color: "black"
+    border {
+        color: "gold"
+        width: piece.width * 0.025
+    }
 }
 

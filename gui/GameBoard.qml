@@ -25,7 +25,7 @@ Item {
                 id: rec
                 width: parent.width / checkersModelInstance.getColumnsNo()
                 height: parent.height / checkersModelInstance.getRowsNo()
-                border.width: !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole) ? rec.width * 0.025 : rec.width * 0.5
+                border.width: !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole) ? rec.width * 0.025 : rec.width * 0.08
                 border.color: !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole) ? CheckersTheme.fieldBorderColor : CheckersTheme.selectedBorderColor
 
                 //property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
