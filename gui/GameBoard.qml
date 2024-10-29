@@ -52,21 +52,11 @@ Item {
                     opacity: 0
                     onClicked: {
                         checkersModelInstance.deselectAllFields()
+                        console.log("1.model index: ", modelIndex)
                         checkersModelInstance.setData(modelIndex, !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole), CheckersModel.IsSelectedRole)
+                        console.log("2.model index: ", modelIndex)
                         checkersModelInstance.itemChanged(item)
-
-                        /*
-                        if(checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole)) {
-                                                                                            rec.border.color = CheckersTheme.selectedBorderColor
-                                                                                            rec.border.width = rec.width * 0.05
-                        }
-                        else {
-                                                                                            rec.border.color = CheckersTheme.fieldBorderColor
-                                                                                            rec.border.width = rec.width * 0.025
-                        }
-                        */
-
-
+                        console.log("3.model index: ", modelIndex)
 
                         //console.log("model index: ", modelIndex)
                         //console.log("index: ", index)
@@ -102,7 +92,7 @@ Item {
         }
         Connections {
             target: checkersModelInstance
-            onItemChanged: {
+            function onItemChanged() {
                 console.log("ITEM CHANGED")
                 let currentModel = rep.model;
                 rep.model = null;
