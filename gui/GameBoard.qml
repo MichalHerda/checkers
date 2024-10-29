@@ -55,18 +55,18 @@ Item {
                         console.log("1.model index: ", modelIndex)
                         checkersModelInstance.setData(modelIndex, !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole), CheckersModel.IsSelectedRole)
                         console.log("2.model index: ", modelIndex)
-                        checkersModelInstance.itemChanged(item)
-                        console.log("3.model index: ", modelIndex)
+                        //checkersModelInstance.itemChanged(item)
+                        //console.log("3.model index: ", modelIndex)              // TODO: why modelIndex dissappears here ??????????????????????????????????????????????????
 
-                        //console.log("model index: ", modelIndex)
-                        //console.log("index: ", index)
-                        //console.log("CoordinatesRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
-                        //console.log("IsPlayableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
-                        //console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
-                        //console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
+                        console.log("model index: ", modelIndex)
+                        console.log("index: ", index)
+                        console.log("CoordinatesRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
+                        console.log("IsPlayableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
+                        console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
+                        console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
                         //console.log("CaptureAvailableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
                         //console.log("MultiCaptureRole: ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
-                        //console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
+                        console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
                     }
                 }
 
@@ -92,7 +92,7 @@ Item {
         }
         Connections {
             target: checkersModelInstance
-            function onItemChanged() {
+            function onItemChanged(item) {
                 console.log("ITEM CHANGED")
                 let currentModel = rep.model;
                 rep.model = null;

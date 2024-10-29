@@ -85,7 +85,7 @@ private:
     void setPiece(QModelIndex idx, Player player, Type type = Type::man); // function for initialization for board area with pieces
     void setEmptyField(QModelIndex idx);                                  // <---as in the function name
 
-
+    void setAllPiecesRange();
 };
 
 #endif // CHECKERSMODEL_H

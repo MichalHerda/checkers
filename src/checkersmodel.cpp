@@ -90,6 +90,8 @@ void CheckersModel::resetModel()
     CheckersModel::deselectAllFields();
     // place the pieces on the board
     CheckersModel::initializePieces();
+    // set all pieces range:
+    CheckersModel::setAllPiecesRange();
 }
 
 bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -231,7 +233,7 @@ void CheckersModel::printModel() {
             QVariant piece = m_model.data(index, CheckersRoles::PieceRole);
             QVariant selected = m_model.data(index, CheckersRoles::IsSelectedRole);
             qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Coordinate: " << coordinate << ", Playable: " << playable
-                     << "Piece:" << piece << "Selected: " << selected;
+                     << "Piece:" << piece << "Selected: " << selected << "Index: " << index;
         }
     }
 }
@@ -381,5 +383,17 @@ void CheckersModel::setEmptyField(QModelIndex idx)
     QPair<Player, Type> piece(player, type);
 
     setData(idx, QVariant::fromValue(piece), PieceRole);
+}
+
+void CheckersModel::setAllPiecesRange()
+{
+    for(int row = 0; row < m_rows; row++) {
+        for(int col = 0; col < m_columns; col++) {
+            QModelIndex idx = m_model.index(row, col);
+            int rowNo = idx.row();
+            int colNo = idx.column();
+            qDebug() << "setAllPiecesRange. idx: " << idx << "row: " << rowNo << "column: "<< colNo;
+        }
+    }
 }
 
