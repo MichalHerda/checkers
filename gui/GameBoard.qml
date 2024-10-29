@@ -33,6 +33,7 @@ Item {
 
                 property int column: index % checkersModelInstance.getColumnsNo()
                 property var modelIndex: getFieldIndex(row, column)
+                property var item: checkersModelInstance.getItem(modelIndex)
 
                 color: checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole) === true  ?
                        CheckersTheme.playableFieldColor :
@@ -52,6 +53,7 @@ Item {
                     onClicked: {
                         checkersModelInstance.deselectAllFields()
                         checkersModelInstance.setData(modelIndex, !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole), CheckersModel.IsSelectedRole)
+                        checkersModelInstance.itemChanged(item)
 
                         /*
                         if(checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole)) {
@@ -78,6 +80,8 @@ Item {
                     }
                 }
 
+
+
                 Piece {
                     property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole) ;
                     visible: checkersModelInstance.isPiecePresent(modelIndex)
@@ -93,6 +97,16 @@ Item {
                     //console.log("Rectangle idx: ", index, "column: ", column, "row: ", row)
                     //console.log("role: ", checkersModelInstance.data(modelIndex, CheckersModel.isPlayableRole))
                 }
+            }
+
+        }
+        Connections {
+            target: checkersModelInstance
+            onItemChanged: {
+                console.log("ITEM CHANGED")
+                let currentModel = rep.model;
+                rep.model = null;
+                rep.model = currentModel;
             }
         }
     }

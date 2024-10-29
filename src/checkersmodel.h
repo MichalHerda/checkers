@@ -59,6 +59,7 @@ public:
     Q_INVOKABLE QModelIndex getIndex(int row, int column);
     Q_INVOKABLE void setTurn();
     Q_INVOKABLE Player getTurn();
+    Q_INVOKABLE QStandardItem* getItem(QModelIndex index);
 
     Q_INVOKABLE void deselectAllFields();
     Q_INVOKABLE void selectField(QModelIndex idx, bool selected = true);

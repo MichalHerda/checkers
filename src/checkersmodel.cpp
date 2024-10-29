@@ -264,6 +264,11 @@ CheckersModel::Player CheckersModel::getTurn()
     return m_turn;
 }
 
+QStandardItem* CheckersModel::getItem(QModelIndex index)
+{
+    return m_model.itemFromIndex(index);
+}
+
 void CheckersModel::selectField(QModelIndex idx, bool selected)
 {
     setData(idx, QVariant::fromValue(selected), IsSelectedRole);
