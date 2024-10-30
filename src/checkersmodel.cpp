@@ -49,14 +49,14 @@ bool CheckersModel::getPieceColor(const QModelIndex &index)                     
     return player == CheckersModel::Player::white;
 }
 
-bool CheckersModel::getPieceType(const QModelIndex &index)                                      //return true: type == man
-{                                                                                               //      false: type == king
+bool CheckersModel::getPieceType(const QModelIndex &index)                                      //return true: type == king
+{                                                                                               //      false: type == man
     auto pieceRole = data(index, PieceRole);
     auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
 
     CheckersModel::Type type = piecePair.second;
 
-    return type == CheckersModel::Type::man;
+    return type == CheckersModel::Type::king;
 }
 
 int CheckersModel::getColumnsNo()
@@ -405,30 +405,37 @@ void CheckersModel::setAllPiecesRange()
             qDebug() << "setAllPiecesRange. idx: " << idx << "row: " << rowNo << "column: "<< colNo;
 
             if(isPiecePresent(idx)) {
-                if(getPieceColor(idx)) {
-                    qDebug() << "white piece presence";
-                    if(getPieceType(idx)) {
-                        qDebug() << "man";
-                    }
-                    else {
-                        qDebug() << "king";
-                    }
+                bool isWhite = getPieceColor(idx);
+                bool isKing = getPieceType(idx);
 
+                QList <QPair <char, int> > possibleMoves;
+
+                if(isKing) {
+                    possibleMoves = getKingMoves(idx, isWhite);
                 }
-                if(!getPieceColor(idx)) {
-                    qDebug() << "black piece presence";
-                    if(getPieceType(idx)) {
-                        qDebug() << "man";
-                    }
-                    else {
-                        qDebug() << "king";
-                    }
+                else {
+                    possibleMoves = getManMoves(idx, isWhite);
                 }
+
+                setData(idx, QVariant::fromValue(possibleMoves), RangeRole);
             }
             else {
                 qDebug() << "no piece";
+                setData(idx, QVariantList(), RangeRole);
             }
         }
     }
+}
+
+QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
+{
+    QList <QPair <char, int> > possibleMoves {};
+    return possibleMoves;
+}
+
+QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, bool isWhite)
+{
+    QList <QPair <char, int> > possibleMoves {};
+    return possibleMoves;
 }
 

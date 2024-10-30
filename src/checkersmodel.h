@@ -87,6 +87,8 @@ private:
     void setEmptyField(QModelIndex idx);                                  // <---as in the function name
 
     void setAllPiecesRange();
+    QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
+    QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
 };
 
 #endif // CHECKERSMODEL_H
