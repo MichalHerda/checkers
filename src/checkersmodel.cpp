@@ -34,8 +34,8 @@ bool CheckersModel::isPiecePresent(const QModelIndex &index)
     return type != CheckersModel::Type::null;
 }
 
-bool CheckersModel::getPieceColor(const QModelIndex &index)
-{
+bool CheckersModel::getPieceColor(const QModelIndex &index)                                     //return true: player == white
+{                                                                                               //      false: player == black
     auto pieceRole = data(index, PieceRole);
     //qDebug() << "GetPieceColor function, pieceRole: " << pieceRole;
 
@@ -47,6 +47,16 @@ bool CheckersModel::getPieceColor(const QModelIndex &index)
     //qDebug() << "isPiecePresent function, player:" << player;
 
     return player == CheckersModel::Player::white;
+}
+
+bool CheckersModel::getPieceType(const QModelIndex &index)                                      //return true: type == man
+{                                                                                               //      false: type == king
+    auto pieceRole = data(index, PieceRole);
+    auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
+
+    CheckersModel::Type type = piecePair.second;
+
+    return type == CheckersModel::Type::man;
 }
 
 int CheckersModel::getColumnsNo()
@@ -393,6 +403,31 @@ void CheckersModel::setAllPiecesRange()
             int rowNo = idx.row();
             int colNo = idx.column();
             qDebug() << "setAllPiecesRange. idx: " << idx << "row: " << rowNo << "column: "<< colNo;
+
+            if(isPiecePresent(idx)) {
+                if(getPieceColor(idx)) {
+                    qDebug() << "white piece presence";
+                    if(getPieceType(idx)) {
+                        qDebug() << "man";
+                    }
+                    else {
+                        qDebug() << "king";
+                    }
+
+                }
+                if(!getPieceColor(idx)) {
+                    qDebug() << "black piece presence";
+                    if(getPieceType(idx)) {
+                        qDebug() << "man";
+                    }
+                    else {
+                        qDebug() << "king";
+                    }
+                }
+            }
+            else {
+                qDebug() << "no piece";
+            }
         }
     }
 }
