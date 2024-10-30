@@ -427,15 +427,36 @@ void CheckersModel::setAllPiecesRange()
     }
 }
 
-QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
+QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &idx, bool isWhite)
 {
     QList <QPair <char, int> > possibleMoves {};
+
+    //int rowNo = idx.row();
+    //int colNo = idx.column();
+
     return possibleMoves;
 }
 
-QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, bool isWhite)
+QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &idx, bool isWhite)
 {
     QList <QPair <char, int> > possibleMoves {};
+
+    int rowNo = idx.row();
+    int colNo = idx.column();
+    int direction = isWhite ? 1 : -1;
+
+    if( (colNo != 0) && (colNo != (m_columns -1)) ) {
+        QModelIndex checkIdx1 = getIndex(rowNo + direction, colNo - 1);
+        QModelIndex checkIdx2 = getIndex(rowNo + direction, colNo + 1);
+        if(!isPiecePresent(checkIdx1)) {
+            //QList <QPair <char, int> > move = data(checkIdx1, CoordinatesRole);
+            //possibleMoves.push_back(move);
+        }
+        if(!isPiecePresent(checkIdx2)) {
+
+        }
+    }
+
     return possibleMoves;
 }
 
