@@ -241,9 +241,10 @@ void CheckersModel::printModel() {
             QVariant coordinate = m_model.data(index, CheckersRoles::CoordinatesRole);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             QVariant piece = m_model.data(index, CheckersRoles::PieceRole);
+            QVariant range = m_model.data(index, CheckersModel::RangeRole);
             QVariant selected = m_model.data(index, CheckersRoles::IsSelectedRole);
             qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Coordinate: " << coordinate << ", Playable: " << playable
-                     << "Piece:" << piece << "Selected: " << selected << "Index: " << index;
+                     << "Piece:" << piece << "Range: " << range << "Selected: " << selected << "Index: " << index;
         }
     }
 }
@@ -449,11 +450,28 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &idx, bo
         QModelIndex checkIdx1 = getIndex(rowNo + direction, colNo - 1);
         QModelIndex checkIdx2 = getIndex(rowNo + direction, colNo + 1);
         if(!isPiecePresent(checkIdx1)) {
-            //QList <QPair <char, int> > move = data(checkIdx1, CoordinatesRole);
-            //possibleMoves.push_back(move);
+            QVariant move = data(checkIdx1, CoordinatesRole);
+            possibleMoves.push_back(move.value<QPair<char, int>>());
         }
         if(!isPiecePresent(checkIdx2)) {
+            QVariant move = data(checkIdx2, CoordinatesRole);
+            possibleMoves.push_back(move.value<QPair<char, int>>());
+        }
+    }
 
+    if( colNo == 0) {
+        QModelIndex checkIdx = getIndex(rowNo + direction, colNo + 1);
+        if(!isPiecePresent(checkIdx)) {
+            QVariant move = data(checkIdx, CoordinatesRole);
+            possibleMoves.push_back(move.value<QPair<char, int>>());
+        }
+    }
+
+    if( colNo == ( m_columns -1) ) {
+        QModelIndex checkIdx = getIndex(rowNo + direction, colNo - 1);
+        if(!isPiecePresent(checkIdx)) {
+            QVariant move = data(checkIdx, CoordinatesRole);
+            possibleMoves.push_back(move.value<QPair<char, int>>());
         }
     }
 
