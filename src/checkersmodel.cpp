@@ -399,9 +399,9 @@ void CheckersModel::setAllPiecesRange()
     for(int row = 0; row < m_rows; row++) {
         for(int col = 0; col < m_columns; col++) {
             QModelIndex index = m_model.index(row, col);
-            int rowNo = index.row();
-            int colNo = index.column();
-            qDebug() << "setAllPiecesRange. index: " << index << "row: " << rowNo << "column: "<< colNo;
+            //int rowNo = index.row();
+            //int colNo = index.column();
+            //qDebug() << "setAllPiecesRange. index: " << index << "row: " << rowNo << "column: "<< colNo;
 
             if(isPiecePresent(index)) {
                 bool isWhite = getPieceColor(index);
@@ -419,7 +419,7 @@ void CheckersModel::setAllPiecesRange()
                 setData(index, QVariant::fromValue(possibleMoves), RangeRole);
             }
             else {
-                qDebug() << "no piece";
+                //qDebug() << "no piece";
                 setData(index, QVariantList(), RangeRole);
             }
         }

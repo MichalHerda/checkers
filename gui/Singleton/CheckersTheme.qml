@@ -11,4 +11,6 @@ Item {
     property color selectedBorderColor: "red"
     property color blackPlayerColor: "black"
     property color whitePlayerColor: "bisque"
+    property color blackPieceBorderColor: "gold"
+    property color whitePieceBorderColor: "red"
 }

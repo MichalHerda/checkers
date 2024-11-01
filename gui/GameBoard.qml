@@ -76,9 +76,19 @@ Item {
                     property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole) ;
                     visible: checkersModelInstance.isPiecePresent(modelIndex)
                     color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
+                    border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
 
                     Component.onCompleted: {
                         //console.log("piece on completed: ", pieceStatus)
+                    }
+
+                    MouseArea {
+                        id: pieceMouseArea
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log("piece clicked")
+
+                        }
                     }
                 }
 
