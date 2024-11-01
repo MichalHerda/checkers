@@ -4,7 +4,7 @@ import Checkers 1.0
 import checkers.model
 
 Item {
-    id: gameBoard
+    id: root
 
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
@@ -13,6 +13,7 @@ Item {
     }
 
     Grid {
+        id: gameBoard
         anchors.fill: parent
         columns: checkersModelInstance.getColumnsNo()
         rows: checkersModelInstance.getRowsNo()
@@ -73,21 +74,38 @@ Item {
 
 
                 Piece {
-                    property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole) ;
+                    id: piece
+                    property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
+                    property var pieceRange: checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
                     visible: checkersModelInstance.isPiecePresent(modelIndex)
                     color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
                     border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
-
+                    x: parent.width * 0.15
+                    y: parent.width * 0.15
                     Component.onCompleted: {
                         //console.log("piece on completed: ", pieceStatus)
                     }
 
+                    Drag.active: pieceMouseArea.drag.active
+
                     MouseArea {
                         id: pieceMouseArea
                         anchors.fill: parent
+                        drag.target: piece
+                        drag.axis: Drag.XAndYAxis
+                        //drag.minimumX: 0
+                        drag.maximumX: gameBoard.width - piece.width
+                        drag.maximumY: gameBoard.height - piece.height
                         onClicked: {
-                            console.log("piece clicked")
+                            console.log("piece clicked. its range: ", piece.pieceRange)
 
+                        }
+                        onPressed: {
+                            console.log("pressed")
+
+                        }
+                        onReleased: {
+                            console.log("released")
                         }
                     }
                 }
