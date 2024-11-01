@@ -63,7 +63,7 @@ public:
     Q_INVOKABLE QStandardItem* getItem(QModelIndex index);
 
     Q_INVOKABLE void deselectAllFields();
-    Q_INVOKABLE void selectField(QModelIndex idx, bool selected = true);
+    Q_INVOKABLE void selectField(QModelIndex index, bool selected = true);
 
 signals:
 
@@ -83,12 +83,12 @@ private:
     void setPieceRows(int row);                                           // set custom rows number for piece (on game start)
 
     void initializePieces();
-    void setPiece(QModelIndex idx, Player player, Type type = Type::man); // function for initialization for board area with pieces
-    void setEmptyField(QModelIndex idx);                                  // <---as in the function name
+    void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
+    void setEmptyField(QModelIndex index);                                  // <---as in the function name
 
     void setAllPiecesRange();
-    QList <QPair <char, int> > getKingMoves(const QModelIndex &idx, bool isWhite);
-    QList <QPair <char, int> > getManMoves(const QModelIndex &idx, bool isWhite);
+    QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
+    QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
 };
 
 #endif // CHECKERSMODEL_H

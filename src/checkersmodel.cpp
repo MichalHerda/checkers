@@ -24,11 +24,9 @@ bool CheckersModel::isPiecePresent(const QModelIndex &index)
     auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
     //qDebug() << "isPiecePresent function, piecePair: " << piecePair;
 
-    CheckersModel::Player player = piecePair.first;
     CheckersModel::Type type = piecePair.second;
 
     //qDebug() << "isPiecePresent function, player:" << player;
-    //qDebug() << "isPiecePresent function, type:" << type;
 
     //return player != CheckersModel::Type::null;
     return type != CheckersModel::Type::null;
@@ -85,16 +83,16 @@ void CheckersModel::resetModel()
             qDebug()<<"item: " << item;
             m_model.setItem(row, col, item);
 
-            QModelIndex idx = m_model.index(row, col);
-            qDebug() << "index got: " << idx;
+            QModelIndex index = m_model.index(row, col);
+            qDebug() << "index got: " << index;
             QPair<char, int> coordinates(column, row + 1);
             bool playable = (col + row) % 2 == 0;
 
-            setData(idx, QVariant::fromValue(coordinates), CoordinatesRole);
-            setData(idx, QVariant::fromValue(playable), IsPlayableRole);
+            setData(index, QVariant::fromValue(coordinates), CoordinatesRole);
+            setData(index, QVariant::fromValue(playable), IsPlayableRole);
 
             //set all fields as not selected
-            //CheckersModel::selectField(idx, false);
+            //CheckersModel::selectField(index, false);
         }
     }
     CheckersModel::deselectAllFields();
@@ -282,9 +280,9 @@ QStandardItem* CheckersModel::getItem(QModelIndex index)
     return m_model.itemFromIndex(index);
 }
 
-void CheckersModel::selectField(QModelIndex idx, bool selected)
+void CheckersModel::selectField(QModelIndex index, bool selected)
 {
-    setData(idx, QVariant::fromValue(selected), IsSelectedRole);
+    setData(index, QVariant::fromValue(selected), IsSelectedRole);
 }
 
 void CheckersModel::deselectAllFields()
@@ -376,101 +374,101 @@ void CheckersModel::initializePieces()
     }
 }
 
-void CheckersModel::setPiece(QModelIndex idx, Player player, Type type)
+void CheckersModel::setPiece(QModelIndex index, Player player, Type type)
 {
     Player playerToSet = player;
     Type typeToSet = type;
 
     QPair<Player, Type> piece(playerToSet, typeToSet);
 
-    setData(idx, QVariant::fromValue(piece), PieceRole);
+    setData(index, QVariant::fromValue(piece), PieceRole);
 }
 
-void CheckersModel::setEmptyField(QModelIndex idx)
+void CheckersModel::setEmptyField(QModelIndex index)
 {
     Player player = Player::null;
     Type type = Type::null;
 
     QPair<Player, Type> piece(player, type);
 
-    setData(idx, QVariant::fromValue(piece), PieceRole);
+    setData(index, QVariant::fromValue(piece), PieceRole);
 }
 
 void CheckersModel::setAllPiecesRange()
 {
     for(int row = 0; row < m_rows; row++) {
         for(int col = 0; col < m_columns; col++) {
-            QModelIndex idx = m_model.index(row, col);
-            int rowNo = idx.row();
-            int colNo = idx.column();
-            qDebug() << "setAllPiecesRange. idx: " << idx << "row: " << rowNo << "column: "<< colNo;
+            QModelIndex index = m_model.index(row, col);
+            int rowNo = index.row();
+            int colNo = index.column();
+            qDebug() << "setAllPiecesRange. index: " << index << "row: " << rowNo << "column: "<< colNo;
 
-            if(isPiecePresent(idx)) {
-                bool isWhite = getPieceColor(idx);
-                bool isKing = getPieceType(idx);
+            if(isPiecePresent(index)) {
+                bool isWhite = getPieceColor(index);
+                bool isKing = getPieceType(index);
 
                 QList <QPair <char, int> > possibleMoves;
 
                 if(isKing) {
-                    possibleMoves = getKingMoves(idx, isWhite);
+                    possibleMoves = getKingMoves(index, isWhite);
                 }
                 else {
-                    possibleMoves = getManMoves(idx, isWhite);
+                    possibleMoves = getManMoves(index, isWhite);
                 }
 
-                setData(idx, QVariant::fromValue(possibleMoves), RangeRole);
+                setData(index, QVariant::fromValue(possibleMoves), RangeRole);
             }
             else {
                 qDebug() << "no piece";
-                setData(idx, QVariantList(), RangeRole);
+                setData(index, QVariantList(), RangeRole);
             }
         }
     }
 }
 
-QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &idx, bool isWhite)
+QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
 {
     QList <QPair <char, int> > possibleMoves {};
 
-    //int rowNo = idx.row();
-    //int colNo = idx.column();
+    //int rowNo = index.row();
+    //int colNo = index.column();
 
     return possibleMoves;
 }
 
-QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &idx, bool isWhite)
+QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, bool isWhite)
 {
     QList <QPair <char, int> > possibleMoves {};
 
-    int rowNo = idx.row();
-    int colNo = idx.column();
+    int rowNo = index.row();
+    int colNo = index.column();
     int direction = isWhite ? 1 : -1;
 
     if( (colNo != 0) && (colNo != (m_columns -1)) ) {
-        QModelIndex checkIdx1 = getIndex(rowNo + direction, colNo - 1);
-        QModelIndex checkIdx2 = getIndex(rowNo + direction, colNo + 1);
-        if(!isPiecePresent(checkIdx1)) {
-            QVariant move = data(checkIdx1, CoordinatesRole);
+        QModelIndex checkindex1 = getIndex(rowNo + direction, colNo - 1);
+        QModelIndex checkindex2 = getIndex(rowNo + direction, colNo + 1);
+        if(!isPiecePresent(checkindex1)) {
+            QVariant move = data(checkindex1, CoordinatesRole);
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
-        if(!isPiecePresent(checkIdx2)) {
-            QVariant move = data(checkIdx2, CoordinatesRole);
+        if(!isPiecePresent(checkindex2)) {
+            QVariant move = data(checkindex2, CoordinatesRole);
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
     }
 
     if( colNo == 0) {
-        QModelIndex checkIdx = getIndex(rowNo + direction, colNo + 1);
-        if(!isPiecePresent(checkIdx)) {
-            QVariant move = data(checkIdx, CoordinatesRole);
+        QModelIndex checkindex = getIndex(rowNo + direction, colNo + 1);
+        if(!isPiecePresent(checkindex)) {
+            QVariant move = data(checkindex, CoordinatesRole);
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
     }
 
     if( colNo == ( m_columns -1) ) {
-        QModelIndex checkIdx = getIndex(rowNo + direction, colNo - 1);
-        if(!isPiecePresent(checkIdx)) {
-            QVariant move = data(checkIdx, CoordinatesRole);
+        QModelIndex checkindex = getIndex(rowNo + direction, colNo - 1);
+        if(!isPiecePresent(checkindex)) {
+            QVariant move = data(checkindex, CoordinatesRole);
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
     }
