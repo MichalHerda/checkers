@@ -100,13 +100,19 @@ Item {
                 property int column: index % checkersModelInstance.getColumnsNo()
                 property var modelIndex: getFieldIndex(row, column)
 
+                property double fieldWidth:  parent.width / checkersModelInstance.getColumnsNo()
+                property double fieldHeight:  parent.height / checkersModelInstance.getColumnsNo()
+
+                property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
+                property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
+
                 property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
                 property var pieceRange: checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
 
-                width: parent.width / checkersModelInstance.getColumnsNo()
-                height: parent.height / checkersModelInstance.getRowsNo()
-                x: column * width
-                y: row * height
+                width: pieceWidth
+                height: pieceHeight
+                x: column * fieldWidth + (fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
+                y: row * fieldHeight + (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
 
                 visible: checkersModelInstance.isPiecePresent(modelIndex)
                 color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor

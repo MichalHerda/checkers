@@ -13,4 +13,6 @@ Item {
     property color whitePlayerColor: "bisque"
     property color blackPieceBorderColor: "gold"
     property color whitePieceBorderColor: "red"
+
+    property double pieceDimensionModificator: 0.75
 }
