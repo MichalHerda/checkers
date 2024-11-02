@@ -4,7 +4,7 @@ import Checkers 1.0
 import checkers.model
 
 Item {
-    id: root
+    id: root    
 
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
@@ -29,9 +29,9 @@ Item {
                 border.width: !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole) ? rec.width * 0.025 : rec.width * 0.08
                 border.color: !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole) ? CheckersTheme.fieldBorderColor : CheckersTheme.selectedBorderColor
 
-                //property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
+                property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
 
-                property int row: checkersModelInstance.getRowsNo() - 1 - Math.floor(index / checkersModelInstance.getColumnsNo())
+                //property int row: checkersModelInstance.getRowsNo() - 1 - Math.floor(index / checkersModelInstance.getColumnsNo())
                 property int column: index % checkersModelInstance.getColumnsNo()
                 property var modelIndex: getFieldIndex(row, column)
                 property var item: checkersModelInstance.getItem(modelIndex)
@@ -96,7 +96,9 @@ Item {
             Piece {
                 id: piece
 
-                property int row: checkersModelInstance.getRowsNo() - 1 - Math.floor(index / checkersModelInstance.getColumnsNo())
+                //property int row: checkersModelInstance.getRowsNo() - 1 - Math.floor(index / checkersModelInstance.getColumnsNo())
+
+                property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
                 property int column: index % checkersModelInstance.getColumnsNo()
                 property var modelIndex: getFieldIndex(row, column)
 
@@ -119,7 +121,13 @@ Item {
                 border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
 
                 Component.onCompleted: {
-                    //console.log("piece on completed: ", pieceStatus)
+                    console.log("**************************************************************************************")
+                    console.log("INDEX: ", index)
+                    console.log("piece on completed: ", pieceStatus)
+                    console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
+                    console.log("playable: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
+                    console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
+                    console.log("**************************************************************************************")
                 }
 
                 Drag.active: pieceMouseArea.drag.active
@@ -133,6 +141,7 @@ Item {
                     drag.maximumX: gameBoard.width - piece.width
                     drag.maximumY: gameBoard.height - piece.height
                     onClicked: {
+                        console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
                         console.log("piece clicked. its range: ", piece.pieceRange)
 
                     }
