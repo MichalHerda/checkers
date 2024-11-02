@@ -4,7 +4,7 @@ import Checkers 1.0
 import checkers.model
 
 Item {
-    id: root    
+    id: root
 
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
