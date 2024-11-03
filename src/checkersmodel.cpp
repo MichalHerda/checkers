@@ -73,7 +73,7 @@ void CheckersModel::resetModel()
     m_model.setColumnCount(m_columns);
 
     //Initialize board coordinates and 'black' and 'white fields
-    for(int row = m_rows - 1; row >= 0; row--) {
+    for(int row = 0; row < m_rows; row++) {
         for(int col = 0 ; col < m_columns; col++) {
             char column = 'A' + col;
 
@@ -86,7 +86,7 @@ void CheckersModel::resetModel()
             QModelIndex index = m_model.index(row, col);
             qDebug() << "index got: " << index;
             QPair<char, int> coordinates(column, row + 1);
-            bool playable = (col + row) % 2 == 0;
+            bool playable = (col + row) % 2 != 0;
 
             setData(index, QVariant::fromValue(coordinates), CoordinatesRole);
             setData(index, QVariant::fromValue(playable), IsPlayableRole);
@@ -341,7 +341,7 @@ void CheckersModel::initializePieces()
             QModelIndex index = m_model.index(row, col);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             if(playable.toBool()){
-                CheckersModel::setPiece(index, Player::white);
+                CheckersModel::setPiece(index, Player::black);
             }
             else {
                 Player player = Player::null;
@@ -358,7 +358,7 @@ void CheckersModel::initializePieces()
             QModelIndex index = m_model.index(row, col);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             if(playable.toBool()){
-                CheckersModel::setPiece(index, Player::black);
+                CheckersModel::setPiece(index, Player::white);
             }
             else {
                 CheckersModel::setEmptyField(index);
