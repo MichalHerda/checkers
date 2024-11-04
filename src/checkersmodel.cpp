@@ -73,11 +73,11 @@ void CheckersModel::resetModel()
     m_model.setColumnCount(m_columns);
 
     //Initialize board coordinates and 'black' and 'white fields
-    for(int row = 0; row < m_rows; row++) {
+    for(int row = 0, rowCoo = 8; row < m_rows; row++, rowCoo--) {
         for(int col = 0 ; col < m_columns; col++) {
             char column = 'A' + col;
 
-            qDebug() << "column: " << column << "row: " << row + 1;
+            qDebug() << "column: " << column << "row: " << row + 1 << "rowCoo: " << rowCoo;
 
             QStandardItem* item = new QStandardItem();
             qDebug()<<"item: " << item;
@@ -85,7 +85,7 @@ void CheckersModel::resetModel()
 
             QModelIndex index = m_model.index(row, col);
             qDebug() << "index got: " << index;
-            QPair<char, int> coordinates(column, row + 1);
+            QPair<char, int> coordinates(column, rowCoo);
             bool playable = (col + row) % 2 != 0;
 
             setData(index, QVariant::fromValue(coordinates), CoordinatesRole);
@@ -241,7 +241,7 @@ void CheckersModel::printModel() {
             QVariant piece = m_model.data(index, CheckersRoles::PieceRole);
             QVariant range = m_model.data(index, CheckersModel::RangeRole);
             QVariant selected = m_model.data(index, CheckersRoles::IsSelectedRole);
-            qDebug() << "Column: " << column << ", Row: " << row + 1 << ", Coordinate: " << coordinate << ", Playable: " << playable
+            qDebug() << /* "Column: " << column << ", Row: " << row + 1 << */" Coordinate: " << coordinate << ", Playable: " << playable
                      << "Piece:" << piece << "Range: " << range << "Selected: " << selected << "Index: " << index;
         }
     }
