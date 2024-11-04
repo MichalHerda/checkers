@@ -3,6 +3,11 @@ import QtQuick.Controls
 import Checkers 1.0
 import checkers.model
 
+//potrzebna jest funkcja, która na podstawie zaznaczonego pionka i na podstawie rangeRole, określi koordynaty dla pól które są w zasięgu
+//jedną z opcji jest utworzenie kolejnej roli: indexRole - ale to jest raczej dyskusyjne
+//obecnym problemem jest to, że funkcje które stworzyłem do pobrania koordynatów, pobierają je na podstawie zaznaczonego pola lub zaznaczonego pionka
+//należy rozwiązać problem, jak podać sąsiednie pola planszy do gry celem uzyskania koordynatów
+
 Item {
     id: root
 
@@ -12,8 +17,25 @@ Item {
         return checkersModelInstance.getIndex(row, column)
     }
 
-    function showCoo(piece) {
-        console.log("x: ", piece.x, "y: ", piece.y)
+    function getCoo(piece) {
+        console.log("show ", piece, "x: ", piece.x, "y: ", piece.y)
+        let coordinates = { x: piece.x, y: piece.y };
+        return coordinates;
+    }
+
+    function getAvailableFieldsCoo(modelIndex) {
+        var rangeArray = checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
+
+        if (!rangeArray || rangeArray.length === 0) {
+           console.log("No range available for modelIndex:", modelIndex);
+           return [];
+        }
+        else {
+            for(var i = 0; i < rangeArray.length; i++) {
+                console.log("range for index ", modelIndex, ": ", rangeArray)
+                console.log("rangeArray idx: ", i)
+            }
+        }
     }
 
     Grid {
@@ -56,6 +78,7 @@ Item {
                     anchors.fill: parent
                     opacity: 0
                     onClicked: {
+                    /*
                         checkersModelInstance.deselectAllFields()
                         console.log("1.model index: ", modelIndex)
                         checkersModelInstance.setData(modelIndex, !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole), CheckersModel.IsSelectedRole)
@@ -72,6 +95,8 @@ Item {
                         //console.log("CaptureAvailableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
                         //console.log("MultiCaptureRole: ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                         console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
+                    */
+                        getCoo(rec)
                     }
                 }
 
@@ -147,15 +172,18 @@ Item {
                     onClicked: {
                         console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
                         console.log("piece clicked. its range: ", piece.pieceRange)
-                        showCoo(piece)
+                        getCoo(piece)
 
                     }
                     onPressed: {
                         console.log("pressed")
+                        getCoo(piece)
+                        getAvailableFieldsCoo(modelIndex)
 
                     }
                     onReleased: {
                         console.log("released")
+                        getCoo(piece)
                     }
                 }
             }
