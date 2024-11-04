@@ -442,7 +442,7 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
 
     int rowNo = index.row();
     int colNo = index.column();
-    int direction = isWhite ? 1 : -1;
+    int direction = isWhite ? -1 : 1;
 
     if( (colNo != 0) && (colNo != (m_columns -1)) ) {
         QModelIndex checkindex1 = getIndex(rowNo + direction, colNo - 1);

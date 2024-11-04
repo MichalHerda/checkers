@@ -12,6 +12,10 @@ Item {
         return checkersModelInstance.getIndex(row, column)
     }
 
+    function showCoo(piece) {
+        console.log("x: ", piece.x, "y: ", piece.y)
+    }
+
     Grid {
         id: gameBoard
         anchors.fill: parent
@@ -122,15 +126,15 @@ Item {
 
                 Component.onCompleted: {
                     console.log("**************************************************************************************")
-                    console.log("INDEX: ", index)
+                    console.log("INDEX: ", index, "piece: ", piece)
                     console.log("piece on completed: ", pieceStatus)
-                    console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
+                    //console.log("x: ", piece.x, "y: ", piece.y)                   // coordinates somehow not initialized and not visible at the moment
                     console.log("playable: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
                     console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
                     console.log("**************************************************************************************")
                 }
 
-                Drag.active: pieceMouseArea.drag.active
+                //Drag.active: pieceMouseArea.drag.active
 
                 MouseArea {
                     id: pieceMouseArea
@@ -143,6 +147,7 @@ Item {
                     onClicked: {
                         console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
                         console.log("piece clicked. its range: ", piece.pieceRange)
+                        showCoo(piece)
 
                     }
                     onPressed: {
