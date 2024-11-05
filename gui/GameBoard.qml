@@ -38,6 +38,13 @@ Item {
         }
     }
 
+    function getAllPositions(repeater) {
+        var itemsNo = repeater.count
+        for(var i = 0; i < itemsNo; i++) {
+            console.log("item at idx ", i, "coo: x: ", repeater.itemAt(i).x, "y: ", repeater.itemAt(i).y)
+        }
+    }
+
     Grid {
         id: gameBoard
         anchors.fill: parent
@@ -96,7 +103,8 @@ Item {
                         //console.log("MultiCaptureRole: ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                         console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
                     */
-                        getCoo(rec)
+                        getAllPositions(rep)
+                        //getCoo(rec)
                     }
                 }
 
