@@ -95,7 +95,7 @@ Item {
 
                         console.log("model index: ", modelIndex)
                         console.log("index: ", index)
-                        console.log("CoordinatesRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
+                        console.log("FieldNameRole: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
                         console.log("IsPlayableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
                         console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
                         console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
@@ -163,7 +163,7 @@ Item {
                     console.log("piece on completed: ", pieceStatus)
                     //console.log("x: ", piece.x, "y: ", piece.y)                   // coordinates somehow not initialized and not visible at the moment
                     console.log("playable: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
-                    console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
+                    console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
                     console.log("**************************************************************************************")
                 }
 
@@ -178,7 +178,7 @@ Item {
                     drag.maximumX: gameBoard.width - piece.width
                     drag.maximumY: gameBoard.height - piece.height
                     onClicked: {
-                        console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.CoordinatesRole))
+                        console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
                         console.log("piece clicked. its range: ", piece.pieceRange)
                         getCoo(piece)
 

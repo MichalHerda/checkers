@@ -11,13 +11,15 @@ class CheckersModel : public QStandardItemModel
 
 public:
     enum CheckersRoles {
-        CoordinatesRole = Qt::UserRole + 1,
+        FieldNameRole = Qt::UserRole + 1,
         IsPlayableRole,
         PieceRole,
         RangeRole,
         CaptureAvailableRole,
         MultiCaptureRole,
-        IsSelectedRole
+        IsSelectedRole,
+        FieldCoordinatesRole,
+        PieceCoordinatesRole
     };
     Q_ENUM(CheckersRoles)
 

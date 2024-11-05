@@ -88,7 +88,7 @@ void CheckersModel::resetModel()
             QPair<char, int> coordinates(column, rowCoo);
             bool playable = (col + row) % 2 != 0;
 
-            setData(index, QVariant::fromValue(coordinates), CoordinatesRole);
+            setData(index, QVariant::fromValue(coordinates), FieldNameRole);
             setData(index, QVariant::fromValue(playable), IsPlayableRole);
 
             //set all fields as not selected
@@ -117,9 +117,9 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
     }
 
     switch(role) {
-        case CheckersRoles::CoordinatesRole: {
+        case CheckersRoles::FieldNameRole: {
             qDebug() << "CoordinateRole:" << value;
-            item->setData(value, CoordinatesRole);
+            item->setData(value, FieldNameRole);
             break;
         }
         case CheckersRoles::IsPlayableRole: {
@@ -150,6 +150,16 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
         case CheckersRoles::IsSelectedRole: {
             //qDebug() << "IsSelectedRole";
             item->setData(value, IsSelectedRole);
+            break;
+        }
+        case CheckersRoles::FieldCoordinatesRole: {
+            //qDebug() << "FieldCoordinatesRole";
+            item->setData(value, FieldCoordinatesRole);
+            break;
+        }
+        case CheckersRoles::PieceCoordinatesRole: {
+            //qDebug() << "PieceCoordinatesRole";
+            item->setData(value, PieceCoordinatesRole);
             break;
         }
         default: {
@@ -183,8 +193,8 @@ QVariant CheckersModel::data(const QModelIndex &index, int role) const
     }
 
     switch(role) {
-        case CheckersRoles::CoordinatesRole: {
-            return item->data(CoordinatesRole);
+        case CheckersRoles::FieldNameRole: {
+            return item->data(FieldNameRole);
         }
         case CheckersRoles::IsPlayableRole: {
             return item->data(IsPlayableRole);
@@ -203,6 +213,12 @@ QVariant CheckersModel::data(const QModelIndex &index, int role) const
         }
         case CheckersRoles::IsSelectedRole: {
             return item->data(IsSelectedRole);
+        }
+        case CheckersRoles::FieldCoordinatesRole: {
+            return item->data(FieldCoordinatesRole);
+        }
+        case CheckersRoles::PieceCoordinatesRole: {
+            return item->data(PieceCoordinatesRole);
         }
         default: {
              return QVariant();
@@ -236,7 +252,7 @@ void CheckersModel::printModel() {
         char column = 'A' + col;
         for (int row = 0; row < rowCount; row++) {
             QModelIndex index = m_model.index(row, col);
-            QVariant coordinate = m_model.data(index, CheckersRoles::CoordinatesRole);
+            QVariant coordinate = m_model.data(index, CheckersRoles::FieldNameRole);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             QVariant piece = m_model.data(index, CheckersRoles::PieceRole);
             QVariant range = m_model.data(index, CheckersModel::RangeRole);
@@ -253,7 +269,7 @@ QHash<int, QByteArray> CheckersModel::roleNames() const
     qDebug() << "roleNames called";
 
     QHash<int, QByteArray> roles;
-    roles[CoordinatesRole] = "coordinatesRole";
+    roles[FieldNameRole] = "FieldNameRole";
     roles[IsPlayableRole] = "isPlayableRole";
     roles[PieceRole] = "pieceRole";
     roles[RangeRole] = "rangeRole";
@@ -448,11 +464,11 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
         QModelIndex checkindex1 = getIndex(rowNo + direction, colNo - 1);
         QModelIndex checkindex2 = getIndex(rowNo + direction, colNo + 1);
         if(!isPiecePresent(checkindex1)) {
-            QVariant move = data(checkindex1, CoordinatesRole);
+            QVariant move = data(checkindex1, FieldNameRole);
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
         if(!isPiecePresent(checkindex2)) {
-            QVariant move = data(checkindex2, CoordinatesRole);
+            QVariant move = data(checkindex2, FieldNameRole);
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
     }
@@ -460,7 +476,7 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
     if( colNo == 0) {
         QModelIndex checkindex = getIndex(rowNo + direction, colNo + 1);
         if(!isPiecePresent(checkindex)) {
-            QVariant move = data(checkindex, CoordinatesRole);
+            QVariant move = data(checkindex, FieldNameRole);
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
     }
@@ -468,7 +484,7 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
     if( colNo == ( m_columns -1) ) {
         QModelIndex checkindex = getIndex(rowNo + direction, colNo - 1);
         if(!isPiecePresent(checkindex)) {
-            QVariant move = data(checkindex, CoordinatesRole);
+            QVariant move = data(checkindex, FieldNameRole);
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
     }
