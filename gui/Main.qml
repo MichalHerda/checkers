@@ -59,4 +59,14 @@ Window {
             console.log("rotateGameBoard: ", rotateGameBoard)
         }
     }
+
+    onWidthChanged: {
+        console.log("width changed")
+        checkersModelInstance.updateCoordinates()
+    }
+
+    onHeightChanged: {
+        console.log("height changed")
+        checkersModelInstance.updateCoordinates()
+    }
 }

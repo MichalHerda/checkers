@@ -311,6 +311,11 @@ void CheckersModel::deselectAllFields()
     }
 }
 
+void CheckersModel::updateCoordinates()
+{
+    qDebug() << "update coordinates function";
+}
+
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {

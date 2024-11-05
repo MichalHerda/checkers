@@ -42,6 +42,13 @@ public:
         Type type;
     };
 
+    struct CornersCoordinates {
+        QPoint topLeft;
+        QPoint topRight;
+        QPoint bottomLeft;
+        QPoint bottomRight;
+    };
+
     explicit CheckersModel();
 
     Q_INVOKABLE bool isPiecePresent(const QModelIndex &index);
@@ -64,8 +71,10 @@ public:
     Q_INVOKABLE Player getTurn();
     Q_INVOKABLE QStandardItem* getItem(QModelIndex index);
 
-    Q_INVOKABLE void deselectAllFields();
     Q_INVOKABLE void selectField(QModelIndex index, bool selected = true);
+    Q_INVOKABLE void deselectAllFields();
+
+    Q_INVOKABLE void updateCoordinates();
 
 signals:
 
