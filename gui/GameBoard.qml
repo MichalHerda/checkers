@@ -10,6 +10,7 @@ import checkers.model
 
 Item {
     id: root
+    property var fieldCoordinates: [{x, y}, {x, y}, {x, y}, {x, y}]
 
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
@@ -39,10 +40,37 @@ Item {
     }
 
     function getAllPositions(repeater) {
+
+        fieldCoordinates.length = 0
+
+        var fieldWidth = repeater.itemAt(1).x - repeater.itemAt(0).x
+        var fieldHeight = repeater.itemAt(checkersModelInstance.getColumnsNo()).y - repeater.itemAt(0).y
+
+        var topLeft = {x: 0, y: 0}
+        var topRight = {x: 0, y: 0}
+        var bottomLeft = {x: 0, y: 0}
+        var bottomRight = {x: 0, y: 0}
+
+        var fieldCoordinatesItem = []
+
+        console.log("fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+
         var itemsNo = repeater.count
+
         for(var i = 0; i < itemsNo; i++) {
-            console.log("item at idx ", i, "coo: x: ", repeater.itemAt(i).x, "y: ", repeater.itemAt(i).y)
+            topLeft = {x: repeater.itemAt(i).x, y: repeater.itemAt(i).y}
+            topRight = {x: repeater.itemAt(i).x + fieldWidth, y: repeater.itemAt(i).y}
+            bottomLeft = {x: repeater.itemAt(i).x, y: repeater.itemAt(i).y + fieldHeight}
+            bottomRight = {x: repeater.itemAt(i).x + fieldWidth, y: repeater.itemAt(i).y + fieldHeight}
+            //console.log("item at idx ", i, "coo: x: ", repeater.itemAt(i).x, "y: ", repeater.itemAt(i).y)
+
+            fieldCoordinatesItem = [topLeft, topRight, bottomLeft, bottomRight]
+
+            fieldCoordinates.push(fieldCoordinatesItem)
         }
+
+        console.log("fieldCoordinates array size: ", fieldCoordinates.length)
+        //console.log(fieldCoordinates)
     }
 
     Grid {
@@ -124,6 +152,18 @@ Item {
                 rep.model = currentModel;
             }
         }
+
+        onWidthChanged: {
+            console.log("width changed")
+            getAllPositions(rep)
+            //checkersModelInstance.updateCoordinates()
+        }
+
+        onHeightChanged: {
+            console.log("height changed")
+            getAllPositions(rep)
+            //checkersModelInstance.updateCoordinates()
+        }
     }
 
     Repeater {
@@ -140,7 +180,7 @@ Item {
                 property var modelIndex: getFieldIndex(row, column)
 
                 property double fieldWidth:  parent.width / checkersModelInstance.getColumnsNo()
-                property double fieldHeight:  parent.height / checkersModelInstance.getColumnsNo()
+                property double fieldHeight:  parent.height / checkersModelInstance.getRowsNo()
 
                 property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
                 property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator

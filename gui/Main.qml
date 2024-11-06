@@ -16,6 +16,8 @@ Window {
 
     GameBoard {
         id: checkersGameBoard
+        property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
+        property double fieldHeight:  checkersGameBoard.height / checkersModelInstance.getRowsNo()
         anchors.centerIn: parent
         width: parent.width * 0.5
         height: parent.height * 0.675
@@ -58,15 +60,5 @@ Window {
             root.rotateGameBoard = !root.rotateGameBoard
             console.log("rotateGameBoard: ", rotateGameBoard)
         }
-    }
-
-    onWidthChanged: {
-        console.log("width changed")
-        checkersModelInstance.updateCoordinates()
-    }
-
-    onHeightChanged: {
-        console.log("height changed")
-        checkersModelInstance.updateCoordinates()
     }
 }
