@@ -32,14 +32,14 @@ Item {
            return [];
         }
         else {
-            for(var i = 0; i < rangeArray.length; i++) {
+            for(let j = 0; j < rangeArray.length; j++) {
                 console.log("range for index ", modelIndex, ": ", rangeArray)
-                console.log("rangeArray idx: ", i)
+                console.log("rangeArray idx: ", j)
             }
         }
     }
 
-    function getAllPositions(repeater) {
+    function setFieldCoordinates(repeater) {
 
         fieldCoordinates.length = 0
 
@@ -57,7 +57,7 @@ Item {
 
         var itemsNo = repeater.count
 
-        for(var i = 0; i < itemsNo; i++) {
+        for(let i = 0; i < itemsNo; i++) {
             topLeft = {x: repeater.itemAt(i).x, y: repeater.itemAt(i).y}
             topRight = {x: repeater.itemAt(i).x + fieldWidth, y: repeater.itemAt(i).y}
             bottomLeft = {x: repeater.itemAt(i).x, y: repeater.itemAt(i).y + fieldHeight}
@@ -70,7 +70,16 @@ Item {
         }
 
         console.log("fieldCoordinates array size: ", fieldCoordinates.length)
-        //console.log(fieldCoordinates)
+        //displayCoordinates()
+    }
+
+    function displayCoordinates() {
+        for(let i = 0; i < fieldCoordinates.length; i++) {
+            console.log("item no. ", i, "topLeft:    x:", fieldCoordinates[i][0].x, "y: ", fieldCoordinates[i][0].y)
+            console.log("item no. ", i, "topRight:   x:", fieldCoordinates[i][1].x, "y: ", fieldCoordinates[i][1].y)
+            console.log("item no. ", i, "bottomLeft: x:", fieldCoordinates[i][2].x, "y: ", fieldCoordinates[i][2].y)
+            console.log("item no. ", i, "bottomLeft: x:", fieldCoordinates[i][3].x, "y: ", fieldCoordinates[i][3].y)
+        }
     }
 
     Grid {
@@ -131,7 +140,7 @@ Item {
                         //console.log("MultiCaptureRole: ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                         console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
                     */
-                        getAllPositions(rep)
+                        setFieldCoordinates(rep)
                         //getCoo(rec)
                     }
                 }
@@ -155,13 +164,13 @@ Item {
 
         onWidthChanged: {
             console.log("width changed")
-            getAllPositions(rep)
+            setFieldCoordinates(rep)
             //checkersModelInstance.updateCoordinates()
         }
 
         onHeightChanged: {
             console.log("height changed")
-            getAllPositions(rep)
+            setFieldCoordinates(rep)
             //checkersModelInstance.updateCoordinates()
         }
     }
@@ -220,7 +229,8 @@ Item {
                     onClicked: {
                         console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
                         console.log("piece clicked. its range: ", piece.pieceRange)
-                        getCoo(piece)
+                        //getCoo(piece)
+                        displayCoordinates()
 
                     }
                     onPressed: {
@@ -234,7 +244,7 @@ Item {
                         getCoo(piece)
                     }
                 }
-            }
+            }           
     }
 }
 

@@ -6,8 +6,8 @@ import checkers.model
 
 Window {
     id: root
-    width: 640
-    height: 480
+    width: 600 //640
+    height: 400 //480
     visible: true
     title: qsTr("Checkers")
     color: CheckersTheme.backgroundColor
@@ -59,6 +59,18 @@ Window {
         onClicked: {
             root.rotateGameBoard = !root.rotateGameBoard
             console.log("rotateGameBoard: ", rotateGameBoard)
+        }
+    }
+
+    Timer {
+        id: coordinatesInitializationTimer                                  // this timer exist to append fieldCoordinates Array with values, because its initialization onCompleted is with only {0, 0} values
+        interval: 10
+        running: true
+        repeat: true
+        onTriggered: {
+            root.width = 640
+            root.height = 480
+            coordinatesInitializationTimer.running = false
         }
     }
 }
