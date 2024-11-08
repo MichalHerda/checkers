@@ -9,6 +9,11 @@ class CheckersModel : public QStandardItemModel
 {
     Q_OBJECT
 
+    Q_PROPERTY (QVector<CheckersModel::CornersCoordinates> fieldCoordinates
+                READ fieldCoordinatesRead
+                WRITE fieldCoordinatesWrite
+                NOTIFY fieldCoordinatesChanged)
+
 public:
     enum CheckersRoles {
         FieldNameRole = Qt::UserRole + 1,
@@ -49,6 +54,11 @@ public:
         QPoint bottomRight;
     };
 
+    QVector<CheckersModel::CornersCoordinates> fieldCoordinates;
+
+    QVector<CheckersModel::CornersCoordinates> fieldCoordinatesRead()const;
+    void fieldCoordinatesWrite(QVector<CheckersModel::CornersCoordinates> fieldCoordinates);
+
     explicit CheckersModel();
 
     Q_INVOKABLE bool isPiecePresent(const QModelIndex &index);
@@ -76,7 +86,10 @@ public:
 
     Q_INVOKABLE void updateCoordinates();
 
+
+
 signals:
+    void fieldCoordinatesChanged(QVector<CheckersModel::CornersCoordinates> fieldCoordinates);
 
 private:
     int m_columns = 8;

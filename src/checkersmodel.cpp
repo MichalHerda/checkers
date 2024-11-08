@@ -16,6 +16,14 @@ CheckersModel::CheckersModel()
     */
 }
 
+QVector<CheckersModel::CornersCoordinates> CheckersModel::fieldCoordinatesRead()const {
+    return fieldCoordinates;
+}
+
+void CheckersModel::fieldCoordinatesWrite(QVector<CheckersModel::CornersCoordinates> fieldCoordinates) {
+    emit fieldCoordinatesChanged(fieldCoordinates);
+}
+
 bool CheckersModel::isPiecePresent(const QModelIndex &index)
 {
     auto pieceRole = data(index, PieceRole);
