@@ -5,6 +5,17 @@
 #include <QStandardItemModel>
 #include <QMetaEnum>
 
+
+struct CornersCoordinates {
+    QPoint topLeft;
+    QPoint topRight;
+    QPoint bottomLeft;
+    QPoint bottomRight;
+};
+Q_DECLARE_METATYPE(CornersCoordinates)
+
+QDebug operator<<(QDebug debug, const CornersCoordinates &coords);
+
 class CheckersModel : public QStandardItemModel
 {
     Q_OBJECT
@@ -41,14 +52,15 @@ public:
         Player player;
         Type type;
     };
-
+/*
     struct CornersCoordinates {
         QPoint topLeft;
         QPoint topRight;
         QPoint bottomLeft;
         QPoint bottomRight;
     };
-
+    Q_DECLARE_METATYPE(CheckersModel::CornersCoordinates)
+*/
     explicit CheckersModel();
 
     Q_INVOKABLE bool isPiecePresent(const QModelIndex &index);
@@ -102,7 +114,8 @@ private:
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
 
-    QVector <CheckersModel::CornersCoordinates> m_fieldCoordinates;
+    //QVector <CheckersModel::CornersCoordinates> m_fieldCoordinates;
+    QVector <CornersCoordinates> m_fieldCoordinates;
 };
 
 #endif // CHECKERSMODEL_H

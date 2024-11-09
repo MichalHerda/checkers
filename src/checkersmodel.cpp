@@ -561,3 +561,13 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
     return possibleMoves;
 }
 
+QDebug operator<<(QDebug debug, const CornersCoordinates &coords) {
+    debug.nospace() << "CornersCoordinates("
+                    << "topLeft: " << coords.topLeft
+                    << ", topRight: " << coords.topRight
+                    << ", bottomLeft: " << coords.bottomLeft
+                    << ", bottomRight: " << coords.bottomRight
+                    << ")";
+    return debug.space();
+}
+

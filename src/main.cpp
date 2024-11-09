@@ -10,6 +10,8 @@ int main(int argc, char *argv[])
     CheckersModel checkersModelInstance;
     checkersModelInstance.resetModel();
 
+    qRegisterMetaType<CornersCoordinates>("CheckersModel::CornersCoordinates");
+
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);
 
