@@ -10,7 +10,7 @@ import checkers.model
 
 Item {
     id: root
-    property var fieldCoordinates: [{x, y}, {x, y}, {x, y}, {x, y}]
+    property var fieldCoordinates: []
 
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
@@ -46,11 +46,6 @@ Item {
         var fieldWidth = repeater.itemAt(1).x - repeater.itemAt(0).x
         var fieldHeight = repeater.itemAt(checkersModelInstance.getColumnsNo()).y - repeater.itemAt(0).y
 
-        var topLeft = {x: 0, y: 0}
-        var topRight = {x: 0, y: 0}
-        var bottomLeft = {x: 0, y: 0}
-        var bottomRight = {x: 0, y: 0}
-
         var fieldCoordinatesItem = []
 
         console.log("fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
@@ -58,28 +53,28 @@ Item {
         var itemsNo = repeater.count
 
         for(let i = 0; i < itemsNo; i++) {
-            topLeft = {x: repeater.itemAt(i).x, y: repeater.itemAt(i).y}
-            topRight = {x: repeater.itemAt(i).x + fieldWidth, y: repeater.itemAt(i).y}
-            bottomLeft = {x: repeater.itemAt(i).x, y: repeater.itemAt(i).y + fieldHeight}
-            bottomRight = {x: repeater.itemAt(i).x + fieldWidth, y: repeater.itemAt(i).y + fieldHeight}
-            //console.log("item at idx ", i, "coo: x: ", repeater.itemAt(i).x, "y: ", repeater.itemAt(i).y)
-
-            fieldCoordinatesItem = [topLeft, topRight, bottomLeft, bottomRight]
-
-            fieldCoordinates.push(fieldCoordinatesItem)
+            fieldCoordinates.push(repeater.itemAt(i).x);                // topLeftX
+            fieldCoordinates.push(repeater.itemAt(i).y);                // topLeftY
+            fieldCoordinates.push(repeater.itemAt(i).x + fieldWidth);   // topRightX
+            fieldCoordinates.push(repeater.itemAt(i).y);                // topRightY
+            fieldCoordinates.push(repeater.itemAt(i).x);                // bottomLeftX
+            fieldCoordinates.push(repeater.itemAt(i).y + fieldHeight);  // bottomLeftY
+            fieldCoordinates.push(repeater.itemAt(i).x + fieldWidth);   // bottomRightX
+            fieldCoordinates.push(repeater.itemAt(i).y + fieldHeight);  // bottomRightY
         }
 
         console.log("fieldCoordinates array size: ", fieldCoordinates.length)
-        //displayCoordinates()
+        displayCoordinates()
     }
 
     function displayCoordinates() {
-        for(let i = 0; i < fieldCoordinates.length; i++) {
-            console.log("item no. ", i, "topLeft:    x:", fieldCoordinates[i][0].x, "y: ", fieldCoordinates[i][0].y)
-            console.log("item no. ", i, "topRight:   x:", fieldCoordinates[i][1].x, "y: ", fieldCoordinates[i][1].y)
-            console.log("item no. ", i, "bottomLeft: x:", fieldCoordinates[i][2].x, "y: ", fieldCoordinates[i][2].y)
-            console.log("item no. ", i, "bottomLeft: x:", fieldCoordinates[i][3].x, "y: ", fieldCoordinates[i][3].y)
-        }
+        for (let i = 0; i < fieldCoordinates.length; i += 8) {
+                console.log("Item no. ", i / 8, ": ");
+                console.log("  topLeft: x:", fieldCoordinates[i], "y:", fieldCoordinates[i + 1]);
+                console.log("  topRight: x:", fieldCoordinates[i + 2], "y:", fieldCoordinates[i + 3]);
+                console.log("  bottomLeft: x:", fieldCoordinates[i + 4], "y:", fieldCoordinates[i + 5]);
+                console.log("  bottomRight: x:", fieldCoordinates[i + 6], "y:", fieldCoordinates[i + 7]);
+            }
     }
 
     Grid {
