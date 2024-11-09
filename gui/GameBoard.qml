@@ -46,8 +46,6 @@ Item {
         var fieldWidth = repeater.itemAt(1).x - repeater.itemAt(0).x
         var fieldHeight = repeater.itemAt(checkersModelInstance.getColumnsNo()).y - repeater.itemAt(0).y
 
-        var fieldCoordinatesItem = []
-
         console.log("fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
 
         var itemsNo = repeater.count
@@ -65,6 +63,7 @@ Item {
 
         console.log("fieldCoordinates array size: ", fieldCoordinates.length)
         displayCoordinates()
+        checkersModelInstance.updateCoordinates(fieldCoordinates)
     }
 
     function displayCoordinates() {

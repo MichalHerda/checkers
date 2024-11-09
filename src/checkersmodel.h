@@ -74,7 +74,7 @@ public:
     Q_INVOKABLE void selectField(QModelIndex index, bool selected = true);
     Q_INVOKABLE void deselectAllFields();
 
-    Q_INVOKABLE void updateCoordinates();
+    Q_INVOKABLE void updateCoordinates(const QVariantList &fieldCoordinates);
 
 signals:
 
@@ -100,6 +100,8 @@ private:
     void setAllPiecesRange();
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
+
+    QVector <CheckersModel::CornersCoordinates> m_fieldCoordinates;
 };
 
 #endif // CHECKERSMODEL_H

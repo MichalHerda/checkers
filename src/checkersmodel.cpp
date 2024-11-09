@@ -311,9 +311,50 @@ void CheckersModel::deselectAllFields()
     }
 }
 
-void CheckersModel::updateCoordinates()
+void CheckersModel::updateCoordinates(const QVariantList &fieldCoordinates)
 {
-    qDebug() << "update coordinates function";
+    qDebug() << "updateCoordinates function";
+    qDebug() << "fieldCoordinates size: " << fieldCoordinates.size();
+
+    m_fieldCoordinates.clear();
+    m_fieldCoordinates.resize(fieldCoordinates.size() / 8);
+
+    for (int i = 0, j = 0; i < fieldCoordinates.size(); i += 8, j ++) {
+        //qDebug() << "Item no. " << i / 8 <<  ": ";
+        //qDebug() << "  topLeft: x:" << fieldCoordinates[i] << "y:" << fieldCoordinates[i + 1];
+        //qDebug() << "  topRight: x:" << fieldCoordinates[i + 2] << "y:" << fieldCoordinates[i + 3];
+        //qDebug() << "  bottomLeft: x:" << fieldCoordinates[i + 4] << "y:" << fieldCoordinates[i + 5];
+        //qDebug() << "  bottomRight: x:" << fieldCoordinates[i + 6] << "y:" <<  fieldCoordinates[i + 7];
+        //m_fieldCoordinates[j].topLeft {fieldCoordinates[i], fieldCoordinates[i + 1]};
+        CornersCoordinates coords;
+
+        coords.topLeft = QPoint(fieldCoordinates[i].toDouble(), fieldCoordinates[i + 1].toDouble());
+        coords.topRight = QPoint(fieldCoordinates[i + 2].toDouble(), fieldCoordinates[i + 3].toDouble());
+        coords.bottomLeft = QPoint(fieldCoordinates[i + 4].toDouble(), fieldCoordinates[i + 5].toDouble());
+        coords.bottomRight = QPoint(fieldCoordinates[i + 6].toDouble(), fieldCoordinates[i + 7].toDouble());
+
+        m_fieldCoordinates[j] = coords;
+
+        // Debugowanie
+        //qDebug() << "Item no." << i / 8 << ":";
+        //qDebug() << "  topLeft: x:" << coords.topLeft.x() << "y:" << coords.topLeft.y();
+        //qDebug() << "  topRight: x:" << coords.topRight.x() << "y:" << coords.topRight.y();
+        //qDebug() << "  bottomLeft: x:" << coords.bottomLeft.x() << "y:" << coords.bottomLeft.y();
+        //qDebug() << "  bottomRight: x:" << coords.bottomRight.x() << "y:" << coords.bottomRight.y();
+    }
+
+    qDebug() << "Start debug m_fieldCoordinates: ";
+
+    for (int i = 0; i < m_fieldCoordinates.size(); i++) {
+        qDebug() << "item " << i << ": ";
+        qDebug() << "   topLeft: " << m_fieldCoordinates[i].topLeft;
+        qDebug() << "   topRight: " << m_fieldCoordinates[i].topRight;
+        qDebug() << "   bottomLeft: " << m_fieldCoordinates[i].bottomLeft;
+        qDebug() << "   bottomRight: " << m_fieldCoordinates[i].bottomRight;
+    }
+
+    qDebug() << "m_fieldCoordinates size: " << m_fieldCoordinates.size();
+    qDebug() << "end of updateCoordinates function";
 }
 
 void CheckersModel::setColumns(int col)
