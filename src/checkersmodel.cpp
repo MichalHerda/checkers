@@ -257,8 +257,10 @@ void CheckersModel::printModel() {
             QVariant piece = m_model.data(index, CheckersRoles::PieceRole);
             QVariant range = m_model.data(index, CheckersModel::RangeRole);
             QVariant selected = m_model.data(index, CheckersRoles::IsSelectedRole);
+            QVariant coords = m_model.data(index, CheckersModel::FieldCoordinatesRole);
             qDebug() << /* "Column: " << column << ", Row: " << row + 1 << */" Coordinate: " << coordinate << ", Playable: " << playable
-                     << "Piece:" << piece << "Range: " << range << "Selected: " << selected << "Index: " << index;
+                     << "Piece:" << piece << "Range: " << range << "Selected: " << selected << "Index: " << index
+                     << "Coords: " << coords;
         }
     }
 }
@@ -353,6 +355,7 @@ void CheckersModel::updateCoordinates(const QVariantList &fieldCoordinates)
         qDebug() << "   bottomRight: " << m_fieldCoordinates[i].bottomRight;
     }
 
+    setFieldCoordinatesRole();
     qDebug() << "m_fieldCoordinates size: " << m_fieldCoordinates.size();
     qDebug() << "end of updateCoordinates function";
 }
@@ -483,6 +486,26 @@ void CheckersModel::setAllPiecesRange()
             else {
                 //qDebug() << "no piece";
                 setData(index, QVariantList(), RangeRole);
+            }
+        }
+    }
+}
+
+void CheckersModel::setFieldCoordinatesRole()
+{
+    int fieldsNo = m_columns * m_rows;
+
+    if(fieldsNo != m_fieldCoordinates.size()) {
+        qDebug() << "m_fieldCoordinates size not equal model size. Return";
+        return;
+    }
+    else {
+        qDebug() << "m_fieldCoordinates size equals model size. Start append model fieldCoordinatesRole";
+        for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
+            for(int column = 0; column < m_columns; column++) {
+                QModelIndex index = getIndex(row, column);
+                setData(index, QVariant::fromValue(m_fieldCoordinates[arrayIdx]), FieldCoordinatesRole);
+                arrayIdx++;
             }
         }
     }
