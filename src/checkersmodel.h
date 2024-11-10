@@ -30,6 +30,7 @@ public:
         MultiCaptureRole,
         IsSelectedRole,
         FieldCoordinatesRole,
+        FieldCenterRole,
         PieceCoordinatesRole
     };
     Q_ENUM(CheckersRoles)
@@ -110,6 +111,7 @@ private:
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
 
     QVector <CornersCoordinates> m_fieldsCoordinates;
+    QVector <CornersCoordinates> m_piecesCoordinates;
 };
 
 #endif // CHECKERSMODEL_H
