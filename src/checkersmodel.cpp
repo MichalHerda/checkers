@@ -244,13 +244,14 @@ QModelIndex CheckersModel::getIndex(int row, int column)
     return m_model.index(row, column);
 }
 
-void CheckersModel::printModel() {
+void CheckersModel::printModel()
+{
     int rowCount = m_model.rowCount();
     int columnCount = m_model.columnCount();
 
-    for (int col = 0; col < columnCount; col++) {
-        char column = 'A' + col;
-        for (int row = 0; row < rowCount; row++) {
+    for (int row = 0; row < rowCount; row++) {
+        for (int col = 0; col < columnCount; col++) {
+            //char column = 'A' + col;
             QModelIndex index = m_model.index(row, col);
             QVariant coordinate = m_model.data(index, CheckersRoles::FieldNameRole);
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
@@ -330,10 +331,10 @@ void CheckersModel::updateCoordinates(const QVariantList &fieldCoordinates)
         //m_fieldCoordinates[j].topLeft {fieldCoordinates[i], fieldCoordinates[i + 1]};
         CornersCoordinates coords;
 
-        coords.topLeft = QPoint(fieldCoordinates[i].toDouble(), fieldCoordinates[i + 1].toDouble());
-        coords.topRight = QPoint(fieldCoordinates[i + 2].toDouble(), fieldCoordinates[i + 3].toDouble());
-        coords.bottomLeft = QPoint(fieldCoordinates[i + 4].toDouble(), fieldCoordinates[i + 5].toDouble());
-        coords.bottomRight = QPoint(fieldCoordinates[i + 6].toDouble(), fieldCoordinates[i + 7].toDouble());
+        coords.topLeft = QPointF(fieldCoordinates[i].toDouble(), fieldCoordinates[i + 1].toDouble());
+        coords.topRight = QPointF(fieldCoordinates[i + 2].toDouble(), fieldCoordinates[i + 3].toDouble());
+        coords.bottomLeft = QPointF(fieldCoordinates[i + 4].toDouble(), fieldCoordinates[i + 5].toDouble());
+        coords.bottomRight = QPointF(fieldCoordinates[i + 6].toDouble(), fieldCoordinates[i + 7].toDouble());
 
         m_fieldCoordinates[j] = coords;
 

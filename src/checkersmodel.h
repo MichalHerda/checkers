@@ -7,10 +7,10 @@
 
 
 struct CornersCoordinates {
-    QPoint topLeft;
-    QPoint topRight;
-    QPoint bottomLeft;
-    QPoint bottomRight;
+    QPointF topLeft;
+    QPointF topRight;
+    QPointF bottomLeft;
+    QPointF bottomRight;
 };
 Q_DECLARE_METATYPE(CornersCoordinates)
 
@@ -101,9 +101,9 @@ private:
     QStandardItemModel m_model;
     Player m_turn;
 
-    void setColumns(int col);                                             // set custom board size
+    void setColumns(int col);                                               // set custom board size
     void setRows(int row);
-    void setPieceRows(int row);                                           // set custom rows number for piece (on game start)
+    void setPieceRows(int row);                                             // set custom rows number for piece (on game start)
 
     void initializePieces();
     void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
