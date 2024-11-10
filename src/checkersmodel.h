@@ -106,7 +106,7 @@ private:
 
     void setAllPiecesRange();
     void setFieldsCoordinatesRole();
-    void setPiecesCoordinatesRole();
+    void setFieldCenterRole();
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
 
