@@ -81,7 +81,7 @@ public:
 
     Q_INVOKABLE void updateCoordinates(const QVariantList &fieldsCoordinates);
     //Q_INVOKABLE void updateFieldsCoordinates(const QVariantList &fieldsCoordinates);
-    //Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
+    Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
 
 signals:
 
@@ -107,6 +107,8 @@ private:
     void setAllPiecesRange();
     void setFieldsCoordinatesRole();
     void setFieldCenterRole();
+    void setPiecesCoordinatesRole();
+
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
 

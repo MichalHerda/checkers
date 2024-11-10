@@ -73,18 +73,18 @@ Item {
         var itemsNo = repeater.count
 
         for(let i = 0; i < itemsNo; i++) {
-            fieldsCoordinates.push(repeater.itemAt(i).x);                // topLeftX
-            fieldsCoordinates.push(repeater.itemAt(i).y);                // topLeftY
-            fieldsCoordinates.push(repeater.itemAt(i).x + pieceWidth);   // topRightX
-            fieldsCoordinates.push(repeater.itemAt(i).y);                // topRightY
-            fieldsCoordinates.push(repeater.itemAt(i).x);                // bottomLeftX
-            fieldsCoordinates.push(repeater.itemAt(i).y + pieceHeight);  // bottomLeftY
-            fieldsCoordinates.push(repeater.itemAt(i).x + pieceWidth);   // bottomRightX
-            fieldsCoordinates.push(repeater.itemAt(i).y + pieceHeight);  // bottomRightY
+            piecesCoordinates.push(repeater.itemAt(i).x);                // topLeftX
+            piecesCoordinates.push(repeater.itemAt(i).y);                // topLeftY
+            piecesCoordinates.push(repeater.itemAt(i).x + pieceWidth);   // topRightX
+            piecesCoordinates.push(repeater.itemAt(i).y);                // topRightY
+            piecesCoordinates.push(repeater.itemAt(i).x);                // bottomLeftX
+            piecesCoordinates.push(repeater.itemAt(i).y + pieceHeight);  // bottomLeftY
+            piecesCoordinates.push(repeater.itemAt(i).x + pieceWidth);   // bottomRightX
+            piecesCoordinates.push(repeater.itemAt(i).y + pieceHeight);  // bottomRightY
         }
 
         console.log("piecesCoordinates array size: ", piecesCoordinates.length)
-
+        checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
     }
 
     function displayCoordinates() {
@@ -253,7 +253,17 @@ Item {
                         getCoo(piece)
                     }
                 }
-            }           
+
+                onWidthChanged: {
+                    console.log("width changed")
+                    setPiecesCoordinates(pieceRep, pieceWidth, pieceHeight)
+                }
+
+                onHeightChanged: {
+                    console.log("height changed")
+                    setPiecesCoordinates(pieceRep, pieceWidth, pieceHeight)
+                }
+            }
     }
 }
 

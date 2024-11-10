@@ -266,11 +266,12 @@ void CheckersModel::printModel()
             QVariant piece = m_model.data(index, CheckersRoles::PieceRole);
             QVariant range = m_model.data(index, CheckersModel::RangeRole);
             QVariant selected = m_model.data(index, CheckersRoles::IsSelectedRole);
-            QVariant coords = m_model.data(index, CheckersModel::FieldCoordinatesRole);
+            QVariant fieldCoords = m_model.data(index, CheckersModel::FieldCoordinatesRole);
             QVariant fieldCenter = m_model.data(index, CheckersModel::FieldCenterRole);
+            QVariant pieceCoords = m_model.data(index, CheckersModel::PieceCoordinatesRole);
             qDebug() << /* "Column: " << column << ", Row: " << row + 1 << */" Coordinate: " << coordinate << ", Playable: " << playable
                      << "Piece:" << piece << "Range: " << range << "Selected: " << selected << "Index: " << index
-                     << "Coords: " << coords << "FieldCenter: " << fieldCenter;
+                     << "fieldCoords: " << fieldCoords << "FieldCenter: " << fieldCenter << "pieceCoords: " << pieceCoords;
         }
     }
 }
@@ -371,12 +372,56 @@ void CheckersModel::updateCoordinates(const QVariantList &fieldsCoordinates)
     qDebug() << "m_fieldsCoordinates size: " << m_fieldsCoordinates.size();
     qDebug() << "end of updateFieldsCoordinates function";
 }
-/*
-void CheckersModel::updatePiecesCoordinates(const QVariantList &fieldsCoordinates)
-{
 
+void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinates)
+{
+    qDebug() << "updatePiecesCoordinates function";
+    qDebug() << "piecesCoordinates size: " << piecesCoordinates.size();
+
+    m_piecesCoordinates.clear();
+    m_piecesCoordinates.resize(piecesCoordinates.size() / 8);
+
+    for (int i = 0, j = 0; i < piecesCoordinates.size(); i += 8, j ++) {
+        //qDebug() << "Item no. " << i / 8 <<  ": ";
+        //qDebug() << "  topLeft: x:" << fieldsCoordinates[i] << "y:" << fieldsCoordinates[i + 1];
+        //qDebug() << "  topRight: x:" << fieldsCoordinates[i + 2] << "y:" << fieldsCoordinates[i + 3];
+        //qDebug() << "  bottomLeft: x:" << fieldsCoordinates[i + 4] << "y:" << fieldsCoordinates[i + 5];
+        //qDebug() << "  bottomRight: x:" << fieldsCoordinates[i + 6] << "y:" <<  fieldsCoordinates[i + 7];
+        //m_fieldsCoordinates[j].topLeft {fieldsCoordinates[i], fieldsCoordinates[i + 1]};
+        CornersCoordinates coords;
+
+        coords.topLeft = QPointF(piecesCoordinates[i].toDouble(), piecesCoordinates[i + 1].toDouble());
+        coords.topRight = QPointF(piecesCoordinates[i + 2].toDouble(), piecesCoordinates[i + 3].toDouble());
+        coords.bottomLeft = QPointF(piecesCoordinates[i + 4].toDouble(), piecesCoordinates[i + 5].toDouble());
+        coords.bottomRight = QPointF(piecesCoordinates[i + 6].toDouble(), piecesCoordinates[i + 7].toDouble());
+
+        m_piecesCoordinates[j] = coords;
+
+        // Debugowanie
+        //qDebug() << "Item no." << i / 8 << ":";
+        //qDebug() << "  topLeft: x:" << coords.topLeft.x() << "y:" << coords.topLeft.y();
+        //qDebug() << "  topRight: x:" << coords.topRight.x() << "y:" << coords.topRight.y();
+        //qDebug() << "  bottomLeft: x:" << coords.bottomLeft.x() << "y:" << coords.bottomLeft.y();
+        //qDebug() << "  bottomRight: x:" << coords.bottomRight.x() << "y:" << coords.bottomRight.y();
+    }
+
+    qDebug() << "Start debug m_piecesCoordinates: ";
+
+    for (int i = 0; i < m_piecesCoordinates.size(); i++) {
+        qDebug() << "item " << i << ": ";
+        qDebug() << "   topLeft: " << m_piecesCoordinates[i].topLeft;
+        qDebug() << "   topRight: " << m_piecesCoordinates[i].topRight;
+        qDebug() << "   bottomLeft: " << m_piecesCoordinates[i].bottomLeft;
+        qDebug() << "   bottomRight: " << m_piecesCoordinates[i].bottomRight;
+    }
+
+    setPiecesCoordinatesRole();
+    //setFieldCenterRole();
+
+    qDebug() << "m_piecesCoordinates size: " << m_piecesCoordinates.size();
+    qDebug() << "end of updateFieldsCoordinates function";
 }
-*/
+
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {
@@ -518,7 +563,7 @@ void CheckersModel::setFieldsCoordinatesRole()
         return;
     }
     else {
-        qDebug() << "   m_fieldsCoordinates size equals model size. Start append model fieldsCoordinatesRole";
+        qDebug() << "   m_fieldsCoordinates size equals model size. Start append model FieldCoordinatesRole";
         for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
             for(int column = 0; column < m_columns; column++) {
                 QModelIndex index = getIndex(row, column);
@@ -539,7 +584,7 @@ void CheckersModel::setFieldCenterRole()
         return;
     }
     else {
-        qDebug() << "   m_fieldsCoordinates size equals model size. Start append model pieceCoordinatesRole";
+        qDebug() << "   m_fieldsCoordinates size equals model size. Start append model PieceCenterRole";
         for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
             for(int column = 0; column < m_columns; column++) {
                 QModelIndex index = getIndex(row, column);
@@ -555,6 +600,27 @@ void CheckersModel::setFieldCenterRole()
                     qDebug() << "index: " << arrayIdx << "fieldCenter: " << fieldCenter;
                     setData(index, QVariant::fromValue(fieldCenter), FieldCenterRole);
                 }
+                arrayIdx++;
+            }
+        }
+    }
+}
+
+void CheckersModel::setPiecesCoordinatesRole()
+{
+    int fieldsNo = m_columns * m_rows;
+    qDebug() << "function setPiecesCoordinatesRole: ";
+
+    if(fieldsNo != m_piecesCoordinates.size()) {
+        qDebug() << "   m_piecesCoordinates size not equal model size. Return";
+        return;
+    }
+    else {
+        qDebug() << "   m_piecesCoordinates size equals model size. Start append model PiecesCoordinatesRole";
+        for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
+            for(int column = 0; column < m_columns; column++) {
+                QModelIndex index = getIndex(row, column);
+                setData(index, QVariant::fromValue(m_piecesCoordinates[arrayIdx]), PieceCoordinatesRole);
                 arrayIdx++;
             }
         }
