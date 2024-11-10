@@ -10,7 +10,7 @@ import checkers.model
 
 Item {
     id: root
-    property var fieldCoordinates: []
+    property var fieldsCoordinates: []
 
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
@@ -39,9 +39,9 @@ Item {
         }
     }
 
-    function setFieldCoordinates(repeater) {
+    function setfieldsCoordinates(repeater) {
 
-        fieldCoordinates.length = 0
+        fieldsCoordinates.length = 0
 
         var fieldWidth = repeater.itemAt(1).x - repeater.itemAt(0).x
         var fieldHeight = repeater.itemAt(checkersModelInstance.getColumnsNo()).y - repeater.itemAt(0).y
@@ -51,28 +51,28 @@ Item {
         var itemsNo = repeater.count
 
         for(let i = 0; i < itemsNo; i++) {
-            fieldCoordinates.push(repeater.itemAt(i).x);                // topLeftX
-            fieldCoordinates.push(repeater.itemAt(i).y);                // topLeftY
-            fieldCoordinates.push(repeater.itemAt(i).x + fieldWidth);   // topRightX
-            fieldCoordinates.push(repeater.itemAt(i).y);                // topRightY
-            fieldCoordinates.push(repeater.itemAt(i).x);                // bottomLeftX
-            fieldCoordinates.push(repeater.itemAt(i).y + fieldHeight);  // bottomLeftY
-            fieldCoordinates.push(repeater.itemAt(i).x + fieldWidth);   // bottomRightX
-            fieldCoordinates.push(repeater.itemAt(i).y + fieldHeight);  // bottomRightY
+            fieldsCoordinates.push(repeater.itemAt(i).x);                // topLeftX
+            fieldsCoordinates.push(repeater.itemAt(i).y);                // topLeftY
+            fieldsCoordinates.push(repeater.itemAt(i).x + fieldWidth);   // topRightX
+            fieldsCoordinates.push(repeater.itemAt(i).y);                // topRightY
+            fieldsCoordinates.push(repeater.itemAt(i).x);                // bottomLeftX
+            fieldsCoordinates.push(repeater.itemAt(i).y + fieldHeight);  // bottomLeftY
+            fieldsCoordinates.push(repeater.itemAt(i).x + fieldWidth);   // bottomRightX
+            fieldsCoordinates.push(repeater.itemAt(i).y + fieldHeight);  // bottomRightY
         }
 
-        console.log("fieldCoordinates array size: ", fieldCoordinates.length)
+        console.log("fieldsCoordinates array size: ", fieldsCoordinates.length)
         displayCoordinates()
-        checkersModelInstance.updateCoordinates(fieldCoordinates)
+        checkersModelInstance.updateCoordinates(fieldsCoordinates)
     }
 
     function displayCoordinates() {
-        for (let i = 0; i < fieldCoordinates.length; i += 8) {
+        for (let i = 0; i < fieldsCoordinates.length; i += 8) {
                 console.log("Item no. ", i / 8, ": ");
-                console.log("  topLeft: x:", fieldCoordinates[i], "y:", fieldCoordinates[i + 1]);
-                console.log("  topRight: x:", fieldCoordinates[i + 2], "y:", fieldCoordinates[i + 3]);
-                console.log("  bottomLeft: x:", fieldCoordinates[i + 4], "y:", fieldCoordinates[i + 5]);
-                console.log("  bottomRight: x:", fieldCoordinates[i + 6], "y:", fieldCoordinates[i + 7]);
+                console.log("  topLeft: x:", fieldsCoordinates[i], "y:", fieldsCoordinates[i + 1]);
+                console.log("  topRight: x:", fieldsCoordinates[i + 2], "y:", fieldsCoordinates[i + 3]);
+                console.log("  bottomLeft: x:", fieldsCoordinates[i + 4], "y:", fieldsCoordinates[i + 5]);
+                console.log("  bottomRight: x:", fieldsCoordinates[i + 6], "y:", fieldsCoordinates[i + 7]);
             }
     }
 
@@ -134,7 +134,7 @@ Item {
                         //console.log("MultiCaptureRole: ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                         console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
                     */
-                        setFieldCoordinates(rep)
+                        setfieldsCoordinates(rep)
                         //getCoo(rec)
                     }
                 }
@@ -158,13 +158,13 @@ Item {
 
         onWidthChanged: {
             console.log("width changed")
-            setFieldCoordinates(rep)
+            setfieldsCoordinates(rep)
             //checkersModelInstance.updateCoordinates()
         }
 
         onHeightChanged: {
             console.log("height changed")
-            setFieldCoordinates(rep)
+            setfieldsCoordinates(rep)
             //checkersModelInstance.updateCoordinates()
         }
     }

@@ -153,7 +153,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
             break;
         }
         case CheckersRoles::FieldCoordinatesRole: {
-            //qDebug() << "FieldCoordinatesRole";
+            //qDebug() << "fieldsCoordinatesRole";
             item->setData(value, FieldCoordinatesRole);
             break;
         }
@@ -314,29 +314,29 @@ void CheckersModel::deselectAllFields()
     }
 }
 
-void CheckersModel::updateCoordinates(const QVariantList &fieldCoordinates)
+void CheckersModel::updateCoordinates(const QVariantList &fieldsCoordinates)
 {
-    qDebug() << "updateCoordinates function";
-    qDebug() << "fieldCoordinates size: " << fieldCoordinates.size();
+    qDebug() << "updateFieldsCoordinates function";
+    qDebug() << "fieldsCoordinates size: " << fieldsCoordinates.size();
 
-    m_fieldCoordinates.clear();
-    m_fieldCoordinates.resize(fieldCoordinates.size() / 8);
+    m_fieldsCoordinates.clear();
+    m_fieldsCoordinates.resize(fieldsCoordinates.size() / 8);
 
-    for (int i = 0, j = 0; i < fieldCoordinates.size(); i += 8, j ++) {
+    for (int i = 0, j = 0; i < fieldsCoordinates.size(); i += 8, j ++) {
         //qDebug() << "Item no. " << i / 8 <<  ": ";
-        //qDebug() << "  topLeft: x:" << fieldCoordinates[i] << "y:" << fieldCoordinates[i + 1];
-        //qDebug() << "  topRight: x:" << fieldCoordinates[i + 2] << "y:" << fieldCoordinates[i + 3];
-        //qDebug() << "  bottomLeft: x:" << fieldCoordinates[i + 4] << "y:" << fieldCoordinates[i + 5];
-        //qDebug() << "  bottomRight: x:" << fieldCoordinates[i + 6] << "y:" <<  fieldCoordinates[i + 7];
-        //m_fieldCoordinates[j].topLeft {fieldCoordinates[i], fieldCoordinates[i + 1]};
+        //qDebug() << "  topLeft: x:" << fieldsCoordinates[i] << "y:" << fieldsCoordinates[i + 1];
+        //qDebug() << "  topRight: x:" << fieldsCoordinates[i + 2] << "y:" << fieldsCoordinates[i + 3];
+        //qDebug() << "  bottomLeft: x:" << fieldsCoordinates[i + 4] << "y:" << fieldsCoordinates[i + 5];
+        //qDebug() << "  bottomRight: x:" << fieldsCoordinates[i + 6] << "y:" <<  fieldsCoordinates[i + 7];
+        //m_fieldsCoordinates[j].topLeft {fieldsCoordinates[i], fieldsCoordinates[i + 1]};
         CornersCoordinates coords;
 
-        coords.topLeft = QPointF(fieldCoordinates[i].toDouble(), fieldCoordinates[i + 1].toDouble());
-        coords.topRight = QPointF(fieldCoordinates[i + 2].toDouble(), fieldCoordinates[i + 3].toDouble());
-        coords.bottomLeft = QPointF(fieldCoordinates[i + 4].toDouble(), fieldCoordinates[i + 5].toDouble());
-        coords.bottomRight = QPointF(fieldCoordinates[i + 6].toDouble(), fieldCoordinates[i + 7].toDouble());
+        coords.topLeft = QPointF(fieldsCoordinates[i].toDouble(), fieldsCoordinates[i + 1].toDouble());
+        coords.topRight = QPointF(fieldsCoordinates[i + 2].toDouble(), fieldsCoordinates[i + 3].toDouble());
+        coords.bottomLeft = QPointF(fieldsCoordinates[i + 4].toDouble(), fieldsCoordinates[i + 5].toDouble());
+        coords.bottomRight = QPointF(fieldsCoordinates[i + 6].toDouble(), fieldsCoordinates[i + 7].toDouble());
 
-        m_fieldCoordinates[j] = coords;
+        m_fieldsCoordinates[j] = coords;
 
         // Debugowanie
         //qDebug() << "Item no." << i / 8 << ":";
@@ -346,21 +346,26 @@ void CheckersModel::updateCoordinates(const QVariantList &fieldCoordinates)
         //qDebug() << "  bottomRight: x:" << coords.bottomRight.x() << "y:" << coords.bottomRight.y();
     }
 
-    qDebug() << "Start debug m_fieldCoordinates: ";
+    qDebug() << "Start debug m_fieldsCoordinates: ";
 
-    for (int i = 0; i < m_fieldCoordinates.size(); i++) {
+    for (int i = 0; i < m_fieldsCoordinates.size(); i++) {
         qDebug() << "item " << i << ": ";
-        qDebug() << "   topLeft: " << m_fieldCoordinates[i].topLeft;
-        qDebug() << "   topRight: " << m_fieldCoordinates[i].topRight;
-        qDebug() << "   bottomLeft: " << m_fieldCoordinates[i].bottomLeft;
-        qDebug() << "   bottomRight: " << m_fieldCoordinates[i].bottomRight;
+        qDebug() << "   topLeft: " << m_fieldsCoordinates[i].topLeft;
+        qDebug() << "   topRight: " << m_fieldsCoordinates[i].topRight;
+        qDebug() << "   bottomLeft: " << m_fieldsCoordinates[i].bottomLeft;
+        qDebug() << "   bottomRight: " << m_fieldsCoordinates[i].bottomRight;
     }
 
-    setFieldCoordinatesRole();
-    qDebug() << "m_fieldCoordinates size: " << m_fieldCoordinates.size();
-    qDebug() << "end of updateCoordinates function";
+    setFieldsCoordinatesRole();
+    qDebug() << "m_fieldsCoordinates size: " << m_fieldsCoordinates.size();
+    qDebug() << "end of updateFieldsCoordinates function";
 }
+/*
+void CheckersModel::updatePiecesCoordinates(const QVariantList &fieldsCoordinates)
+{
 
+}
+*/
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {
@@ -492,24 +497,29 @@ void CheckersModel::setAllPiecesRange()
     }
 }
 
-void CheckersModel::setFieldCoordinatesRole()
+void CheckersModel::setFieldsCoordinatesRole()
 {
     int fieldsNo = m_columns * m_rows;
 
-    if(fieldsNo != m_fieldCoordinates.size()) {
-        qDebug() << "m_fieldCoordinates size not equal model size. Return";
+    if(fieldsNo != m_fieldsCoordinates.size()) {
+        qDebug() << "m_fieldsCoordinates size not equal model size. Return";
         return;
     }
     else {
-        qDebug() << "m_fieldCoordinates size equals model size. Start append model fieldCoordinatesRole";
+        qDebug() << "m_fieldsCoordinates size equals model size. Start append model fieldsCoordinatesRole";
         for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
             for(int column = 0; column < m_columns; column++) {
                 QModelIndex index = getIndex(row, column);
-                setData(index, QVariant::fromValue(m_fieldCoordinates[arrayIdx]), FieldCoordinatesRole);
+                setData(index, QVariant::fromValue(m_fieldsCoordinates[arrayIdx]), FieldCoordinatesRole);
                 arrayIdx++;
             }
         }
     }
+}
+
+void CheckersModel::setPiecesCoordinatesRole()
+{
+
 }
 
 QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)

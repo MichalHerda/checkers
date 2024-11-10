@@ -52,15 +52,7 @@ public:
         Player player;
         Type type;
     };
-/*
-    struct CornersCoordinates {
-        QPoint topLeft;
-        QPoint topRight;
-        QPoint bottomLeft;
-        QPoint bottomRight;
-    };
-    Q_DECLARE_METATYPE(CheckersModel::CornersCoordinates)
-*/
+
     explicit CheckersModel();
 
     Q_INVOKABLE bool isPiecePresent(const QModelIndex &index);
@@ -86,7 +78,9 @@ public:
     Q_INVOKABLE void selectField(QModelIndex index, bool selected = true);
     Q_INVOKABLE void deselectAllFields();
 
-    Q_INVOKABLE void updateCoordinates(const QVariantList &fieldCoordinates);
+    Q_INVOKABLE void updateCoordinates(const QVariantList &fieldsCoordinates);
+    //Q_INVOKABLE void updateFieldsCoordinates(const QVariantList &fieldsCoordinates);
+    //Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
 
 signals:
 
@@ -110,12 +104,12 @@ private:
     void setEmptyField(QModelIndex index);                                  // <---as in the function name
 
     void setAllPiecesRange();
-    void setFieldCoordinatesRole();
+    void setFieldsCoordinatesRole();
+    void setPiecesCoordinatesRole();
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
 
-    //QVector <CheckersModel::CornersCoordinates> m_fieldCoordinates;
-    QVector <CornersCoordinates> m_fieldCoordinates;
+    QVector <CornersCoordinates> m_fieldsCoordinates;
 };
 
 #endif // CHECKERSMODEL_H
