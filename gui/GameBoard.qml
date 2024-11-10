@@ -3,11 +3,6 @@ import QtQuick.Controls
 import Checkers 1.0
 import checkers.model
 
-//potrzebna jest funkcja, która na podstawie zaznaczonego pionka i na podstawie rangeRole, określi koordynaty dla pól które są w zasięgu
-//jedną z opcji jest utworzenie kolejnej roli: indexRole - ale to jest raczej dyskusyjne
-//obecnym problemem jest to, że funkcje które stworzyłem do pobrania koordynatów, pobierają je na podstawie zaznaczonego pola lub zaznaczonego pionka
-//należy rozwiązać problem, jak podać sąsiednie pola planszy do gry celem uzyskania koordynatów
-
 Item {
     id: root
     property var fieldsCoordinates: []
@@ -94,8 +89,6 @@ Item {
                 border.color: !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole) ? CheckersTheme.fieldBorderColor : CheckersTheme.selectedBorderColor
 
                 property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
-
-                //property int row: checkersModelInstance.getRowsNo() - 1 - Math.floor(index / checkersModelInstance.getColumnsNo())
                 property int column: index % checkersModelInstance.getColumnsNo()
                 property var modelIndex: getFieldIndex(row, column)
                 property var item: checkersModelInstance.getItem(modelIndex)
@@ -176,8 +169,6 @@ Item {
             Piece {
                 id: piece
 
-                //property int row: checkersModelInstance.getRowsNo() - 1 - Math.floor(index / checkersModelInstance.getColumnsNo())
-
                 property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
                 property int column: index % checkersModelInstance.getColumnsNo()
                 property var modelIndex: getFieldIndex(row, column)
@@ -204,13 +195,11 @@ Item {
                     console.log("**************************************************************************************")
                     console.log("INDEX: ", index, "piece: ", piece)
                     console.log("piece on completed: ", pieceStatus)
-                    //console.log("x: ", piece.x, "y: ", piece.y)                   // coordinates somehow not initialized and not visible at the moment
+                    //console.log("x: ", piece.x, "y: ", piece.y)                                                           // coordinates somehow not initialized and not visible at the moment
                     console.log("playable: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
                     console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
                     console.log("**************************************************************************************")
                 }
-
-                //Drag.active: pieceMouseArea.drag.active
 
                 MouseArea {
                     id: pieceMouseArea

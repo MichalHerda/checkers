@@ -259,9 +259,10 @@ void CheckersModel::printModel()
             QVariant range = m_model.data(index, CheckersModel::RangeRole);
             QVariant selected = m_model.data(index, CheckersRoles::IsSelectedRole);
             QVariant coords = m_model.data(index, CheckersModel::FieldCoordinatesRole);
+            QVariant fieldCoord = m_model.data(index, CheckersModel::PieceCoordinatesRole);
             qDebug() << /* "Column: " << column << ", Row: " << row + 1 << */" Coordinate: " << coordinate << ", Playable: " << playable
                      << "Piece:" << piece << "Range: " << range << "Selected: " << selected << "Index: " << index
-                     << "Coords: " << coords;
+                     << "Coords: " << coords << "Field coord: " << fieldCoord;
         }
     }
 }
@@ -357,6 +358,8 @@ void CheckersModel::updateCoordinates(const QVariantList &fieldsCoordinates)
     }
 
     setFieldsCoordinatesRole();
+    setPiecesCoordinatesRole();
+
     qDebug() << "m_fieldsCoordinates size: " << m_fieldsCoordinates.size();
     qDebug() << "end of updateFieldsCoordinates function";
 }
@@ -500,13 +503,14 @@ void CheckersModel::setAllPiecesRange()
 void CheckersModel::setFieldsCoordinatesRole()
 {
     int fieldsNo = m_columns * m_rows;
+    qDebug() << "function setFieldsCoordinatesRole: ";
 
     if(fieldsNo != m_fieldsCoordinates.size()) {
-        qDebug() << "m_fieldsCoordinates size not equal model size. Return";
+        qDebug() << "   m_fieldsCoordinates size not equal model size. Return";
         return;
     }
     else {
-        qDebug() << "m_fieldsCoordinates size equals model size. Start append model fieldsCoordinatesRole";
+        qDebug() << "   m_fieldsCoordinates size equals model size. Start append model fieldsCoordinatesRole";
         for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
             for(int column = 0; column < m_columns; column++) {
                 QModelIndex index = getIndex(row, column);
@@ -519,7 +523,34 @@ void CheckersModel::setFieldsCoordinatesRole()
 
 void CheckersModel::setPiecesCoordinatesRole()
 {
+    int fieldsNo = m_columns * m_rows;
+    qDebug() << "function setPiecesCoordinatesRole: ";
 
+    if(fieldsNo != m_fieldsCoordinates.size()) {
+        qDebug() << "   m_fieldsCoordinates size not equal model size. Return";
+        return;
+    }
+    else {
+        qDebug() << "   m_fieldsCoordinates size equals model size. Start append model pieceCoordinatesRole";
+        for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
+            for(int column = 0; column < m_columns; column++) {
+                QModelIndex index = getIndex(row, column);
+                QVariant isPlayable = data(index, IsPlayableRole);
+                if(!isPlayable.toBool() || !isPiecePresent(index) ) {
+                    //QPointF fieldCenter = {-1, -1};
+                    setData(index, QVariant::fromValue(QPointF(-1, -1)), PieceCoordinatesRole);
+                }
+                else {
+                    double averageX = (m_fieldsCoordinates[arrayIdx].topLeft.x() + m_fieldsCoordinates[arrayIdx].topRight.x() + m_fieldsCoordinates[arrayIdx].bottomLeft.x() + m_fieldsCoordinates[arrayIdx].bottomRight.x()) / 4;
+                    double averageY = (m_fieldsCoordinates[arrayIdx].topLeft.y() + m_fieldsCoordinates[arrayIdx].topRight.y() + m_fieldsCoordinates[arrayIdx].bottomLeft.y() + m_fieldsCoordinates[arrayIdx].bottomRight.y()) / 4;
+                    QPointF fieldCenter = {averageX, averageY};
+                    qDebug() << "index: " << arrayIdx << "fieldCenter: " << fieldCenter;
+                    setData(index, QVariant::fromValue(fieldCenter), PieceCoordinatesRole);
+                }
+                arrayIdx++;
+            }
+        }
+    }
 }
 
 QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
