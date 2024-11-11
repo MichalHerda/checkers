@@ -255,12 +255,31 @@ Item {
 
                 }
                 onReleased: {
-                    var newCooX = pieceRep.itemAt(index).x
-                    var newCooY = pieceRep.itemAt(index).y
+                    var newCooLeftUpX = pieceRep.itemAt(index).x
+                    var newCooLeftUpY = pieceRep.itemAt(index).y
+                    var newCooRightUpX = pieceRep.itemAt(index).x + piece.width
+                    var newCooRightUpY = pieceRep.itemAt(index).y
+                    var newCooLeftBottomX = pieceRep.itemAt(index).x
+                    var newCooLeftBottomY = pieceRep.itemAt(index).y + piece.height
+                    var newCooRightBottomX = pieceRep.itemAt(index).x + piece.width
+                    var newCooRightBottomY = pieceRep.itemAt(index).y
+
+                    var newAverageX = ( newCooLeftUpX + newCooRightUpX + newCooLeftBottomX + newCooRightBottomX ) / 4
+                    var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
 
                     console.log("RELEASED:")
-                    console.log("   newCooX: ", newCooX)
-                    console.log("   newCooY: ", newCooY)
+                    console.log("   pieceWidth:", piece.width)
+                    console.log("   pieceHeight: ", piece.height)
+                    console.log("   newCooLeftUpX: ", newCooLeftUpX)
+                    console.log("   newCooLeftUpY: ", newCooLeftUpY)
+                    console.log("   newCooRightUpX: ", newCooRightUpX)
+                    console.log("   newCooRightUpY: ", newCooRightUpY)
+                    console.log("   newCooLeftBottomX: ", newCooLeftBottomX)
+                    console.log("   newCooLeftBottomY: ", newCooLeftBottomY)
+                    console.log("   newCooRightBottomX: ", newCooRightBottomX)
+                    console.log("   newCooRightBottomY: ", newCooRightBottomY)
+                    console.log("   newAverageX: ", newAverageX)
+                    console.log("   newAverageY: ", newAverageY)
                     /*
                     TODO:
                         1. Oblicz koordynaty: wierzchołków pionka i środka pionka

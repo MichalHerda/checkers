@@ -1,5 +1,5 @@
 #include "checkersmodel.h"
-
+//**************************************************************************************************************************************
 CheckersModel::CheckersModel()
 {
     /*
@@ -15,7 +15,7 @@ CheckersModel::CheckersModel()
     }
     */
 }
-
+//**************************************************************************************************************************************
 bool CheckersModel::isPiecePresent(const QModelIndex &index)
 {
     auto pieceRole = data(index, PieceRole);
@@ -31,7 +31,7 @@ bool CheckersModel::isPiecePresent(const QModelIndex &index)
     //return player != CheckersModel::Type::null;
     return type != CheckersModel::Type::null;
 }
-
+//**************************************************************************************************************************************
 bool CheckersModel::getPieceColor(const QModelIndex &index)                                     //return true: player == white
 {                                                                                               //      false: player == black
     auto pieceRole = data(index, PieceRole);
@@ -46,7 +46,7 @@ bool CheckersModel::getPieceColor(const QModelIndex &index)                     
 
     return player == CheckersModel::Player::white;
 }
-
+//**************************************************************************************************************************************
 bool CheckersModel::getPieceType(const QModelIndex &index)                                      //return true: type == king
 {                                                                                               //      false: type == man
     auto pieceRole = data(index, PieceRole);
@@ -56,17 +56,17 @@ bool CheckersModel::getPieceType(const QModelIndex &index)                      
 
     return type == CheckersModel::Type::king;
 }
-
+//**************************************************************************************************************************************
 int CheckersModel::getColumnsNo()
 {
     return m_columns;
 }
-
+//**************************************************************************************************************************************
 int CheckersModel::getRowsNo()
 {
     return m_rows;
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::resetModel()
 {
     m_model.setRowCount(m_rows);
@@ -101,7 +101,7 @@ void CheckersModel::resetModel()
     // set all pieces range:
     CheckersModel::setAllPiecesRange();
 }
-
+//**************************************************************************************************************************************
 bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid()) {
@@ -176,7 +176,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
     emit dataChanged(index, index, {role});
     return true;
 }
-
+//**************************************************************************************************************************************
 QVariant CheckersModel::data(const QModelIndex &index, int role) const
 {
     //qDebug() << "index in data function: " << index;
@@ -234,7 +234,7 @@ QVariant CheckersModel::data(const QModelIndex &index, int role) const
     }
     return QVariant();
 }
-
+//**************************************************************************************************************************************
 QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent) const
 {
     if(!m_model.hasIndex(row, column)) {
@@ -246,12 +246,12 @@ QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent)
         return CheckersModel::createIndex(row, column);
     }
 }
-
+//**************************************************************************************************************************************
 QModelIndex CheckersModel::getIndex(int row, int column)
 {
     return m_model.index(row, column);
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::printModel()
 {
     int rowCount = m_model.rowCount();
@@ -282,7 +282,7 @@ void CheckersModel::printModel()
         }
     }
 }
-
+//**************************************************************************************************************************************
 /*
 QHash<int, QByteArray> CheckersModel::roleNames() const
 {
@@ -300,27 +300,27 @@ QHash<int, QByteArray> CheckersModel::roleNames() const
     return m_rolesMap;
 }
 */
-
+//**************************************************************************************************************************************
 void CheckersModel::setTurn()
 {
     m_turn == Player::black ? m_turn = Player::white : m_turn = Player::black;
 }
-
+//**************************************************************************************************************************************
 CheckersModel::Player CheckersModel::getTurn()
 {
     return m_turn;
 }
-
+//**************************************************************************************************************************************
 QStandardItem* CheckersModel::getItem(QModelIndex index)
 {
     return m_model.itemFromIndex(index);
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::selectField(QModelIndex index, bool selected)
 {
     setData(index, QVariant::fromValue(selected), IsSelectedRole);
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::deselectAllFields()
 {
     for(int i = 0; i < m_columns; i++) {
@@ -330,7 +330,7 @@ void CheckersModel::deselectAllFields()
         }
     }
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::updateCoordinates(const QVariantList &fieldsCoordinates)
 {
     qDebug() << "updateFieldsCoordinates function";
@@ -379,7 +379,7 @@ void CheckersModel::updateCoordinates(const QVariantList &fieldsCoordinates)
     qDebug() << "m_fieldsCoordinates size: " << m_fieldsCoordinates.size();
     qDebug() << "end of updateFieldsCoordinates function";
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinates)
 {
     qDebug() << "updatePiecesCoordinates function";
@@ -428,7 +428,7 @@ void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinate
     qDebug() << "m_piecesCoordinates size: " << m_piecesCoordinates.size();
     qDebug() << "end of updateFieldsCoordinates function";
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {
@@ -440,7 +440,7 @@ void CheckersModel::setColumns(int col)
         m_columns = col;
     }
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setRows(int row)
 {
     if(row % 2 != 0) {
@@ -452,7 +452,7 @@ void CheckersModel::setRows(int row)
         m_rows = row;
     }
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setPieceRows(int row)
 {
     int maxPieceRows = (m_rows - 2) / 2;
@@ -466,7 +466,7 @@ void CheckersModel::setPieceRows(int row)
         m_pieceRows = row;
     }
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::initializePieces()
 {
     //SET WHITE PIECES:
@@ -507,7 +507,7 @@ void CheckersModel::initializePieces()
         }
     }
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setPiece(QModelIndex index, Player player, Type type)
 {
     Player playerToSet = player;
@@ -517,7 +517,7 @@ void CheckersModel::setPiece(QModelIndex index, Player player, Type type)
 
     setData(index, QVariant::fromValue(piece), PieceRole);
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setEmptyField(QModelIndex index)
 {
     Player player = Player::null;
@@ -527,7 +527,7 @@ void CheckersModel::setEmptyField(QModelIndex index)
 
     setData(index, QVariant::fromValue(piece), PieceRole);
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setAllPiecesRange()
 {
     for(int row = 0; row < m_rows; row++) {
@@ -559,7 +559,7 @@ void CheckersModel::setAllPiecesRange()
         }
     }
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setFieldsCoordinatesRole()
 {
     int fieldsNo = m_columns * m_rows;
@@ -580,7 +580,7 @@ void CheckersModel::setFieldsCoordinatesRole()
         }
     }
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setFieldCenterRole()
 {
     int fieldsNo = m_columns * m_rows;
@@ -612,7 +612,7 @@ void CheckersModel::setFieldCenterRole()
         }
     }
 }
-
+//**************************************************************************************************************************************
 void CheckersModel::setPiecesCoordinatesRole()
 {
     int fieldsNo = m_columns * m_rows;
@@ -633,7 +633,7 @@ void CheckersModel::setPiecesCoordinatesRole()
         }
     }
 }
-
+//**************************************************************************************************************************************
 QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
 {
     QList <QPair <char, int> > possibleMoves {};
@@ -643,7 +643,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
 
     return possibleMoves;
 }
-
+//**************************************************************************************************************************************
 QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, bool isWhite)
 {
     QList <QPair <char, int> > possibleMoves {};
@@ -683,7 +683,7 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
 
     return possibleMoves;
 }
-
+//**************************************************************************************************************************************
 QDebug operator<<(QDebug debug, const CornersCoordinates &coords) {
     debug.nospace() << "CornersCoordinates("
                     << "topLeft: " << coords.topLeft
@@ -693,4 +693,4 @@ QDebug operator<<(QDebug debug, const CornersCoordinates &coords) {
                     << ")";
     return debug.space();
 }
-
+//**************************************************************************************************************************************
