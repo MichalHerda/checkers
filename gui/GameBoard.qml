@@ -8,8 +8,6 @@ Item {
     property var fieldsCoordinates: []
     property var piecesCoordinates: []
 
-
-
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
         //console.log("getIdx: ", checkersModelInstance.getIndex(row, column))
@@ -91,12 +89,12 @@ Item {
 
     function displayCoordinates() {
         for (let i = 0; i < fieldsCoordinates.length; i += 8) {
-                console.log("Item no. ", i / 8, ": ");
-                console.log("  topLeft: x:", fieldsCoordinates[i], "y:", fieldsCoordinates[i + 1]);
-                console.log("  topRight: x:", fieldsCoordinates[i + 2], "y:", fieldsCoordinates[i + 3]);
-                console.log("  bottomLeft: x:", fieldsCoordinates[i + 4], "y:", fieldsCoordinates[i + 5]);
-                console.log("  bottomRight: x:", fieldsCoordinates[i + 6], "y:", fieldsCoordinates[i + 7]);
-            }
+            console.log("Item no. ", i / 8, ": ");
+            console.log("  topLeft: x:", fieldsCoordinates[i], "y:", fieldsCoordinates[i + 1]);
+            console.log("  topRight: x:", fieldsCoordinates[i + 2], "y:", fieldsCoordinates[i + 3]);
+            console.log("  bottomLeft: x:", fieldsCoordinates[i + 4], "y:", fieldsCoordinates[i + 5]);
+            console.log("  bottomRight: x:", fieldsCoordinates[i + 6], "y:", fieldsCoordinates[i + 7]);
+        }
     }
 
     Grid {
@@ -155,7 +153,7 @@ Item {
                         //console.log("MultiCaptureRole: ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                         console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
                     */
-                        setFieldsCoordinates(rep)
+                        //setFieldsCoordinates(rep)
                         //getCoo(rec)
                     }
                 }
@@ -240,35 +238,41 @@ Item {
                 drag.maximumX: gameBoard.width - piece.width
                 drag.maximumY: gameBoard.height - piece.height
                 onClicked: {
-                    console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
-                    console.log("piece clicked. its range: ", piece.pieceRange)
+                    //console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
+                    //console.log("   piece clicked. its range: ", piece.pieceRange)
+                    //console.log("   coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole))
                     //getCoo(piece)
-                    displayCoordinates()
+                    //displayCoordinates()
 
                 }
                 onPressed: {
-                    console.log("pressed")
-                    getCoo(piece)
-                    getAvailableFieldsCoo(modelIndex)
+                    console.log("PRESSED:")
+                    console.log("   model index:", modelIndex)
+                    console.log("   pieceRep index: ", index)
+                    //console.log("pressed")
+                    //getCoo(piece)
+                    //getAvailableFieldsCoo(modelIndex)
 
                 }
                 onReleased: {
-                    console.log("released")
-                    getCoo(piece)
+                    var newCooX = pieceRep.itemAt(index).x
+                    var newCooY = pieceRep.itemAt(index).y
+
+                    console.log("RELEASED:")
+                    console.log("   newCooX: ", newCooX)
+                    console.log("   newCooY: ", newCooY)
+                    /*
+                    TODO:
+                        1. Oblicz koordynaty: wierzchołków pionka i środka pionka
+                        2. Znajdź indeks pola wewnątrz którego znajduje się środek pionka
+                        3. Sprawdź, czy znalezione pole znajduje się w zasięgu pionka (RangeRole)
+                        4. Jeśli nie: wróć pionkiem do poprzedniej pozycji
+                        5. Jeśli tak: wycentruj pionek tak, żeby jego środek był równy FieldCenterRole
+                    */
+                    //getCoo(piece)
                 }
             }
         }
-/*
-        onWidthChanged: {
-            console.log("width changed")
-            setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
-        }
-
-        onHeightChanged: {
-            console.log("height changed")
-            setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
-        }
-*/
     }
 }
 

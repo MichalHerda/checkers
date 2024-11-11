@@ -269,8 +269,8 @@ void CheckersModel::printModel()
             QVariant fieldCoords = m_model.data(index, CheckersModel::FieldCoordinatesRole);
             QVariant fieldCenter = m_model.data(index, CheckersModel::FieldCenterRole);
             QVariant pieceCoords = m_model.data(index, CheckersModel::PieceCoordinatesRole);
-            qDebug() /*<< "Column: " << column << ", Row: " << row + 1
-                     << " Coordinate: " << coordinate
+            qDebug() /*<< "Column: " << column << ", Row: " << row + 1*/
+                     << " Coordinate: " << coordinate /*
                      << ", Playable: " << playable
                      << "Piece:" << piece
                      << "Range: " << range
