@@ -8,6 +8,8 @@ Item {
     property var fieldsCoordinates: []
     property var piecesCoordinates: []
 
+
+
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
         //console.log("getIdx: ", checkersModelInstance.getIndex(row, column))
@@ -178,12 +180,14 @@ Item {
         onWidthChanged: {
             console.log("width changed")
             setFieldsCoordinates(rep)
+            setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
             //checkersModelInstance.updateCoordinates()
         }
 
         onHeightChanged: {
             console.log("height changed")
             setFieldsCoordinates(rep)
+            setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
             //checkersModelInstance.updateCoordinates()
         }
     }
@@ -192,78 +196,79 @@ Item {
         id: pieceRep
         model: checkersModelInstance.getColumnsNo() * checkersModelInstance.getRowsNo()
 
-            Piece {
-                id: piece
+        property double fieldWidth:  parent.width / checkersModelInstance.getColumnsNo()
+        property double fieldHeight:  parent.height / checkersModelInstance.getRowsNo()
 
-                property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
-                property int column: index % checkersModelInstance.getColumnsNo()
-                property var modelIndex: getFieldIndex(row, column)
+        property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
+        property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
 
-                property double fieldWidth:  parent.width / checkersModelInstance.getColumnsNo()
-                property double fieldHeight:  parent.height / checkersModelInstance.getRowsNo()
+        Piece {
+            id: piece
 
-                property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
-                property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
+            property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
+            property int column: index % checkersModelInstance.getColumnsNo()
+            property var modelIndex: getFieldIndex(row, column)
 
-                property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
-                property var pieceRange: checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
+            property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
+            property var pieceRange: checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
 
-                width: pieceWidth
-                height: pieceHeight
-                x: column * fieldWidth + (fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
-                y: row * fieldHeight + (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
+            width: pieceRep.pieceWidth
+            height: pieceRep.pieceHeight
+            x: column * fieldWidth + (fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
+            y: row * fieldHeight + (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
 
-                visible: checkersModelInstance.isPiecePresent(modelIndex)
-                color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
-                border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
+            visible: checkersModelInstance.isPiecePresent(modelIndex)
+            color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
+            border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
 
-                Component.onCompleted: {
-                    console.log("**************************************************************************************")
-                    console.log("INDEX: ", index, "piece: ", piece)
-                    console.log("piece on completed: ", pieceStatus)
-                    //console.log("x: ", piece.x, "y: ", piece.y)                                                           // coordinates somehow not initialized and not visible at the moment
-                    console.log("playable: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
-                    console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
-                    console.log("**************************************************************************************")
+            Component.onCompleted: {
+                //console.log("**************************************************************************************")
+                //console.log("INDEX: ", index, "piece: ", piece)
+                //console.log("piece on completed: ", pieceStatus)
+                //console.log("x: ", piece.x, "y: ", piece.y)                                                           // coordinates somehow not initialized and not visible at the moment
+                //console.log("playable: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
+                //console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
+                //console.log("**************************************************************************************")
+            }
+
+            MouseArea {
+                id: pieceMouseArea
+                anchors.fill: parent
+                drag.target: piece
+                drag.axis: Drag.XAndYAxis
+                //drag.minimumX: 0
+                drag.maximumX: gameBoard.width - piece.width
+                drag.maximumY: gameBoard.height - piece.height
+                onClicked: {
+                    console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
+                    console.log("piece clicked. its range: ", piece.pieceRange)
+                    //getCoo(piece)
+                    displayCoordinates()
+
                 }
+                onPressed: {
+                    console.log("pressed")
+                    getCoo(piece)
+                    getAvailableFieldsCoo(modelIndex)
 
-                MouseArea {
-                    id: pieceMouseArea
-                    anchors.fill: parent
-                    drag.target: piece
-                    drag.axis: Drag.XAndYAxis
-                    //drag.minimumX: 0
-                    drag.maximumX: gameBoard.width - piece.width
-                    drag.maximumY: gameBoard.height - piece.height
-                    onClicked: {
-                        console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
-                        console.log("piece clicked. its range: ", piece.pieceRange)
-                        //getCoo(piece)
-                        displayCoordinates()
-
-                    }
-                    onPressed: {
-                        console.log("pressed")
-                        getCoo(piece)
-                        getAvailableFieldsCoo(modelIndex)
-
-                    }
-                    onReleased: {
-                        console.log("released")
-                        getCoo(piece)
-                    }
                 }
-
-                onWidthChanged: {
-                    console.log("width changed")
-                    setPiecesCoordinates(pieceRep, pieceWidth, pieceHeight)
-                }
-
-                onHeightChanged: {
-                    console.log("height changed")
-                    setPiecesCoordinates(pieceRep, pieceWidth, pieceHeight)
+                onReleased: {
+                    console.log("released")
+                    getCoo(piece)
                 }
             }
+        }
+/*
+        onWidthChanged: {
+            console.log("width changed")
+            setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
+        }
+
+        onHeightChanged: {
+            console.log("height changed")
+            setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
+        }
+*/
     }
 }
 

@@ -77,14 +77,14 @@ void CheckersModel::resetModel()
         for(int col = 0 ; col < m_columns; col++) {
             char column = 'A' + col;
 
-            qDebug() << "column: " << column << "row: " << row + 1 << "rowCoo: " << rowCoo;
+            //qDebug() << "column: " << column << "row: " << row + 1 << "rowCoo: " << rowCoo;
 
             QStandardItem* item = new QStandardItem();
-            qDebug()<<"item: " << item;
+            //qDebug()<<"item: " << item;
             m_model.setItem(row, col, item);
 
             QModelIndex index = m_model.index(row, col);
-            qDebug() << "index got: " << index;
+            //qDebug() << "index got: " << index;
             QPair<char, int> coordinates(column, rowCoo);
             bool playable = (col + row) % 2 != 0;
 
@@ -118,7 +118,7 @@ bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int
 
     switch(role) {
         case CheckersRoles::FieldNameRole: {
-            qDebug() << "CoordinateRole:" << value;
+            //qDebug() << "CoordinateRole:" << value;
             item->setData(value, FieldNameRole);
             break;
         }
@@ -269,9 +269,16 @@ void CheckersModel::printModel()
             QVariant fieldCoords = m_model.data(index, CheckersModel::FieldCoordinatesRole);
             QVariant fieldCenter = m_model.data(index, CheckersModel::FieldCenterRole);
             QVariant pieceCoords = m_model.data(index, CheckersModel::PieceCoordinatesRole);
-            qDebug() << /* "Column: " << column << ", Row: " << row + 1 << */" Coordinate: " << coordinate << ", Playable: " << playable
-                     << "Piece:" << piece << "Range: " << range << "Selected: " << selected << "Index: " << index
-                     << "fieldCoords: " << fieldCoords << "FieldCenter: " << fieldCenter << "pieceCoords: " << pieceCoords;
+            qDebug() /*<< "Column: " << column << ", Row: " << row + 1
+                     << " Coordinate: " << coordinate
+                     << ", Playable: " << playable
+                     << "Piece:" << piece
+                     << "Range: " << range
+                     << "Selected: " << selected
+                     << "Index: " << index */
+                     << "fieldCoords: " << fieldCoords
+                     << "FieldCenter: " << fieldCenter
+                     << "pieceCoords: " << pieceCoords;
         }
     }
 }
