@@ -83,6 +83,8 @@ public:
     //Q_INVOKABLE void updateFieldsCoordinates(const QVariantList &fieldsCoordinates);
     Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
 
+    Q_INVOKABLE bool isMoveValid(double averageX, double averageY);
+
 signals:
 
 private:
@@ -108,6 +110,8 @@ private:
     void setFieldsCoordinatesRole();
     void setFieldCenterRole();
     void setPiecesCoordinatesRole();
+
+    QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
 
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);

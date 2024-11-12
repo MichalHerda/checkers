@@ -429,6 +429,14 @@ void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinate
     qDebug() << "end of updateFieldsCoordinates function";
 }
 //**************************************************************************************************************************************
+bool CheckersModel::isMoveValid(double averageX, double averageY)
+{
+    QPointF pieceCenter(averageX, averageY);
+    QModelIndex targetFieldIndex = CheckersModel::findFieldIndexForPieceCenter(pieceCenter);
+    qDebug() << "piece center is now inside field: " << targetFieldIndex;
+    return true;
+}
+//**************************************************************************************************************************************
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {
@@ -632,6 +640,25 @@ void CheckersModel::setPiecesCoordinatesRole()
             }
         }
     }
+}
+//**************************************************************************************************************************************
+QModelIndex CheckersModel::findFieldIndexForPieceCenter(const QPointF &pieceCenter)
+{
+    for (int row = 0; row < m_rows; ++row) {
+        for (int col = 0; col < m_columns; ++col) {
+
+            QModelIndex fieldIndex = getIndex(row, col);
+            CornersCoordinates fieldCorners = data(fieldIndex, FieldCoordinatesRole).value<CornersCoordinates>();
+
+            if (pieceCenter.x() >= fieldCorners.topLeft.x() &&
+                pieceCenter.x() <= fieldCorners.topRight.x() &&
+                pieceCenter.y() >= fieldCorners.topLeft.y() &&
+                pieceCenter.y() <= fieldCorners.bottomLeft.y()) {
+                return fieldIndex;
+            }
+        }
+    }
+    return QModelIndex();
 }
 //**************************************************************************************************************************************
 QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)

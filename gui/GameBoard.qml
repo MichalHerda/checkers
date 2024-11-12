@@ -280,6 +280,9 @@ Item {
                     console.log("   newCooRightBottomY: ", newCooRightBottomY)
                     console.log("   newAverageX: ", newAverageX)
                     console.log("   newAverageY: ", newAverageY)
+
+                    checkersModelInstance.isMoveValid(newAverageX, newAverageY)
+
                     /*
                     TODO:
                         1. Oblicz koordynaty: wierzchołków pionka i środka pionka
