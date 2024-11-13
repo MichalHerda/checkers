@@ -64,7 +64,7 @@ Window {
 
     Timer {
         id: coordinatesInitializationTimer                                  // this timer exists to append fieldCoordinates Array with values, because its initialization onCompleted is with only {0, 0} values
-        interval: 10
+        interval: 1000
         running: true
         repeat: true
         onTriggered: {

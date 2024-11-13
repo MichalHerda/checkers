@@ -272,8 +272,8 @@ void CheckersModel::printModel()
             qDebug() /*<< "Column: " << column << ", Row: " << row + 1*/
                      << " Coordinate: " << coordinate /*
                      << ", Playable: " << playable
-                     << "Piece:" << piece
-                     << "Range: " << range
+                     << "Piece:" << piece */
+                     << "Range: " << range /*
                      << "Selected: " << selected
                      << "Index: " << index */
                      << "fieldCoords: " << fieldCoords
@@ -429,12 +429,28 @@ void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinate
     qDebug() << "end of updateFieldsCoordinates function";
 }
 //**************************************************************************************************************************************
-bool CheckersModel::isMoveValid(double averageX, double averageY)
+bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
 {
+    qDebug() << "isMoveValid, index passed: " << index;
+    QVariantList range = data(index, RangeRole).toList();
+    qDebug() << "passed index range: "  << range;
+
     QPointF pieceCenter(averageX, averageY);
     QModelIndex targetFieldIndex = CheckersModel::findFieldIndexForPieceCenter(pieceCenter);
     qDebug() << "piece center is now inside field: " << targetFieldIndex;
-    return true;
+
+    std::pair<char, int> targetCoordinate = data(targetFieldIndex, FieldNameRole).value<std::pair<char, int>>();
+    qDebug() << "target coordinate: " << targetCoordinate;
+    for (const QVariant &item : range) {
+        std::pair<char, int> rangeCoordinate = item.value<std::pair<char, int>>();
+        if (rangeCoordinate == targetCoordinate) {
+            qDebug() << "Pole docelowe znajduje się w zakresie ruchu pionka.";
+            return true;
+        }
+    }
+
+    qDebug() << "Pole docelowe nie znajduje się w zakresie pionka";
+    return false;
 }
 //**************************************************************************************************************************************
 void CheckersModel::setColumns(int col)
@@ -644,20 +660,37 @@ void CheckersModel::setPiecesCoordinatesRole()
 //**************************************************************************************************************************************
 QModelIndex CheckersModel::findFieldIndexForPieceCenter(const QPointF &pieceCenter)
 {
-    for (int row = 0; row < m_rows; ++row) {
-        for (int col = 0; col < m_columns; ++col) {
+    qDebug() << "findFieldIndexForPieceCenter function: ";
+
+    int count = 0;
+
+    for (int row = 0; row < m_rows; row++) {
+        for (int col = 0; col < m_columns; col++) {
 
             QModelIndex fieldIndex = getIndex(row, col);
             CornersCoordinates fieldCorners = data(fieldIndex, FieldCoordinatesRole).value<CornersCoordinates>();
 
+            qDebug() << count;
+            qDebug() << "   field name: " << data(fieldIndex, FieldNameRole);
+            qDebug() << "   piece center x: " << pieceCenter.x();
+            qDebug() << "   piece center y: " << pieceCenter.y();
+            qDebug() << "   topLeft.x: " << fieldCorners.topLeft.x();
+            qDebug() << "   bottomRight.x: " << fieldCorners.bottomRight.x();
+            qDebug() << "   bottomLeft.y: " << fieldCorners.bottomLeft.y();
+            qDebug() << "   topRight.y: " << fieldCorners.topRight.y();
+
             if (pieceCenter.x() >= fieldCorners.topLeft.x() &&
-                pieceCenter.x() <= fieldCorners.topRight.x() &&
+                pieceCenter.x() <= fieldCorners.bottomRight.x() &&
                 pieceCenter.y() >= fieldCorners.topLeft.y() &&
-                pieceCenter.y() <= fieldCorners.bottomLeft.y()) {
+                pieceCenter.y() <= fieldCorners.bottomRight.y()) {
+                qDebug() << "FIELD INDEX FOR PIECE CENTER FOUND: " << data(fieldIndex, FieldNameRole);
                 return fieldIndex;
             }
+
+            count++;
         }
     }
+    qDebug() << "WARNING: fieldindex for piece center not found !";
     return QModelIndex();
 }
 //**************************************************************************************************************************************

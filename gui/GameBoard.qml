@@ -266,7 +266,7 @@ Item {
 
                     var newAverageX = ( newCooLeftUpX + newCooRightUpX + newCooLeftBottomX + newCooRightBottomX ) / 4
                     var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
-
+/*
                     console.log("RELEASED:")
                     console.log("   pieceWidth:", piece.width)
                     console.log("   pieceHeight: ", piece.height)
@@ -280,8 +280,8 @@ Item {
                     console.log("   newCooRightBottomY: ", newCooRightBottomY)
                     console.log("   newAverageX: ", newAverageX)
                     console.log("   newAverageY: ", newAverageY)
-
-                    checkersModelInstance.isMoveValid(newAverageX, newAverageY)
+*/
+                    checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)
 
                     /*
                     TODO:
