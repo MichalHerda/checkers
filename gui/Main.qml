@@ -19,8 +19,8 @@ Window {
         property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
         property double fieldHeight:  checkersGameBoard.height / checkersModelInstance.getRowsNo()
         anchors.centerIn: parent
-        width: parent.width * 0.5
-        height: parent.height * 0.675
+        width: root.width * 0.5
+        height: root.height * 0.675
         transformOrigin: Item.Center
         rotation: rotateGameBoard ? 180 : 0
     }
@@ -61,7 +61,7 @@ Window {
             console.log("rotateGameBoard: ", rotateGameBoard)
         }
     }
-
+/*
     Timer {
         id: coordinatesInitializationTimer                                  // this timer exists to append fieldCoordinates Array with values, because its initialization onCompleted is with only {0, 0} values
         interval: 1000
@@ -73,4 +73,5 @@ Window {
             coordinatesInitializationTimer.running = false
         }
     }
+*/
 }

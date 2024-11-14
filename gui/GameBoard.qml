@@ -35,19 +35,25 @@ Item {
         }
     }
 
-    function setFieldsCoordinates(repeater) {
+    function setFieldsCoordinates(repeater, fieldHeight, fieldHeight) {
 
         fieldsCoordinates.length = 0
 
-        var fieldWidth = repeater.itemAt(1).x - repeater.itemAt(0).x
-        var fieldHeight = repeater.itemAt(checkersModelInstance.getColumnsNo()).y - repeater.itemAt(0).y
+        //var fieldWidth = repeater.itemAt(1).x - repeater.itemAt(0).x
+        //var fieldHeight = repeater.itemAt(checkersModelInstance.getColumnsNo()).y - repeater.itemAt(0).y
 
         console.log("setFieldCoordinates function: ")
+        console.log("   checkersGameboard.width: ", checkersGameBoard.width )
+        console.log("   checkersGameboard.height: ", checkersGameBoard.height )
+        console.log("   rows no: ", checkersModelInstance.getRowsNo())
+        console.log("   columns no: ", checkersModelInstance.getColumnsNo())
         console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
 
         var itemsNo = repeater.count
 
         for(let i = 0; i < itemsNo; i++) {
+            //console.log("   repeater.itemAt(", i, ").x: ", repeater.itemAt(i).x)
+            //console.log("   repeater.itemAt(", i, ").y: ", repeater.itemAt(i).y)
             fieldsCoordinates.push(repeater.itemAt(i).x);                // topLeftX
             fieldsCoordinates.push(repeater.itemAt(i).y);                // topLeftY
             fieldsCoordinates.push(repeater.itemAt(i).x + fieldWidth);   // topRightX
@@ -176,17 +182,59 @@ Item {
         }
 
         onWidthChanged: {
-            console.log("width changed")
-            setFieldsCoordinates(rep)
+            var fieldWidth = rep.itemAt(1).x - rep.itemAt(0).x
+            var fieldHeight = rep.itemAt(checkersModelInstance.getColumnsNo()).y - rep.itemAt(0).y
+
+            console.log("WIDTH CHANGED: ")
+            console.log("   rows no: ", checkersModelInstance.getRowsNo())
+            console.log("   columns no: ", checkersModelInstance.getColumnsNo())
+            console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+
+            for(let i = 0; i < rep.count; i++) {
+                console.log("   repeater.itemAt(", i, ").x: ", rep.itemAt(i).x)
+                console.log("   repeater.itemAt(", i, ").y: ", rep.itemAt(i).y)
+            }
+
+            setFieldsCoordinates(rep, fieldHeight, fieldHeight)
             setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
             //checkersModelInstance.updateCoordinates()
         }
 
         onHeightChanged: {
-            console.log("height changed")
-            setFieldsCoordinates(rep)
+            var fieldWidth = rep.itemAt(1).x - rep.itemAt(0).x
+            var fieldHeight = rep.itemAt(checkersModelInstance.getColumnsNo()).y - rep.itemAt(0).y
+
+            console.log("HEIGHT CHANGED: ")
+            console.log("   rows no: ", checkersModelInstance.getRowsNo())
+            console.log("   columns no: ", checkersModelInstance.getColumnsNo())
+            console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+
+            for(let i = 0; i < rep.count; i++) {
+                console.log("   repeater.itemAt(", i, ").x: ", rep.itemAt(i).x)
+                console.log("   repeater.itemAt(", i, ").y: ", rep.itemAt(i).y)
+            }
+
+            setFieldsCoordinates(rep, fieldHeight, fieldHeight)
             setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
             //checkersModelInstance.updateCoordinates()
+        }
+
+        Component.onCompleted: {
+            var fieldWidth = rep.itemAt(1).x - rep.itemAt(0).x
+            var fieldHeight = rep.itemAt(checkersModelInstance.getColumnsNo()).y - rep.itemAt(0).y
+
+            console.log("COMPONENT.ON.COMPLETED: ")
+            console.log("   rows no: ", checkersModelInstance.getRowsNo())
+            console.log("   columns no: ", checkersModelInstance.getColumnsNo())
+            console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+
+            for(let i = 0; i < rep.count; i++) {
+                console.log("   repeater.itemAt(", i, ").x: ", rep.itemAt(i).x)
+                console.log("   repeater.itemAt(", i, ").y: ", rep.itemAt(i).y)
+            }
+
+            setFieldsCoordinates(rep, fieldHeight, fieldHeight)
+            setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
         }
     }
 
