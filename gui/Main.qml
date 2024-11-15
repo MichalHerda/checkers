@@ -13,6 +13,7 @@ Window {
     color: CheckersTheme.backgroundColor
 
     property bool rotateGameBoard: false
+    property bool completed: false
 
     GameBoard {
         id: checkersGameBoard
