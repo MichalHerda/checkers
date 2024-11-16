@@ -111,12 +111,18 @@ Item {
                     var modelIndex = checkersModelInstance.getIndex(row, col)
                     if(checkersModelInstance.isPiecePresent(modelIndex)) {
 
-                        console.log("center piece, row: ", row, "column: ", col )
+                        console.log("   center piece, row: ", row, "column: ", col )
                         //pieceRepeater.itemAt(repeaterIndex).x = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole).topLeft
-                        console.log("DATA: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole) )
+                        //console.log("   DATA: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole) )
                         var coordinates = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole);
                         var topLeft = coordinates.topLeft
+                        var topRight = coordinates.topRight
+                        var bottomLeft = coordinates.bottomLeft
+                        var bottomRight = coordinates.bottomRight
                         console.log("   topLeft: ", topLeft)
+                        console.log("   topRight: ", topRight )
+                        console.log("   bottomLeft: ", bottomLeft)
+                        console.log("   bottomRight: ", bottomRight )
                         // TODO:
                         // JAK UZYSKAĆ POJEDYNCZE ELEMENTY STRUKTURY CORNERSCOORDINATES ???
                         // NAJPROŚCIEJ BĘDZIE ROZDZIELIĆ ROLE ZAWIERAJĄCE STRUKTURĘ, NA MNIEJSZE ROLE...

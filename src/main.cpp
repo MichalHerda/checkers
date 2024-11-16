@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<CheckersModel>("checkers.model", 1, 0, "CheckersModel");
 
+    qmlRegisterUncreatableType<CornersCoordinates>("Checkers", 1, 0, "CornersCoordinates", "CornersCoordinates cannot be created in QML");
+
     const QUrl url(QStringLiteral("qrc:/Checkers/gui/Main.qml"));
     QObject::connect(
         &engine,

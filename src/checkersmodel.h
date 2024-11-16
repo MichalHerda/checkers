@@ -6,6 +6,13 @@
 #include <QMetaEnum>
 
 struct CornersCoordinates {
+    Q_GADGET
+    Q_PROPERTY(QPointF topLeft MEMBER topLeft)
+    Q_PROPERTY(QPointF topRight MEMBER topRight)
+    Q_PROPERTY(QPointF bottomLeft MEMBER bottomLeft)
+    Q_PROPERTY(QPointF bottomRight MEMBER bottomRight)
+
+public:
     QPointF topLeft;
     QPointF topRight;
     QPointF bottomLeft;
