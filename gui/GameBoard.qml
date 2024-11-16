@@ -290,7 +290,8 @@ Item {
                 anchors.fill: parent
                 drag.target: piece
                 drag.axis: Drag.XAndYAxis
-                //drag.minimumX: 0
+                drag.minimumX: 0
+                drag.minimumY: 0
                 drag.maximumX: gameBoard.width - piece.width
                 drag.maximumY: gameBoard.height - piece.height
                 onClicked: {
@@ -337,7 +338,12 @@ Item {
                     console.log("   newAverageX: ", newAverageX)
                     console.log("   newAverageY: ", newAverageY)
 */
-                    checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)
+                    if(checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)) {
+                        console.log("move valid")
+                    }
+                    else {
+                        console.log("move not valid")
+                    }
 
                     /*
                     TODO:
