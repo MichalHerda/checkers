@@ -93,6 +93,46 @@ Item {
         checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
     }
 
+    function centerAllPiecesOnFields(repeater, pieceRepeater) {
+
+        console.log("centerAllPiecesOnFields function")
+        console.log("   pieceRepeater size: ", pieceRepeater.count)
+        var itemsNo = repeater.count
+        var modelNo = checkersModelInstance.getRowsNo() * checkersModelInstance.getColumnsNo()
+
+        if(itemsNo === modelNo) {
+            console.log("   modelNo equals itemNo !")
+            var repeaterIndex = 0
+
+            for(let row = 0; row < checkersModelInstance.getRowsNo(); row++) {
+                for(let col = 0; col < checkersModelInstance.getColumnsNo(); col++) {
+                    console.log("repeater index: ", repeaterIndex)
+
+                    var modelIndex = checkersModelInstance.getIndex(row, col)
+                    if(checkersModelInstance.isPiecePresent(modelIndex)) {
+
+                        console.log("center piece, row: ", row, "column: ", col )
+                        //pieceRepeater.itemAt(repeaterIndex).x = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole).topLeft
+                        console.log("DATA: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole) )
+                        var coordinates = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole);
+                        var topLeft = coordinates.topLeft
+                        console.log("   topLeft: ", topLeft)
+                        // TODO:
+                        // JAK UZYSKAĆ POJEDYNCZE ELEMENTY STRUKTURY CORNERSCOORDINATES ???
+                        // NAJPROŚCIEJ BĘDZIE ROZDZIELIĆ ROLE ZAWIERAJĄCE STRUKTURĘ, NA MNIEJSZE ROLE...
+                    }
+                    else {
+                        console.log("piece not present, no item to center")
+                    }
+                    repeaterIndex++
+                }
+            }
+        }
+        else {
+            console.log("   modelNo does not equal itemNo !")
+        }
+    }
+
     function displayCoordinates() {
         for (let i = 0; i < fieldsCoordinates.length; i += 8) {
             console.log("Item no. ", i / 8, ": ");
@@ -343,6 +383,7 @@ Item {
                     }
                     else {
                         console.log("move not valid")
+                        centerAllPiecesOnFields(rep, pieceRep)
                     }
 
                     /*

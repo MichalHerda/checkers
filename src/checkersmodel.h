@@ -5,7 +5,6 @@
 #include <QStandardItemModel>
 #include <QMetaEnum>
 
-
 struct CornersCoordinates {
     QPointF topLeft;
     QPointF topRight;
