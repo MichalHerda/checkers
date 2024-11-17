@@ -21,10 +21,10 @@ bool CheckersModel::isPiecePresent(const QModelIndex &index)
     auto pieceRole = data(index, PieceRole);
     //qDebug() << "isPiecePresent function, pieceRole: " << pieceRole;
 
-    auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
+    auto piece = pieceRole.value<Piece>();
     //qDebug() << "isPiecePresent function, piecePair: " << piecePair;
 
-    CheckersModel::Type type = piecePair.second;
+    CheckersModel::Type type = piece.type;
 
     //qDebug() << "isPiecePresent function, player:" << player;
 
@@ -37,10 +37,11 @@ bool CheckersModel::getPieceColor(const QModelIndex &index)                     
     auto pieceRole = data(index, PieceRole);
     //qDebug() << "GetPieceColor function, pieceRole: " << pieceRole;
 
-    auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
+    //auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
+    auto piece = pieceRole.value<Piece>();
     //qDebug() << "isPiecePresent function, piecePair: " << piecePair;
 
-    CheckersModel::Player player = piecePair.first;
+    CheckersModel::Player player = piece.player;
 
     //qDebug() << "isPiecePresent function, player:" << player;
 
@@ -50,9 +51,10 @@ bool CheckersModel::getPieceColor(const QModelIndex &index)                     
 bool CheckersModel::getPieceType(const QModelIndex &index)                                      //return true: type == king
 {                                                                                               //      false: type == man
     auto pieceRole = data(index, PieceRole);
-    auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
+    //auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
+    auto piece = pieceRole.value<Piece>();
 
-    CheckersModel::Type type = piecePair.second;
+    CheckersModel::Type type = piece.type;
 
     return type == CheckersModel::Type::king;
 }
@@ -515,7 +517,7 @@ void CheckersModel::setPieceRows(int row)
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::initializePieces()
 {
-    //SET WHITE PIECES:
+    //SET BLACK PIECES:
     for(int row = 0; row < m_pieceRows; row++ ) {
         for(int col = 0; col < m_columns; col++) {
             QModelIndex index = m_model.index(row, col);
@@ -524,15 +526,18 @@ void CheckersModel::initializePieces()
                 CheckersModel::setPiece(index, Player::black);
             }
             else {
-                Player player = Player::null;
-                Type type = Type::null;
-                QPair<Player, Type> piece(player, type);
-                setData(index, QVariant::fromValue(piece), PieceRole);
+                //Player player = Player::null;
+                //Type type = Type::null;
+                //Piece piece;
+                //piece.player = Player::null;
+                //piece.type = Type::null;
+                //setData(index, QVariant::fromValue(piece), PieceRole);
+                CheckersModel::setEmptyField(index);
             }
         }
     }
 
-    //SET BLACK PIECES:
+    //SET WHITE PIECES:
     for(int row = m_rows - 1; row >= m_rows - m_pieceRows; row--){
         for(int col = 0; col < m_columns; col++) {
             QModelIndex index = m_model.index(row, col);
@@ -573,7 +578,9 @@ void CheckersModel::setEmptyField(QModelIndex index)
     Player player = Player::null;
     Type type = Type::null;
 
-    QPair<Player, Type> piece(player, type);
+    Piece piece;
+    piece.player = player;
+    piece.type = type;
 
     setData(index, QVariant::fromValue(piece), PieceRole);
 }
