@@ -55,12 +55,12 @@ public:
         null
     };
     Q_ENUM(Type)
-
+/*
     struct Piece {
         Player player;
         Type type;
     };
-
+*/
     explicit CheckersModel();
 
     Q_INVOKABLE bool isPiecePresent(const QModelIndex &index);
@@ -127,5 +127,17 @@ private:
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
 };
+
+struct Piece {
+    Q_GADGET
+
+    Q_PROPERTY(CheckersModel::Player player MEMBER player)
+    Q_PROPERTY(CheckersModel::Type type MEMBER type)
+
+public:
+    CheckersModel::Player player;
+    CheckersModel::Type type;
+};
+Q_DECLARE_METATYPE(Piece)
 
 #endif // CHECKERSMODEL_H

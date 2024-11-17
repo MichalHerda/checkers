@@ -15,6 +15,16 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);
 
+    qRegisterMetaType<CheckersModel::Player>("CheckersModel::Player");
+    qRegisterMetaType<CheckersModel::Type>("CheckersModel::Type");
+    qRegisterMetaType<Piece>("Piece");
+    //qRegisterMetaType<CheckersModel::Piece>("CheckersModel::Piece");
+
+    qmlRegisterUncreatableMetaObject(CheckersModel::staticMetaObject,
+                                     "CheckersEnums", 1, 0,
+                                     "CheckersModel",
+                                     "Error: Only enums");
+
     qmlRegisterType<CheckersModel>("checkers.model", 1, 0, "CheckersModel");
 
     qmlRegisterUncreatableType<CornersCoordinates>("Checkers", 1, 0, "CornersCoordinates", "CornersCoordinates cannot be created in QML");
