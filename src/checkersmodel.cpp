@@ -453,6 +453,28 @@ bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double avera
     return false;
 }
 //***************************************************************************************************************************************************************************************************************************************
+QModelIndex CheckersModel::getModelIndexFromGivenCoordinates(double averageX, double averageY)
+{
+    qDebug() << "getModelIndexFromGivenCoordinates function: ";
+
+    for (int row = 0; row < m_rows; row++) {
+        for (int col = 0; col < m_columns; col++) {
+            QModelIndex index = m_model.index(row, col);
+            CornersCoordinates corners = data(index, FieldCoordinatesRole).value<CornersCoordinates>();
+            qDebug() << "   corners: " << corners;
+
+            if (averageX >= corners.topLeft.x()        &&
+                averageX <= corners.topRight.x()       &&
+                averageY >= corners.topLeft.y()        &&
+                averageY <= corners.bottomLeft.y())     {
+                return index;
+            }
+        }
+    }
+
+    return QModelIndex();
+}
+//***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::setColumns(int col)
 {
     if(col % 2 != 0) {

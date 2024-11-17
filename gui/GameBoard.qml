@@ -106,14 +106,13 @@ Item {
 
             for(let row = 0; row < checkersModelInstance.getRowsNo(); row++) {
                 for(let col = 0; col < checkersModelInstance.getColumnsNo(); col++) {
-                    console.log("repeater index: ", repeaterIndex)
+                    console.log("   repeater index: ", repeaterIndex)
 
                     var modelIndex = checkersModelInstance.getIndex(row, col)
                     if(checkersModelInstance.isPiecePresent(modelIndex)) {
 
                         console.log("   center piece, row: ", row, "column: ", col )
-                        //pieceRepeater.itemAt(repeaterIndex).x = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole).topLeft
-                        //console.log("   DATA: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole) )
+
                         var coordinates = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole);
                         var topLeft = coordinates.topLeft
                         var topRight = coordinates.topRight
@@ -123,9 +122,7 @@ Item {
                         console.log("   topRight: ", topRight )
                         console.log("   bottomLeft: ", bottomLeft)
                         console.log("   bottomRight: ", bottomRight )
-                        // TODO:
-                        // JAK UZYSKAĆ POJEDYNCZE ELEMENTY STRUKTURY CORNERSCOORDINATES ???
-                        // NAJPROŚCIEJ BĘDZIE ROZDZIELIĆ ROLE ZAWIERAJĄCE STRUKTURĘ, NA MNIEJSZE ROLE...
+
                         pieceRepeater.itemAt(repeaterIndex).x = topLeft.x
                         pieceRepeater.itemAt(repeaterIndex).y = topLeft.y
                     }
@@ -388,6 +385,11 @@ Item {
 */
                     if(checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)) {
                         console.log("move valid")
+                        var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
+                        console.log("model index to move: ", modelIndexToMove)
+
+                        //TODO: SWAP FIELDS VALUES NOW:
+                        //checkersModelInstance.setData(modelIndexToMove, )
                     }
                     else {
                         console.log("move not valid")

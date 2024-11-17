@@ -91,6 +91,7 @@ public:
     Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
 
     Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
+    Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
 signals:
 
