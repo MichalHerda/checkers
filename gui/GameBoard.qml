@@ -126,6 +126,8 @@ Item {
                         // TODO:
                         // JAK UZYSKAĆ POJEDYNCZE ELEMENTY STRUKTURY CORNERSCOORDINATES ???
                         // NAJPROŚCIEJ BĘDZIE ROZDZIELIĆ ROLE ZAWIERAJĄCE STRUKTURĘ, NA MNIEJSZE ROLE...
+                        pieceRepeater.itemAt(repeaterIndex).x = topLeft.x
+                        pieceRepeater.itemAt(repeaterIndex).y = topLeft.y
                     }
                     else {
                         console.log("piece not present, no item to center")
