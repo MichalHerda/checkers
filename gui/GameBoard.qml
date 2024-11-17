@@ -114,6 +114,7 @@ Item {
                         console.log("   center piece, row: ", row, "column: ", col )
 
                         var coordinates = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole);
+                        console.log("   coordinates: ", coordinates)
                         var topLeft = coordinates.topLeft
                         var topRight = coordinates.topRight
                         var bottomLeft = coordinates.bottomLeft
@@ -388,6 +389,10 @@ Item {
                         var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
                         console.log("model index to move: ", modelIndexToMove)
 
+                        var pieceData = checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
+                        console.log("piece data: ", pieceData)
+                        console.log("piece data color: ", pieceData.player)
+                        console.log("piece data type: ", pieceData.type)
                         //TODO: SWAP FIELDS VALUES NOW:
                         //checkersModelInstance.setData(modelIndexToMove, )
                     }

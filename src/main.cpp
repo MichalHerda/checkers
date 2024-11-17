@@ -11,14 +11,13 @@ int main(int argc, char *argv[])
     checkersModelInstance.resetModel();
 
     qRegisterMetaType<CornersCoordinates>("CheckersModel::CornersCoordinates");
-
-    QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);
+    qRegisterMetaType<Piece>("Piece");
 
     qRegisterMetaType<CheckersModel::Player>("CheckersModel::Player");
     qRegisterMetaType<CheckersModel::Type>("CheckersModel::Type");
-    qRegisterMetaType<Piece>("Piece");
-    //qRegisterMetaType<CheckersModel::Piece>("CheckersModel::Piece");
+
+    QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);
 
     qmlRegisterUncreatableMetaObject(CheckersModel::staticMetaObject,
                                      "CheckersEnums", 1, 0,
@@ -27,7 +26,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<CheckersModel>("checkers.model", 1, 0, "CheckersModel");
 
-    qmlRegisterUncreatableType<CornersCoordinates>("Checkers", 1, 0, "CornersCoordinates", "CornersCoordinates cannot be created in QML");
+    qmlRegisterUncreatableType<CornersCoordinates>("Checkers", 1, 0, "cornersCoordinates", "CornersCoordinates cannot be created in QML");
+    qmlRegisterUncreatableType<Piece>("Checkers", 1, 0, "piece", "Piece cannot be created in QML");
 
     const QUrl url(QStringLiteral("qrc:/Checkers/gui/Main.qml"));
     QObject::connect(

@@ -494,7 +494,7 @@ void CheckersModel::setRows(int row)
         row++;
         CheckersModel::setRows(row);
     }
-    else {        
+    else {
         m_rows = row;
     }
 }
@@ -556,10 +556,14 @@ void CheckersModel::initializePieces()
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::setPiece(QModelIndex index, Player player, Type type)
 {
-    Player playerToSet = player;
-    Type typeToSet = type;
+    //Player playerToSet = player;
+    //Type typeToSet = type;
 
-    QPair<Player, Type> piece(playerToSet, typeToSet);
+    //QPair<Player, Type> piece(playerToSet, typeToSet);
+
+    Piece piece;
+    piece.player = player;
+    piece.type = type;
 
     setData(index, QVariant::fromValue(piece), PieceRole);
 }
