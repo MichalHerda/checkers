@@ -21,8 +21,6 @@ public:
 };
 Q_DECLARE_METATYPE(CornersCoordinates)
 
-QDebug operator<<(QDebug debug, const CornersCoordinates &coords);
-
 class CheckersModel : public QStandardItemModel
 {
     Q_OBJECT
@@ -139,5 +137,8 @@ public:
     CheckersModel::Type type;
 };
 Q_DECLARE_METATYPE(Piece)
+
+QDebug operator<<(QDebug debug, const CornersCoordinates &coords);
+QDebug operator<<(QDebug debug, const Piece &pieceRole);
 
 #endif // CHECKERSMODEL_H
