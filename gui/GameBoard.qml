@@ -35,7 +35,7 @@ Item {
         }
     }
 
-    function setFieldsCoordinates(repeater, fieldHeight, fieldHeight) {
+    function setFieldsCoordinates(repeater, fieldWidth, fieldHeight) {
 
         fieldsCoordinates.length = 0
 
@@ -242,7 +242,7 @@ Item {
                     console.log("   repeater.itemAt(", i, ").y: ", rep.itemAt(i).y)
                 }
 
-                setFieldsCoordinates(rep, fieldHeight, fieldHeight)
+                setFieldsCoordinates(rep, fieldWidth, fieldHeight)
                 setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
                 //checkersModelInstance.updateCoordinates()
             }
@@ -263,7 +263,7 @@ Item {
                     console.log("   repeater.itemAt(", i, ").y: ", rep.itemAt(i).y)
                 }
 
-                setFieldsCoordinates(rep, fieldHeight, fieldHeight)
+                setFieldsCoordinates(rep, fieldWidth, fieldHeight)
                 setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
                 //checkersModelInstance.updateCoordinates()
             }
@@ -284,7 +284,7 @@ Item {
                     console.log("   repeater.itemAt(", i, ").y: ", rep.itemAt(i).y)
                 }
 
-                setFieldsCoordinates(rep, fieldHeight, fieldHeight)
+                setFieldsCoordinates(rep, fieldWidth, fieldHeight)
                 setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
 
                 completed = true
@@ -389,12 +389,29 @@ Item {
                         var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
                         console.log("model index to move: ", modelIndexToMove)
 
+                        //SWAP FIELDS VALUES:
+
+                        var emptyPieceData = checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole)
+                        console.log("field to move before swap: ", emptyPieceData)
+                        console.log("field to move data color: ", emptyPieceData.player)
+                        console.log("field to move data type: ", emptyPieceData.type)
+
                         var pieceData = checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
                         console.log("piece data: ", pieceData)
                         console.log("piece data color: ", pieceData.player)
                         console.log("piece data type: ", pieceData.type)
-                        //TODO: SWAP FIELDS VALUES NOW:
-                        //checkersModelInstance.setData(modelIndexToMove, )
+
+                        checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
+                        checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
+
+                        var fieldWidth = rep.itemAt(1).x - rep.itemAt(0).x
+                        var fieldHeight = rep.itemAt(checkersModelInstance.getColumnsNo()).y - rep.itemAt(0).y
+
+                        setFieldsCoordinates(rep, fieldWidth, fieldHeight)
+                        setPiecesCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
+
+                        centerAllPiecesOnFields(rep, pieceRep)
+
                     }
                     else {
                         console.log("move not valid")

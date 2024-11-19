@@ -271,16 +271,17 @@ void CheckersModel::printModel()
             QVariant fieldCoords = m_model.data(index, CheckersModel::FieldCoordinatesRole);
             QVariant fieldCenter = m_model.data(index, CheckersModel::FieldCenterRole);
             QVariant pieceCoords = m_model.data(index, CheckersModel::PieceCoordinatesRole);
-            qDebug() /*<< "Column: " << column << ", Row: " << row + 1*/
+            qDebug() << "\nRow: " << row << ", Column: " << col << "\n"/*
                      << " Coordinate: " << coordinate
-                     << ", Playable: " << playable
-                     << "Piece:" << piece
-                     << "Range: " << range /*
-                     << "Selected: " << selected
-                     << "Index: " << index */
-                     << "fieldCoords: " << fieldCoords
-                     << "FieldCenter: " << fieldCenter
-                     << "pieceCoords: " << pieceCoords;
+                     << ", Playable: " << playable */
+                     << "\n     Piece:" << piece /*
+                     << "\n     Range: " << range
+                     << "\n     Selected: " << selected
+                     << "\n     Index: " << index*/
+                     << "\n     fieldCoords: " << fieldCoords
+                     << "\n     FieldCenter: " << fieldCenter
+                     << "\n     pieceCoords: " << pieceCoords
+                     << "\n";
         }
     }
 }
@@ -406,7 +407,6 @@ void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinate
 
         m_piecesCoordinates[j] = coords;
 
-        // Debugowanie
         //qDebug() << "Item no." << i / 8 << ":";
         //qDebug() << "  topLeft: x:" << coords.topLeft.x() << "y:" << coords.topLeft.y();
         //qDebug() << "  topRight: x:" << coords.topRight.x() << "y:" << coords.topRight.y();
