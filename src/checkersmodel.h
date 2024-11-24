@@ -84,8 +84,7 @@ public:
     Q_INVOKABLE void selectField(QModelIndex index, bool selected = true);
     Q_INVOKABLE void deselectAllFields();
 
-    Q_INVOKABLE void updateCoordinates(const QVariantList &fieldsCoordinates);
-    //Q_INVOKABLE void updateFieldsCoordinates(const QVariantList &fieldsCoordinates);
+    Q_INVOKABLE void updateFieldsCoordinates(const QVariantList &fieldsCoordinates);
     Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
 
     Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);

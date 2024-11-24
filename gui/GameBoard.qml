@@ -114,6 +114,13 @@ Item {
         }
     }
 
+    function updateCoordinates(fieldRep, pieceRep) {
+        var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
+        var piecesCoordinates = getCoordinates(pieceRep, pieceWidth, pieceHeight)
+        checkersModelInstance.updateFieldsCoordinates(fieldsCoordinates)
+        checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
+    }
+
     Grid {
         id: gameBoard
         anchors.fill: parent
@@ -194,6 +201,7 @@ Item {
 
         onWidthChanged: {
             if(completed) {
+                /*
                 var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
                 var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
@@ -201,21 +209,23 @@ Item {
                 console.log("   rows no: ", checkersModelInstance.getRowsNo())
                 console.log("   columns no: ", checkersModelInstance.getColumnsNo())
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
                 for(let i = 0; i < fieldRep.count; i++) {
                     console.log("   repeater.itemAt(", i, ").x: ", fieldRep.itemAt(i).x)
                     console.log("   repeater.itemAt(", i, ").y: ", fieldRep.itemAt(i).y)
                 }
+                */
+                console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-                var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
-                var piecesCoordinates = getCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
-                checkersModelInstance.updateCoordinates(fieldsCoordinates)
-                checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
+                updateCoordinates(fieldRep, pieceRep)
             }
         }
 
         onHeightChanged: {
             if(completed) {
+                /*
                 var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
                 var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
@@ -223,21 +233,23 @@ Item {
                 console.log("   rows no: ", checkersModelInstance.getRowsNo())
                 console.log("   columns no: ", checkersModelInstance.getColumnsNo())
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
                 for(let i = 0; i < fieldRep.count; i++) {
                     console.log("   repeater.itemAt(", i, ").x: ", fieldRep.itemAt(i).x)
                     console.log("   repeater.itemAt(", i, ").y: ", fieldRep.itemAt(i).y)
                 }
+                */
+                console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-                var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
-                var piecesCoordinates = getCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
-                checkersModelInstance.updateCoordinates(fieldsCoordinates)
-                checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
+                updateCoordinates(fieldRep, pieceRep)
             }
         }
 
         Component.onCompleted: {
             if(!completed) {
+                /*
                 var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
                 var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
@@ -245,16 +257,17 @@ Item {
                 console.log("   rows no: ", checkersModelInstance.getRowsNo())
                 console.log("   columns no: ", checkersModelInstance.getColumnsNo())
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
                 for(let i = 0; i < fieldRep.count; i++) {
                     console.log("   repeater.itemAt(", i, ").x: ", fieldRep.itemAt(i).x)
                     console.log("   repeater.itemAt(", i, ").y: ", fieldRep.itemAt(i).y)
                 }
+                */
+                console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-                var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
-                var piecesCoordinates = getCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
-                checkersModelInstance.updateCoordinates(fieldsCoordinates)
-                checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
+                updateCoordinates(fieldRep, pieceRep)
 
                 completed = true
             }
@@ -379,10 +392,7 @@ Item {
                         var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
                         var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
-                        var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
-                        var piecesCoordinates = getCoordinates(pieceRep, pieceRep.pieceWidth, pieceRep.pieceHeight)
-                        checkersModelInstance.updateCoordinates(fieldsCoordinates)
-                        checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
+                        updateCoordinates(fieldRep, pieceRep)
 
                         centerAllPiecesOnFields(fieldRep, pieceRep)
 

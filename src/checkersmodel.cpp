@@ -334,7 +334,7 @@ void CheckersModel::deselectAllFields()
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
-void CheckersModel::updateCoordinates(const QVariantList &fieldsCoordinates)
+void CheckersModel::updateFieldsCoordinates(const QVariantList &fieldsCoordinates)
 {
     qDebug() << "updateFieldsCoordinates function";
     qDebug() << "fieldsCoordinates size: " << fieldsCoordinates.size();
@@ -428,7 +428,7 @@ void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinate
     //setFieldCenterRole();
 
     qDebug() << "m_piecesCoordinates size: " << m_piecesCoordinates.size();
-    qDebug() << "end of updateFieldsCoordinates function";
+    qDebug() << "end of updatePiecesCoordinates function";
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
