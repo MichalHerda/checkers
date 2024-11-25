@@ -27,6 +27,7 @@ qt_add_qml_module(appCheckers
         SOURCES src/checkersmodel.h src/checkersmodel.cpp
         QML_FILES gui/GameBoard.qml
         QML_FILES gui/Piece.qml
+        QML_FILES gui/frontEnd.js
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

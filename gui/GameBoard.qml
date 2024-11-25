@@ -2,10 +2,11 @@ import QtQuick 2.15
 import QtQuick.Controls
 import Checkers 1.0
 import checkers.model
+import "frontEnd.js" as Js
 
 Item {
     id: root
-
+/*
     function getFieldIndex(row, column) {
         //console.log("getFieldFoo, row: ", row, "column: ", column)
         //console.log("getIdx: ", checkersModelInstance.getIndex(row, column))
@@ -17,7 +18,7 @@ Item {
         let coordinates = { x: piece.x, y: piece.y };
         return coordinates;
     }
-
+*/
     function getAvailableFieldsCoo(modelIndex) {
         var rangeArray = checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
 
@@ -32,7 +33,7 @@ Item {
             }
         }
     }
-
+/*
     function getCoordinates(repeater, width, height) {
 
         var coordinates = []
@@ -114,13 +115,13 @@ Item {
         }
     }
 
-    function updateCoordinates(fieldRep, pieceRep) {
+    function updateCoordinates(fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight) {
         var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
         var piecesCoordinates = getCoordinates(pieceRep, pieceWidth, pieceHeight)
         checkersModelInstance.updateFieldsCoordinates(fieldsCoordinates)
         checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
     }
-
+*/
     Grid {
         id: gameBoard
         anchors.fill: parent
@@ -140,7 +141,7 @@ Item {
 
                 property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
                 property int column: index % checkersModelInstance.getColumnsNo()
-                property var modelIndex: getFieldIndex(row, column)
+                property var modelIndex: Js.getFieldIndex(row, column, checkersModelInstance)
                 property var item: checkersModelInstance.getItem(modelIndex)
 
                 color: checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole) === true  ?
@@ -219,7 +220,7 @@ Item {
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
                 console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-                updateCoordinates(fieldRep, pieceRep)
+                Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight)
             }
         }
 
@@ -243,7 +244,7 @@ Item {
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
                 console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-                updateCoordinates(fieldRep, pieceRep)
+                Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight)
             }
         }
 
@@ -267,7 +268,7 @@ Item {
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
                 console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-                updateCoordinates(fieldRep, pieceRep)
+                Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight)
 
                 completed = true
             }
@@ -289,7 +290,7 @@ Item {
 
             property int row: Math.floor(index / checkersModelInstance.getColumnsNo())
             property int column: index % checkersModelInstance.getColumnsNo()
-            property var modelIndex: getFieldIndex(row, column)
+            property var modelIndex: Js.getFieldIndex(row, column, checkersModelInstance)
 
             property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
             property var pieceRange: checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
@@ -345,7 +346,7 @@ Item {
 
                     var newAverageX = ( newCooLeftUpX + newCooRightUpX + newCooLeftBottomX + newCooRightBottomX ) / 4
                     var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
-/*
+
                     console.log("RELEASED:")
                     console.log("   pieceWidth:", piece.width)
                     console.log("   pieceHeight: ", piece.height)
@@ -359,7 +360,7 @@ Item {
                     console.log("   newCooRightBottomY: ", newCooRightBottomY)
                     console.log("   newAverageX: ", newAverageX)
                     console.log("   newAverageY: ", newAverageY)
-*/
+
                     if(checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)) {
                         console.log("move valid")
                         var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
@@ -392,14 +393,14 @@ Item {
                         var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
                         var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
-                        updateCoordinates(fieldRep, pieceRep)
+                        Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight)
 
-                        centerAllPiecesOnFields(fieldRep, pieceRep)
+                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, fieldRep, pieceRep)    // <---------------------- TUTAJ! W TYM MIEJSCU SZUKAJ BŁĘDU!
 
                     }
                     else {
                         console.log("move not valid")
-                        centerAllPiecesOnFields(fieldRep, pieceRep)
+                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, fieldRep, pieceRep)     // <---------------------- TUTAJ! W TYM MIEJSCU SZUKAJ BŁĘDU!
                     }
 
                     /*
