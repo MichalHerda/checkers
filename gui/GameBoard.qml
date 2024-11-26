@@ -6,19 +6,7 @@ import "frontEnd.js" as Js
 
 Item {
     id: root
-/*
-    function getFieldIndex(row, column) {
-        //console.log("getFieldFoo, row: ", row, "column: ", column)
-        //console.log("getIdx: ", checkersModelInstance.getIndex(row, column))
-        return checkersModelInstance.getIndex(row, column)
-    }
 
-    function getCoo(piece) {
-        console.log("show ", piece, "x: ", piece.x, "y: ", piece.y)
-        let coordinates = { x: piece.x, y: piece.y };
-        return coordinates;
-    }
-*/
     function getAvailableFieldsCoo(modelIndex) {
         var rangeArray = checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
 
@@ -33,95 +21,7 @@ Item {
             }
         }
     }
-/*
-    function getCoordinates(repeater, width, height) {
 
-        var coordinates = []
-
-        var itemsNo = repeater.count
-
-        for(let i = 0; i < itemsNo; i++) {
-            //console.log("   repeater.itemAt(", i, ").x: ", repeater.itemAt(i).x)
-            //console.log("   repeater.itemAt(", i, ").y: ", repeater.itemAt(i).y)
-            coordinates.push(repeater.itemAt(i).x);                // topLeftX
-            coordinates.push(repeater.itemAt(i).y);                // topLeftY
-            coordinates.push(repeater.itemAt(i).x + fieldWidth);   // topRightX
-            coordinates.push(repeater.itemAt(i).y);                // topRightY
-            coordinates.push(repeater.itemAt(i).x);                // bottomLeftX
-            coordinates.push(repeater.itemAt(i).y + fieldHeight);  // bottomLeftY
-            coordinates.push(repeater.itemAt(i).x + fieldWidth);   // bottomRightX
-            coordinates.push(repeater.itemAt(i).y + fieldHeight);  // bottomRightY
-        }
-
-        console.log("SET COORDINATES FUNCTION: ")
-        console.log("   coordinates array size: ", coordinates.length)
-
-        return coordinates
-    }
-
-    function centerAllPiecesOnFields(repeater, pieceRepeater) {
-
-        console.log("centerAllPiecesOnFields function")
-        console.log("   pieceRepeater size: ", pieceRepeater.count)
-        var itemsNo = repeater.count
-        var modelNo = checkersModelInstance.getRowsNo() * checkersModelInstance.getColumnsNo()
-
-        if(itemsNo === modelNo) {
-            console.log("   modelNo equals itemNo !")
-            var repeaterIndex = 0
-
-            for(let row = 0; row < checkersModelInstance.getRowsNo(); row++) {
-                for(let col = 0; col < checkersModelInstance.getColumnsNo(); col++) {
-                    console.log("   repeater index: ", repeaterIndex)
-
-                    var modelIndex = checkersModelInstance.getIndex(row, col)
-                    if(checkersModelInstance.isPiecePresent(modelIndex)) {
-
-                        console.log("   center piece, row: ", row, "column: ", col )
-
-                        var coordinates = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole);
-                        console.log("   coordinates: ", coordinates)
-                        var topLeft = coordinates.topLeft
-                        var topRight = coordinates.topRight
-                        var bottomLeft = coordinates.bottomLeft
-                        var bottomRight = coordinates.bottomRight
-                        console.log("   topLeft: ", topLeft)
-                        console.log("   topRight: ", topRight )
-                        console.log("   bottomLeft: ", bottomLeft)
-                        console.log("   bottomRight: ", bottomRight )
-
-                        pieceRepeater.itemAt(repeaterIndex).x = topLeft.x
-                        pieceRepeater.itemAt(repeaterIndex).y = topLeft.y
-                    }
-                    else {
-                        console.log("piece not present, no item to center")
-                    }
-                    repeaterIndex++
-                }
-            }
-        }
-        else {
-            console.log("   modelNo does not equal itemNo !")
-        }
-    }
-
-    function displayCoordinates(coordinates) {
-        for (let i = 0; i < coordinates.length; i += 8) {
-            console.log("Item no. ", i / 8, ": ");
-            console.log("  topLeft: x:", coordinates[i], "y:", coordinates[i + 1]);
-            console.log("  topRight: x:", coordinates[i + 2], "y:", coordinates[i + 3]);
-            console.log("  bottomLeft: x:", coordinates[i + 4], "y:", coordinates[i + 5]);
-            console.log("  bottomRight: x:", coordinates[i + 6], "y:", coordinates[i + 7]);
-        }
-    }
-
-    function updateCoordinates(fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight) {
-        var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
-        var piecesCoordinates = getCoordinates(pieceRep, pieceWidth, pieceHeight)
-        checkersModelInstance.updateFieldsCoordinates(fieldsCoordinates)
-        checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
-    }
-*/
     Grid {
         id: gameBoard
         anchors.fill: parent
@@ -202,21 +102,7 @@ Item {
 
         onWidthChanged: {
             if(completed) {
-                /*
-                var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
-                var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
-                console.log("WIDTH CHANGED: ")
-                console.log("   rows no: ", checkersModelInstance.getRowsNo())
-                console.log("   columns no: ", checkersModelInstance.getColumnsNo())
-                console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
-
-                for(let i = 0; i < fieldRep.count; i++) {
-                    console.log("   repeater.itemAt(", i, ").x: ", fieldRep.itemAt(i).x)
-                    console.log("   repeater.itemAt(", i, ").y: ", fieldRep.itemAt(i).y)
-                }
-                */
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
                 console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
@@ -226,21 +112,7 @@ Item {
 
         onHeightChanged: {
             if(completed) {
-                /*
-                var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
-                var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
-                console.log("HEIGHT CHANGED: ")
-                console.log("   rows no: ", checkersModelInstance.getRowsNo())
-                console.log("   columns no: ", checkersModelInstance.getColumnsNo())
-                console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
-
-                for(let i = 0; i < fieldRep.count; i++) {
-                    console.log("   repeater.itemAt(", i, ").x: ", fieldRep.itemAt(i).x)
-                    console.log("   repeater.itemAt(", i, ").y: ", fieldRep.itemAt(i).y)
-                }
-                */
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
                 console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
@@ -250,21 +122,7 @@ Item {
 
         Component.onCompleted: {
             if(!completed) {
-                /*
-                var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
-                var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
-                console.log("COMPONENT.ON.COMPLETED: ")
-                console.log("   rows no: ", checkersModelInstance.getRowsNo())
-                console.log("   columns no: ", checkersModelInstance.getColumnsNo())
-                console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-                console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
-
-                for(let i = 0; i < fieldRep.count; i++) {
-                    console.log("   repeater.itemAt(", i, ").x: ", fieldRep.itemAt(i).x)
-                    console.log("   repeater.itemAt(", i, ").y: ", fieldRep.itemAt(i).y)
-                }
-                */
                 console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
                 console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
@@ -337,19 +195,19 @@ Item {
                 onReleased: {
                     var newCooLeftUpX = pieceRep.itemAt(index).x
                     var newCooLeftUpY = pieceRep.itemAt(index).y
-                    var newCooRightUpX = pieceRep.itemAt(index).x + piece.width
+                    var newCooRightUpX = pieceRep.itemAt(index).x + pieceWidth
                     var newCooRightUpY = pieceRep.itemAt(index).y
                     var newCooLeftBottomX = pieceRep.itemAt(index).x
-                    var newCooLeftBottomY = pieceRep.itemAt(index).y + piece.height
-                    var newCooRightBottomX = pieceRep.itemAt(index).x + piece.width
+                    var newCooLeftBottomY = pieceRep.itemAt(index).y + pieceHeight
+                    var newCooRightBottomX = pieceRep.itemAt(index).x + pieceWidth
                     var newCooRightBottomY = pieceRep.itemAt(index).y
 
                     var newAverageX = ( newCooLeftUpX + newCooRightUpX + newCooLeftBottomX + newCooRightBottomX ) / 4
                     var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
 
                     console.log("RELEASED:")
-                    console.log("   pieceWidth:", piece.width)
-                    console.log("   pieceHeight: ", piece.height)
+                    console.log("   pieceWidth:", pieceWidth)
+                    console.log("   pieceHeight: ", pieceHeight)
                     console.log("   newCooLeftUpX: ", newCooLeftUpX)
                     console.log("   newCooLeftUpY: ", newCooLeftUpY)
                     console.log("   newCooRightUpX: ", newCooRightUpX)
@@ -395,23 +253,13 @@ Item {
 
                         Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight)
 
-                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, fieldRep, pieceRep)    // <---------------------- TUTAJ! W TYM MIEJSCU SZUKAJ BŁĘDU!
+                        //Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, fieldRep, pieceRep)    // <---------------------- TUTAJ! W TYM MIEJSCU SZUKAJ BŁĘDU!
 
                     }
                     else {
                         console.log("move not valid")
                         Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, fieldRep, pieceRep)     // <---------------------- TUTAJ! W TYM MIEJSCU SZUKAJ BŁĘDU!
                     }
-
-                    /*
-                    TODO:
-                        1. Oblicz koordynaty: wierzchołków pionka i środka pionka
-                        2. Znajdź indeks pola wewnątrz którego znajduje się środek pionka
-                        3. Sprawdź, czy znalezione pole znajduje się w zasięgu pionka (RangeRole)
-                        4. Jeśli nie: wróć pionkiem do poprzedniej pozycji
-                        5. Jeśli tak: wycentruj pionek tak, żeby jego środek był równy FieldCenterRole
-                    */
-
                 }
             }
         }
