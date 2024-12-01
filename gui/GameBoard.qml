@@ -143,6 +143,9 @@ Item {
         property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
         property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
 
+        //property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
+        //property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
+
         Piece {
             id: piece
 
@@ -153,10 +156,15 @@ Item {
             property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
             property var pieceRange: checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
 
+            property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
+            property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
+
             width: pieceRep.pieceWidth
             height: pieceRep.pieceHeight
-            x: column * fieldWidth + (fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
-            y: row * fieldHeight + (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
+            //x: column * fieldWidth + (fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
+            //y: row * fieldHeight + (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
+            x: (column * fieldWidth) + pieceSeparatorX //(fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
+            y: (row * fieldHeight) + pieceSeparatorY //+ (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
 
             visible: checkersModelInstance.isPiecePresent(modelIndex)
             color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
