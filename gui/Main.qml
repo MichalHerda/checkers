@@ -21,6 +21,8 @@ Window {
         property double fieldHeight:  checkersGameBoard.height / checkersModelInstance.getRowsNo()
         property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
         property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
+        property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
+        property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
         anchors.centerIn: parent
         width: root.width * 0.5
         height: root.height * 0.675

@@ -52,6 +52,32 @@ function getCoordinates(repeater, width, height) {
     return coordinates
 }
 
+function getPiecesCoordinates(repeater, width, height, pieceSeparatorX, pieceSeparatorY) {
+
+    var coordinates = []
+
+    var itemsNo = repeater.count
+
+    for(let i = 0; i < itemsNo; i++) {
+        //console.log("   repeater.itemAt(", i, ").x: ", repeater.itemAt(i).x)
+        //console.log("   repeater.itemAt(", i, ").y: ", repeater.itemAt(i).y)
+        coordinates.push(repeater.itemAt(i).x + pieceSeparatorX);                // topLeftX
+        coordinates.push(repeater.itemAt(i).y + pieceSeparatorY);                // topLeftY
+        coordinates.push(repeater.itemAt(i).x + pieceSeparatorX + width);        // topRightX
+        coordinates.push(repeater.itemAt(i).y + pieceSeparatorY);                // topRightY
+        coordinates.push(repeater.itemAt(i).x + pieceSeparatorX);                // bottomLeftX
+        coordinates.push(repeater.itemAt(i).y + pieceSeparatorY + height);       // bottomLeftY
+        coordinates.push(repeater.itemAt(i).x + pieceSeparatorX + width);        // bottomRightX
+        coordinates.push(repeater.itemAt(i).y + pieceSeparatorY + height);       // bottomRightY
+    }
+
+    console.log("SET COORDINATES FUNCTION: ")
+    console.log("   coordinates array size: ", coordinates.length)
+
+    return coordinates
+}
+
+
 function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, repeater, pieceRepeater) {
 
     console.log("centerAllPiecesOnFields function")
@@ -68,7 +94,7 @@ function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, repeater,
                 console.log("   repeater index: ", repeaterIndex)
 
                 var modelIndex = checkersModelInstance.getIndex(row, col)
-                if(checkersModelInstance.isPiecePresent(modelIndex)) {
+                //if(checkersModelInstance.isPiecePresent(modelIndex)) {
 
                     console.log("   center piece, row: ", row, "column: ", col )
 
@@ -85,10 +111,10 @@ function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, repeater,
 
                     pieceRepeater.itemAt(repeaterIndex).x = topLeft.x
                     pieceRepeater.itemAt(repeaterIndex).y = topLeft.y
-                }
-                else {
-                    console.log("piece not present, no item to center")
-                }
+                //}
+                //else {
+                //    console.log("piece not present, no item to center")
+                //}
                 repeaterIndex++
             }
         }
@@ -108,9 +134,10 @@ function displayCoordinates(coordinates) {
     }
 }
 
-function updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight) {
+function updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+                           pieceSeparatorX, pieceSeparatorY) {
     var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
-    var piecesCoordinates = getCoordinates(pieceRep, pieceWidth, pieceHeight)
+    var piecesCoordinates = getPiecesCoordinates(fieldRep, pieceWidth, pieceHeight,  pieceSeparatorX, pieceSeparatorY)
     checkersModelInstance.updateFieldsCoordinates(fieldsCoordinates)
     checkersModelInstance.updatePiecesCoordinates(piecesCoordinates)
 }
