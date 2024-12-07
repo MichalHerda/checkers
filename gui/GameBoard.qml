@@ -150,9 +150,6 @@ Item {
         property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
         property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
 
-        //property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
-        //property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
-
         Piece {
             id: piece
 
@@ -266,7 +263,7 @@ Item {
                         var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
                         var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
-                        Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+                        Js.updateCoordinates(checkersModelInstance, CheckersModel, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                              pieceSeparatorX, pieceSeparatorY)
 
                         //Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, fieldRep, pieceRep)    // <---------------------- TUTAJ! W TYM MIEJSCU SZUKAJ BŁĘDU!
@@ -286,7 +283,7 @@ Item {
             console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
             console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-            Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+            Js.updateCoordinates(checkersModelInstance, CheckersModel, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
     }
@@ -297,7 +294,7 @@ Item {
             console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
             console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-            Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+            Js.updateCoordinates(checkersModelInstance, CheckersModel, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
     }
@@ -309,9 +306,7 @@ Item {
             console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
             console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
-            //var pieceSeparatorX = (fieldWidth - pieceWidth) / 2
-            //var pieceSeparatorY = (fieldHeight - pieceHeight) / 2
-            Js.updateCoordinates(checkersModelInstance, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+            Js.updateCoordinates(checkersModelInstance, CheckersModel, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
 
             completed = true

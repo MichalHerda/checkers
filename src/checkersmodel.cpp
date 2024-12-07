@@ -365,7 +365,7 @@ void CheckersModel::updateFieldsCoordinates(const QVariantList &fieldsCoordinate
         //qDebug() << "  bottomLeft: x:" << coords.bottomLeft.x() << "y:" << coords.bottomLeft.y();
         //qDebug() << "  bottomRight: x:" << coords.bottomRight.x() << "y:" << coords.bottomRight.y();
     }
-
+/*
     qDebug() << "Start debug m_fieldsCoordinates: ";
 
     for (int i = 0; i < m_fieldsCoordinates.size(); i++) {
@@ -375,18 +375,18 @@ void CheckersModel::updateFieldsCoordinates(const QVariantList &fieldsCoordinate
         qDebug() << "   bottomLeft: " << m_fieldsCoordinates[i].bottomLeft;
         qDebug() << "   bottomRight: " << m_fieldsCoordinates[i].bottomRight;
     }
-
+*/
     setFieldsCoordinatesRole();
     setFieldCenterRole();
 
-    qDebug() << "m_fieldsCoordinates size: " << m_fieldsCoordinates.size();
-    qDebug() << "end of updateFieldsCoordinates function";
+    //qDebug() << "m_fieldsCoordinates size: " << m_fieldsCoordinates.size();
+    //qDebug() << "end of updateFieldsCoordinates function";
 }
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinates)
 {
-    qDebug() << "updatePiecesCoordinates function";
-    qDebug() << "piecesCoordinates size: " << piecesCoordinates.size();
+    //qDebug() << "updatePiecesCoordinates function";
+    //qDebug() << "piecesCoordinates size: " << piecesCoordinates.size();
 
     m_piecesCoordinates.clear();
     m_piecesCoordinates.resize(piecesCoordinates.size() / 8);
@@ -413,7 +413,7 @@ void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinate
         //qDebug() << "  bottomLeft: x:" << coords.bottomLeft.x() << "y:" << coords.bottomLeft.y();
         //qDebug() << "  bottomRight: x:" << coords.bottomRight.x() << "y:" << coords.bottomRight.y();
     }
-
+/*
     qDebug() << "Start debug m_piecesCoordinates: ";
 
     for (int i = 0; i < m_piecesCoordinates.size(); i++) {
@@ -423,12 +423,12 @@ void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinate
         qDebug() << "   bottomLeft: " << m_piecesCoordinates[i].bottomLeft;
         qDebug() << "   bottomRight: " << m_piecesCoordinates[i].bottomRight;
     }
-
+*/
     setPiecesCoordinatesRole();
     //setFieldCenterRole();
 
-    qDebug() << "m_piecesCoordinates size: " << m_piecesCoordinates.size();
-    qDebug() << "end of updatePiecesCoordinates function";
+    //qDebug() << "m_piecesCoordinates size: " << m_piecesCoordinates.size();
+    //qDebug() << "end of updatePiecesCoordinates function";
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
@@ -661,7 +661,7 @@ void CheckersModel::setFieldCenterRole()
                     double averageX = (m_fieldsCoordinates[arrayIdx].topLeft.x() + m_fieldsCoordinates[arrayIdx].topRight.x() + m_fieldsCoordinates[arrayIdx].bottomLeft.x() + m_fieldsCoordinates[arrayIdx].bottomRight.x()) / 4;
                     double averageY = (m_fieldsCoordinates[arrayIdx].topLeft.y() + m_fieldsCoordinates[arrayIdx].topRight.y() + m_fieldsCoordinates[arrayIdx].bottomLeft.y() + m_fieldsCoordinates[arrayIdx].bottomRight.y()) / 4;
                     QPointF fieldCenter = {averageX, averageY};
-                    qDebug() << "index: " << arrayIdx << "fieldCenter: " << fieldCenter;
+                    //qDebug() << "index: " << arrayIdx << "fieldCenter: " << fieldCenter;
                     setData(index, QVariant::fromValue(fieldCenter), FieldCenterRole);
                 }
                 arrayIdx++;
