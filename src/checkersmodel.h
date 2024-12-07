@@ -90,6 +90,8 @@ public:
     Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
+    Q_INVOKABLE void setAllPiecesRange();
+
 signals:
 
 private:
@@ -111,7 +113,7 @@ private:
     void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
     void setEmptyField(QModelIndex index);                                  // <---as in the function name
 
-    void setAllPiecesRange();
+    //void setAllPiecesRange();
     void setFieldsCoordinatesRole();
     void setFieldCenterRole();
     void setPiecesCoordinatesRole();

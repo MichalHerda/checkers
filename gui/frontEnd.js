@@ -120,6 +120,8 @@ function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersT
                     else {
                         pieceRepeater.itemAt(repeaterIndex).color =  CheckersTheme.blackPlayerColor
                     }
+
+                    checkersModelInstance.setAllPiecesRange()
                 //}
                 //else {
                 //    console.log("piece not present, no item to center")
@@ -185,6 +187,8 @@ function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme,
                 pieceRep.itemAt(no).color =  CheckersTheme.blackPlayerColor
                 pieceRep.itemAt(no).border.color =  CheckersTheme.blackPieceBorderColor
             }
+
+            checkersModelInstance.setAllPiecesRange()
         }
     }
 }
