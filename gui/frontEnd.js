@@ -78,7 +78,7 @@ function getPiecesCoordinates(repeater, width, height, pieceSeparatorX, pieceSep
 }
 
 
-function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, repeater, pieceRepeater) {
+function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, repeater, pieceRepeater) {
 
     console.log("centerAllPiecesOnFields function")
     console.log("   pieceRepeater size: ", pieceRepeater.count)
@@ -111,6 +111,15 @@ function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, repeater,
 
                     pieceRepeater.itemAt(repeaterIndex).x = topLeft.x
                     pieceRepeater.itemAt(repeaterIndex).y = topLeft.y
+
+                    pieceRepeater.itemAt(repeaterIndex).visible = checkersModelInstance.isPiecePresent(modelIndex)
+
+                    if(checkersModelInstance.getPieceColor(modelIndex)) {
+                        pieceRepeater.itemAt(repeaterIndex).color =  CheckersTheme.whitePlayerColor
+                    }
+                    else {
+                        pieceRepeater.itemAt(repeaterIndex).color =  CheckersTheme.blackPlayerColor
+                    }
                 //}
                 //else {
                 //    console.log("piece not present, no item to center")
@@ -134,8 +143,11 @@ function displayCoordinates(coordinates) {
     }
 }
 
-function updateCoordinates(checkersModelInstance, CheckersModel, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme,
+                           fieldRep, pieceRep,
+                           fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                            pieceSeparatorX, pieceSeparatorY) {
+
     console.log("UPDATE COORDINATES FUNCTION: ")
     console.log("   field repeater size: ", fieldRep.count)
     console.log("   piece repeater size: ", pieceRep.count)
@@ -162,6 +174,17 @@ function updateCoordinates(checkersModelInstance, CheckersModel, fieldRep, piece
 
             pieceRep.itemAt(no).x = topLeft.x
             pieceRep.itemAt(no).y = topLeft.y
+
+            pieceRep.itemAt(no).visible = checkersModelInstance.isPiecePresent(modelIndex)
+
+            if(checkersModelInstance.getPieceColor(modelIndex)) {
+                pieceRep.itemAt(no).color =  CheckersTheme.whitePlayerColor
+                pieceRep.itemAt(no).border.color =  CheckersTheme.whitePieceBorderColor
+            }
+            else {
+                pieceRep.itemAt(no).color =  CheckersTheme.blackPlayerColor
+                pieceRep.itemAt(no).border.color =  CheckersTheme.blackPieceBorderColor
+            }
         }
     }
 }
