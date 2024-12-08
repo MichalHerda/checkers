@@ -3,6 +3,7 @@ import QtQuick.Controls
 import Checkers 1.0
 import checkers.model
 
+import "frontEnd.js" as Js
 
 Window {
     id: root
@@ -15,6 +16,10 @@ Window {
     property bool rotateGameBoard: false
     property bool completed: false
 
+    property double buttonWidth: root.width * 0.28
+    property double buttonHeight: root.height * 0.075
+    property double buttonsSeparatorX: root.width * 0.04
+
     GameBoard {
         id: checkersGameBoard
         property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
@@ -23,6 +28,9 @@ Window {
         property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
         property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
         property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
+
+        //property var fieldRep: checkersGameBoard.fieldRep
+        //property var pieceRep: checkersGameBoard.pieceRep
 
         anchors.centerIn: parent
         width: root.width * 0.5
@@ -33,10 +41,10 @@ Window {
 
     Button {
         id: testButton
-        width: parent.width * 0.35
-        height: parent.height * 0.075
+        width: buttonWidth
+        height: buttonHeight
         text: "TEST BUTTON"
-        x: parent.width * 0.05
+        x: buttonsSeparatorX
         y: parent.height - ( parent.height * 0.125 )
 
         background: Rectangle {
@@ -51,10 +59,10 @@ Window {
 
     Button {
         id: rotateButton
-        width: parent.width * 0.35
-        height: parent.height * 0.075
+        width: buttonWidth
+        height: buttonHeight
         text: "ROTATE"
-        x: parent.width * 0.05 + ( testButton.width * 1.5 )
+        x: ( buttonsSeparatorX * 2 ) + buttonWidth
         y: parent.height - ( parent.height * 0.125 )
 
         background: Rectangle {
@@ -65,6 +73,35 @@ Window {
         onClicked: {
             root.rotateGameBoard = !root.rotateGameBoard
             console.log("rotateGameBoard: ", rotateGameBoard)
+        }
+    }
+
+    Button {
+        id: restartButton
+        width: buttonWidth
+        height: buttonHeight
+        text: "RESTART"
+        x: ( buttonsSeparatorX * 3 ) + ( buttonWidth * 2 )
+        y: parent.height - ( parent.height * 0.125 )
+
+        property var fieldRep: checkersGameBoard.fieldRep
+        property var pieceRep: checkersGameBoard.pieceRep
+
+        property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
+        property double fieldHeight:  checkersGameBoard.height / checkersModelInstance.getRowsNo()
+        property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
+        property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
+        property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
+        property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
+
+
+        background: Rectangle {
+            anchors.fill: parent
+            color: CheckersTheme.buttonColor
+        }
+
+        onClicked: {
+            //checkersModelInstance.resetModel()
         }
     }
 }
