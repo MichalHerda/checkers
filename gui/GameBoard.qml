@@ -7,6 +7,13 @@ import "frontEnd.js" as Js
 Item {
     id: root
 
+    signal reset()
+
+    function emitReset() {
+        console.log("Emitting reset signal from GameBoard")
+        reset()
+    }
+
     function getAvailableFieldsCoo(modelIndex) {
         var rangeArray = checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
 
@@ -238,6 +245,13 @@ Item {
             }
         }
     }
+
+    onReset:  {
+        checkersModelInstance.resetModel()
+        Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+                             pieceSeparatorX, pieceSeparatorY)
+    }
+
     onWidthChanged: {
         if(completed) {
 

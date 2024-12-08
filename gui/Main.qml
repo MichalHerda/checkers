@@ -101,7 +101,7 @@ Window {
         }
 
         onClicked: {
-            //checkersModelInstance.resetModel()
+            checkersGameBoard.emitReset()
         }
     }
 }
