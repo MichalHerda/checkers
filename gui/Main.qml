@@ -25,6 +25,13 @@ Window {
         visible: isMainMenu
     }
 
+    PlayerTimer {
+        id: playerOneTimer
+        visible: false // !isMainMenu
+        x: buttonsSeparatorX
+        y: parent.height * 0.125
+    }
+
     GameBoard {
         id: checkersGameBoard
         property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
