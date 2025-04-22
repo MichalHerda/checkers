@@ -13,12 +13,17 @@ Window {
     title: qsTr("Checkers")
     color: CheckersTheme.backgroundColor
 
+    property bool isMainMenu: true
     property bool rotateGameBoard: false
     property bool completed: false
 
     property double buttonWidth: root.width * 0.28
     property double buttonHeight: root.height * 0.075
     property double buttonsSeparatorX: root.width * 0.04
+
+    Menu {
+        visible: isMainMenu
+    }
 
     GameBoard {
         id: checkersGameBoard
@@ -37,6 +42,7 @@ Window {
         height: root.height * 0.675
         transformOrigin: Item.Center
         rotation: rotateGameBoard ? 180 : 0
+        visible: !isMainMenu
     }
 
     Button {
