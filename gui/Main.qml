@@ -52,6 +52,7 @@ Window {
         text: "TEST BUTTON"
         x: buttonsSeparatorX
         y: parent.height - ( parent.height * 0.125 )
+        visible: !isMainMenu
 
         background: Rectangle {
             anchors.fill: parent
@@ -70,6 +71,7 @@ Window {
         text: "ROTATE"
         x: ( buttonsSeparatorX * 2 ) + buttonWidth
         y: parent.height - ( parent.height * 0.125 )
+        visible: !isMainMenu
 
         background: Rectangle {
             anchors.fill: parent
@@ -89,6 +91,7 @@ Window {
         text: "RESTART"
         x: ( buttonsSeparatorX * 3 ) + ( buttonWidth * 2 )
         y: parent.height - ( parent.height * 0.125 )
+        visible: !isMainMenu
 
         property var fieldRep: checkersGameBoard.fieldRep
         property var pieceRep: checkersGameBoard.pieceRep
