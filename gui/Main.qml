@@ -21,6 +21,9 @@ Window {
     property double buttonHeight: root.height * 0.075
     property double buttonsSeparatorX: root.width * 0.04
 
+    property string playerOneName: "Player 1"
+    property string playerTwoName: "Player 2"
+
     Menu {
         visible: isMainMenu
     }

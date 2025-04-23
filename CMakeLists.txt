@@ -31,6 +31,7 @@ qt_add_qml_module(appCheckers
         SOURCES src/game.h src/game.cpp
         QML_FILES gui/Menu.qml
         QML_FILES gui/PlayerTimer.qml
+        QML_FILES gui/PlayerTimersRow.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
