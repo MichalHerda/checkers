@@ -28,11 +28,13 @@ Window {
         visible: isMainMenu
     }
 
-    PlayerTimer {
-        id: playerOneTimer
-        visible: false // !isMainMenu
+    PlayerTimersRow {
+        id: playerTimersRow
+        width: ( buttonWidth * 6 ) + ( buttonsSeparatorX * 2 )                                                          // TODO: sprawdzić dokładnie wymiary
+        height: buttonHeight
+        visible: !isMainMenu
         x: buttonsSeparatorX
-        y: parent.height * 0.125
+        y: parent.height * 0.025
     }
 
     GameBoard {

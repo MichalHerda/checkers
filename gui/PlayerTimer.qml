@@ -4,14 +4,19 @@ import QtQuick 2.15
 // PlayerTimer.qml
 Item {
     id: root
-    property string playerName: "Player 1"
-    property int countdown: 10 // sekundy
+    property string playerName: "Player "
+    property int countdown: 60
+    property alias countdownTimer: countdownTimer
+    property alias name: name.text
+
     signal timeout()
 
     Column {
-        spacing: 4
+        id: column
+        spacing: root.height * 0.1
 
         Text {
+            id: name
             text: root.playerName
             font.bold: true
             font.pointSize: 16
