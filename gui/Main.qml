@@ -24,105 +24,113 @@ Window {
     property string playerOneName: "Player 1"
     property string playerTwoName: "Player 2"
 
-    Menu {
-        visible: isMainMenu
-    }
+    Item {
+        id: anchorItem
+        anchors.fill: parent
 
-    PlayerTimersRow {
-        id: playerTimersRow
-        width: ( buttonWidth * 6 ) + ( buttonsSeparatorX * 2 )                                                          // TODO: sprawdzić dokładnie wymiary
-        height: buttonHeight
-        visible: !isMainMenu
-        x: buttonsSeparatorX
-        y: parent.height * 0.025
-    }
-
-    GameBoard {
-        id: checkersGameBoard
-        property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
-        property double fieldHeight:  checkersGameBoard.height / checkersModelInstance.getRowsNo()
-        property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
-        property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
-        property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
-        property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
-
-        //property var fieldRep: checkersGameBoard.fieldRep
-        //property var pieceRep: checkersGameBoard.pieceRep
-
-        anchors.centerIn: parent
-        width: root.width * 0.5
-        height: root.height * 0.675
-        transformOrigin: Item.Center
-        rotation: rotateGameBoard ? 180 : 0
-        visible: !isMainMenu
-    }
-
-    Button {
-        id: testButton
-        width: buttonWidth
-        height: buttonHeight
-        text: "TEST BUTTON"
-        x: buttonsSeparatorX
-        y: parent.height - ( parent.height * 0.125 )
-        visible: !isMainMenu
-
-        background: Rectangle {
-            anchors.fill: parent
-            color: CheckersTheme.buttonColor
+        Menu {
+            visible: isMainMenu
         }
 
-        onClicked: {
-            checkersModelInstance.printModel()
-        }
-    }
+        PlayerTimersRow {
+            id: playerTimersRow
 
-    Button {
-        id: rotateButton
-        width: buttonWidth
-        height: buttonHeight
-        text: "ROTATE"
-        x: ( buttonsSeparatorX * 2 ) + buttonWidth
-        y: parent.height - ( parent.height * 0.125 )
-        visible: !isMainMenu
-
-        background: Rectangle {
-            anchors.fill: parent
-            color: CheckersTheme.buttonColor
+            width: anchorItem.width * 0.75                                                       // TODO: sprawdzić dokładnie wymiary
+            height: anchorItem.height * 0.1//buttonHeight
+            anchors.horizontalCenter: anchorItem.horizontalCenter
+            visible: !isMainMenu
+            //x: buttonsSeparatorX
+            y: parent.height * 0.025
         }
 
-        onClicked: {
-            root.rotateGameBoard = !root.rotateGameBoard
-            console.log("rotateGameBoard: ", rotateGameBoard)
-        }
-    }
+        GameBoard {
+            id: checkersGameBoard
+            property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
+            property double fieldHeight:  checkersGameBoard.height / checkersModelInstance.getRowsNo()
+            property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
+            property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
+            property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
+            property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
 
-    Button {
-        id: restartButton
-        width: buttonWidth
-        height: buttonHeight
-        text: "RESTART"
-        x: ( buttonsSeparatorX * 3 ) + ( buttonWidth * 2 )
-        y: parent.height - ( parent.height * 0.125 )
-        visible: !isMainMenu
+            //property var fieldRep: checkersGameBoard.fieldRep
+            //property var pieceRep: checkersGameBoard.pieceRep
 
-        property var fieldRep: checkersGameBoard.fieldRep
-        property var pieceRep: checkersGameBoard.pieceRep
-
-        property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
-        property double fieldHeight:  checkersGameBoard.height / checkersModelInstance.getRowsNo()
-        property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
-        property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
-        property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
-        property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
-
-
-        background: Rectangle {
-            anchors.fill: parent
-            color: CheckersTheme.buttonColor
+            anchors.centerIn: parent
+            width: root.width * 0.5
+            height: root.height * 0.675
+            transformOrigin: Item.Center
+            rotation: rotateGameBoard ? 180 : 0
+            visible: !isMainMenu
         }
 
-        onClicked: {
-            checkersGameBoard.emitReset()
+        Button {
+            id: testButton
+            width: buttonWidth
+            height: buttonHeight
+            text: "TEST BUTTON"
+            x: buttonsSeparatorX
+            y: parent.height - ( parent.height * 0.125 )
+            visible: !isMainMenu
+
+            background: Rectangle {
+                anchors.fill: parent
+                color: CheckersTheme.buttonColor
+            }
+
+            onClicked: {
+                checkersModelInstance.printModel()
+            }
         }
+
+        Button {
+            id: rotateButton
+            width: buttonWidth
+            height: buttonHeight
+            text: "ROTATE"
+            x: ( buttonsSeparatorX * 2 ) + buttonWidth
+            y: parent.height - ( parent.height * 0.125 )
+            visible: !isMainMenu
+
+            background: Rectangle {
+                anchors.fill: parent
+                color: CheckersTheme.buttonColor
+            }
+
+            onClicked: {
+                root.rotateGameBoard = !root.rotateGameBoard
+                console.log("rotateGameBoard: ", rotateGameBoard)
+            }
+        }
+
+        Button {
+            id: restartButton
+            width: buttonWidth
+            height: buttonHeight
+            text: "RESTART"
+            x: ( buttonsSeparatorX * 3 ) + ( buttonWidth * 2 )
+            y: parent.height - ( parent.height * 0.125 )
+            visible: !isMainMenu
+
+            property var fieldRep: checkersGameBoard.fieldRep
+            property var pieceRep: checkersGameBoard.pieceRep
+
+            property double fieldWidth:  checkersGameBoard.width / checkersModelInstance.getColumnsNo()
+            property double fieldHeight:  checkersGameBoard.height / checkersModelInstance.getRowsNo()
+            property double pieceWidth: fieldWidth * CheckersTheme.pieceDimensionModificator
+            property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
+            property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
+            property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
+
+
+            background: Rectangle {
+                anchors.fill: parent
+                color: CheckersTheme.buttonColor
+            }
+
+            onClicked: {
+                checkersGameBoard.emitReset()
+            }
+        }
+
     }
 }

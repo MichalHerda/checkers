@@ -4,6 +4,7 @@ import QtQuick 2.15
 
 Item {
     property color backgroundColor: "black"
+    property color uiBorderColor: "orange"
     property color buttonColor: "blue"
     property color playableFieldColor: "slateblue"
     property color notPlayableFieldColor: "white"
