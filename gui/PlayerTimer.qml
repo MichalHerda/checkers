@@ -87,7 +87,7 @@ Item {
     Timer {
         id: countdownTimer
         interval: 1000
-        running: true
+        running: game.gameOn
         repeat: true
         onTriggered: {
             if (root.countdown > 0) {
@@ -98,4 +98,18 @@ Item {
             }
         }
     }
+
+    Connections {
+        id: countdownTimerConnection
+        target: game
+        onGameOnChanged: {
+            console.log("GAME ON CHANGED !!!")
+            if (game.gameOn) {
+                countdownTimer.start()
+            } else {
+                countdownTimer.stop()
+            }
+        }
+    }
+
 }

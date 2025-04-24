@@ -130,6 +130,15 @@ Window {
                 checkersGameBoard.emitReset()
             }
         }
-
+    }
+    Timer {
+        id: debugTimer
+        interval: 5000
+        repeat: true
+        running: true
+        onTriggered: {
+            console.log("game.player: ", game.player)
+            console.log("game.gameon: ", game.gameOn)
+        }
     }
 }

@@ -21,11 +21,11 @@ public:
     CheckersModel::Player playerRead()const;
 
     void gameOnWrite(bool gameOn);
-    void playerWrite(CheckersModel::Player player);
+    void playerWrite(CheckersModel::Player _player);
 
 signals:
-    void gameOnChanged(bool gameOn);
-    void playerChanged(CheckersModel::Player player);
+    void gameOnChanged(bool _gameOn);
+    void playerChanged(CheckersModel::Player _player);
 
 };
 

@@ -17,6 +17,7 @@ Rectangle {
         onClicked: {
             //root.isMainMenu === true
             root.isMainMenu = !root.isMainMenu
+            game.gameOn = true;
         }
     }
 }

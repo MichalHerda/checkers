@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "checkersmodel.h"
+#include "game.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,6 +10,8 @@ int main(int argc, char *argv[])
 
     CheckersModel checkersModelInstance;
     checkersModelInstance.resetModel();
+
+    Game game;
 
     qRegisterMetaType<CornersCoordinates>("CheckersModel::CornersCoordinates");
     qRegisterMetaType<Piece>("Piece");
@@ -18,6 +21,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);
+    engine.rootContext()->setContextProperty("game", &game);
 
     qmlRegisterUncreatableMetaObject(CheckersModel::staticMetaObject,
                                      "CheckersEnums", 1, 0,
