@@ -5,7 +5,7 @@ import Checkers 1.0
 Item {
     id: root
     property string playerName: "Player "
-    property int countdown: 60
+    property int countdown: 180
     property alias countdownTimer: countdownTimer
     property alias name: name.text
 
@@ -14,7 +14,6 @@ Item {
     Column {
         id: column
         anchors.fill: parent
-        //spacing: root.height * 0.1
 
         Rectangle {
             id: nameRect
@@ -56,11 +55,12 @@ Item {
                     id: minutesText
                     width: parent.width * 0.4
                     height: parent.height
-                    text: countdown.toString()
+                    text: Math.floor(root.countdown / 60).toString().padStart(2, "0")
                     horizontalAlignment: "AlignHCenter"
                     font.pointSize: 14
                     color: countdown <= 3 ? "red" : "white"
                 }
+
                 Label {
                     id: colonText
                     width: parent.width * 0.2
@@ -70,11 +70,12 @@ Item {
                     font.pointSize: 14
                     color: countdown <= 3 ? "red" : "white"
                 }
+
                 Label {
                     id: secondsText
                     width: parent.width * 0.4
                     height: parent.height
-                    text: countdown.toString()
+                    text: (root.countdown % 60).toString().padStart(2, "0")
                     horizontalAlignment: "AlignHCenter"
                     font.pointSize: 14
                     color: countdown <= 3 ? "red" : "white"

@@ -35,11 +35,10 @@ Window {
         PlayerTimersRow {
             id: playerTimersRow
 
-            width: anchorItem.width * 0.75                                                       // TODO: sprawdzić dokładnie wymiary
-            height: anchorItem.height * 0.1//buttonHeight
+            width: anchorItem.width * 0.75
+            height: anchorItem.height * 0.1
             anchors.horizontalCenter: anchorItem.horizontalCenter
             visible: !isMainMenu
-            //x: buttonsSeparatorX
             y: parent.height * 0.025
         }
 
