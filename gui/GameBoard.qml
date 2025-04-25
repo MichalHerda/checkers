@@ -236,6 +236,12 @@ Item {
 
                         Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
 
+                        if(game.player === CheckersModel.Player.white) {
+                            game.player = CheckersModel.Player.black
+                        }
+                        else {
+                            game.player = CheckersModel.Player.white
+                        }
                     }
                     else {
                         console.log("move not valid")

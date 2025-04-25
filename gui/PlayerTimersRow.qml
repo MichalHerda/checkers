@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import checkers.model
 
 Row {
     id: root
@@ -14,6 +15,7 @@ Row {
         width: root.width * 0.5 //playerTimerWidth
         height: root.height //playerTimerHeight
         playerName: playerOneName
+        countdownTimer.running: (game.player === CheckersModel.Player.white)
     }
 
     PlayerTimer {
@@ -22,6 +24,7 @@ Row {
         width: root.width * 0.5 //playerTimerWidth
         height: root.height //playerTimerHeight
         playerName: playerTwoName
+        countdownTimer.running: (game.player === CheckersModel.Player.black)
     }
 }
 
