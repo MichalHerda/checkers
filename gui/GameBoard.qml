@@ -199,52 +199,64 @@ Item {
                     console.log("   newAverageX: ", newAverageX)
                     console.log("   newAverageY: ", newAverageY)
 
-                    if(checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)) {
-                        console.log("move valid")
-                        var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
-                        console.log("model index: ", modelIndex)
-                        console.log("model index to move: ", modelIndexToMove)
+                    //***
+                    if( (checkersModelInstance.getPieceColor(modelIndex) === true && game.player === CheckersModel.Player.white ) ||
+                        (checkersModelInstance.getPieceColor(modelIndex) === false && game.player === CheckersModel.Player.black ) ) {
 
-                        //SWAP FIELDS VALUES:
 
-                        var emptyPieceData = checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole)
-                        console.log("field to move before swap: ", emptyPieceData)
-                        console.log("field to move data color: ", emptyPieceData.player)
-                        console.log("field to move data type: ", emptyPieceData.type)
 
-                        var pieceData = checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
-                        console.log("piece data: ", pieceData)
-                        console.log("piece data color: ", pieceData.player)
-                        console.log("piece data type: ", pieceData.type)
+                        //***
+                        if(checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)) {
+                            console.log("move valid")
+                            var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
+                            console.log("model index: ", modelIndex)
+                            console.log("model index to move: ", modelIndexToMove)
 
-                        checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
-                        checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
+                            //SWAP FIELDS VALUES:
 
-                        console.log("field to move after swap: ", checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole))
-                        //console.log("field to move after swap data color: ", emptyPieceData.player)
-                        //console.log("field to move after swap data type: ", emptyPieceData.type)
+                            var emptyPieceData = checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole)
+                            console.log("field to move before swap: ", emptyPieceData)
+                            console.log("field to move data color: ", emptyPieceData.player)
+                            console.log("field to move data type: ", emptyPieceData.type)
 
-                        console.log("piece data after swap: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
-                        //console.log("piece data color after swap: ", pieceData.player)
-                        //console.log("piece data type after swap: ", pieceData.type)
+                            var pieceData = checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
+                            console.log("piece data: ", pieceData)
+                            console.log("piece data color: ", pieceData.player)
+                            console.log("piece data type: ", pieceData.type)
 
-                        var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
-                        var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
+                            checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
+                            checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
 
-                        Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
-                                             pieceSeparatorX, pieceSeparatorY)
+                            console.log("field to move after swap: ", checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole))
+                            //console.log("field to move after swap data color: ", emptyPieceData.player)
+                            //console.log("field to move after swap data type: ", emptyPieceData.type)
 
-                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
+                            console.log("piece data after swap: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
+                            //console.log("piece data color after swap: ", pieceData.player)
+                            //console.log("piece data type after swap: ", pieceData.type)
 
-                        if(game.player === CheckersModel.Player.white) {
-                            game.player = CheckersModel.Player.black
+                            var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
+                            var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
+
+                            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+                                                 pieceSeparatorX, pieceSeparatorY)
+
+                            Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
+
+                            if(game.player === CheckersModel.Player.white) {
+                                game.player = CheckersModel.Player.black
+                            }
+                            else {
+                                game.player = CheckersModel.Player.white
+                            }
                         }
                         else {
-                            game.player = CheckersModel.Player.white
+                            console.log("move not valid")
+                            Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
                         }
                     }
                     else {
-                        console.log("move not valid")
+                        console.log("NOT YOUR COLOR !")
                         Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
                     }
                 }
