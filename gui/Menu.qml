@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls
+import checkers.model
 
 Rectangle {
     id: mainMenu
@@ -18,6 +19,7 @@ Rectangle {
             //root.isMainMenu === true
             root.isMainMenu = !root.isMainMenu
             game.gameOn = true;
+            game.player = CheckersModel.Player.white
         }
     }
 }
