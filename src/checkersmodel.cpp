@@ -778,6 +778,11 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
     return possibleMoves;
 }
 //***************************************************************************************************************************************************************************************************************************************
+bool CheckersModel::isCaptureAvailable(const QModelIndex &index, bool isWhite)
+{
+    return false;
+}
+//***************************************************************************************************************************************************************************************************************************************
 QDebug operator<<(QDebug debug, const CornersCoordinates &coords) {
     debug.nospace() << "CornersCoordinates("
                     << "topLeft: " << coords.topLeft

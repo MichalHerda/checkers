@@ -125,6 +125,8 @@ private:
 
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
+
+    bool isCaptureAvailable(const QModelIndex &index, bool isWhite);
 };
 
 struct Piece {
