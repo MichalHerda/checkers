@@ -609,6 +609,8 @@ void CheckersModel::setAllPiecesRange()
 
                 setData(index, QVariant::fromValue(possibleMoves), RangeRole);
                 // set captureAvailableRole :
+                bool captureAvailable = isCaptureAvailable(index);
+                setData(index, QVariant::fromValue(captureAvailable), CaptureAvailableRole);
             }
             else {
                 //qDebug() << "no piece";

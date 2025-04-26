@@ -67,6 +67,8 @@ Item {
                     anchors.fill: parent
                     opacity: 0
                     onClicked: {
+                        console.log("model index: ", modelIndex)
+                        console.log("capture available role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
                     /*
                         checkersModelInstance.deselectAllFields()
                         console.log("1.model index: ", modelIndex)
