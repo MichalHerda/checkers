@@ -608,7 +608,7 @@ void CheckersModel::setAllPiecesRange()
                 }
 
                 setData(index, QVariant::fromValue(possibleMoves), RangeRole);
-                //chyba tutaj trzeba wstawić CaptureAvailableRole
+                // set captureAvailableRole :
             }
             else {
                 //qDebug() << "no piece";
@@ -780,6 +780,7 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
 {
+    /*
     if(isPiecePresent(index)) {
         bool isWhite = getPieceColor(index);
         bool isKing = getPieceType(index);
@@ -804,6 +805,63 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
     else {
         qDebug() << "isCaptureAvailable function. Piece not present";
         return false;
+    }
+
+    return false;
+    */
+    if (!isPiecePresent(index)) {
+        qDebug() << "isCaptureAvailable function. Piece not present";
+        return false;
+    }
+
+    bool isWhite = getPieceColor(index);
+    bool isKing = getPieceType(index);
+
+    int row = index.row();
+    int col = index.column();
+
+    const int dr[] = {-1, -1, 1, 1}; // góra-lewo, góra-prawo, dół-lewo, dół-prawo
+    const int dc[] = {-1, 1, -1, 1};
+
+    if (isKing) {
+        for (int dir = 0; dir < 4; ++dir) {
+            int r = row + dr[dir];
+            int c = col + dc[dir];
+            bool foundOpponent = false;
+            while (isInsideBoard(r, c)) {
+                QModelIndex nextIdx = m_model.index(r, c);
+                if (isPiecePresent(nextIdx)) {
+                    if (getPieceColor(nextIdx) != isWhite) {
+                        foundOpponent = true;
+                    }
+                    else break;
+                }
+                else {
+                    if (foundOpponent) return true;
+                }
+                r += dr[dir];
+                c += dc[dir];
+            }
+        }
+    }
+    else {
+        for (int dir = 0; dir < 4; ++dir) {
+            int midR = row + dr[dir];
+            int midC = col + dc[dir];
+            int landR = row + 2*dr[dir];
+            int landC = col + 2*dc[dir];
+
+            if (isInsideBoard(landR, landC)) {
+                QModelIndex midIdx = m_model.index(midR, midC);
+                QModelIndex landIdx = m_model.index(landR, landC);
+
+                if (isPiecePresent(midIdx) &&
+                    getPieceColor(midIdx) != isWhite &&
+                    !isPiecePresent(landIdx)) {
+                    return true;
+                }
+            }
+        }
     }
 
     return false;
