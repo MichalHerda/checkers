@@ -336,8 +336,8 @@ void CheckersModel::deselectAllFields()
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::updateFieldsCoordinates(const QVariantList &fieldsCoordinates)
 {
-    qDebug() << "updateFieldsCoordinates function";
-    qDebug() << "fieldsCoordinates size: " << fieldsCoordinates.size();
+    //qDebug() << "updateFieldsCoordinates function";
+    //qDebug() << "fieldsCoordinates size: " << fieldsCoordinates.size();
 
     m_fieldsCoordinates.clear();
     m_fieldsCoordinates.resize(fieldsCoordinates.size() / 8);
@@ -608,6 +608,7 @@ void CheckersModel::setAllPiecesRange()
                 }
 
                 setData(index, QVariant::fromValue(possibleMoves), RangeRole);
+                //chyba tutaj trzeba wstawić CaptureAvailableRole
             }
             else {
                 //qDebug() << "no piece";
@@ -620,14 +621,14 @@ void CheckersModel::setAllPiecesRange()
 void CheckersModel::setFieldsCoordinatesRole()
 {
     int fieldsNo = m_columns * m_rows;
-    qDebug() << "function setFieldsCoordinatesRole: ";
+    //qDebug() << "function setFieldsCoordinatesRole: ";
 
     if(fieldsNo != m_fieldsCoordinates.size()) {
-        qDebug() << "   m_fieldsCoordinates size not equal model size. Return";
+        //qDebug() << "   m_fieldsCoordinates size not equal model size. Return";
         return;
     }
     else {
-        qDebug() << "   m_fieldsCoordinates size equals model size. Start append model FieldCoordinatesRole";
+        //qDebug() << "   m_fieldsCoordinates size equals model size. Start append model FieldCoordinatesRole";
         for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
             for(int column = 0; column < m_columns; column++) {
                 QModelIndex index = getIndex(row, column);
@@ -641,14 +642,14 @@ void CheckersModel::setFieldsCoordinatesRole()
 void CheckersModel::setFieldCenterRole()
 {
     int fieldsNo = m_columns * m_rows;
-    qDebug() << "function setFieldCenterRole: ";
+    //qDebug() << "function setFieldCenterRole: ";
 
     if(fieldsNo != m_fieldsCoordinates.size()) {
-        qDebug() << "   m_fieldsCoordinates size not equal model size. Return";
+        //qDebug() << "   m_fieldsCoordinates size not equal model size. Return";
         return;
     }
     else {
-        qDebug() << "   m_fieldsCoordinates size equals model size. Start append model PieceCenterRole";
+        //qDebug() << "   m_fieldsCoordinates size equals model size. Start append model PieceCenterRole";
         for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
             for(int column = 0; column < m_columns; column++) {
                 QModelIndex index = getIndex(row, column);
@@ -673,14 +674,14 @@ void CheckersModel::setFieldCenterRole()
 void CheckersModel::setPiecesCoordinatesRole()
 {
     int fieldsNo = m_columns * m_rows;
-    qDebug() << "function setPiecesCoordinatesRole: ";
+    //qDebug() << "function setPiecesCoordinatesRole: ";
 
     if(fieldsNo != m_piecesCoordinates.size()) {
-        qDebug() << "   m_piecesCoordinates size not equal model size. Return";
+        //qDebug() << "   m_piecesCoordinates size not equal model size. Return";
         return;
     }
     else {
-        qDebug() << "   m_piecesCoordinates size equals model size. Start append model PiecesCoordinatesRole";
+        //qDebug() << "   m_piecesCoordinates size equals model size. Start append model PiecesCoordinatesRole";
         for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
             for(int column = 0; column < m_columns; column++) {
                 QModelIndex index = getIndex(row, column);

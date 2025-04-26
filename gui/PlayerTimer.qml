@@ -104,7 +104,7 @@ Item {
     Connections {
         id: countdownTimerConnection
         target: game
-        onGameOnChanged: {
+         function onGameOnChanged() {
             console.log("GAME ON CHANGED !!!")
             if (game.gameOn) {
                 countdownTimer.start()

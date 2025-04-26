@@ -46,8 +46,8 @@ function getCoordinates(repeater, width, height) {
         coordinates.push(repeater.itemAt(i).y + height);  // bottomRightY
     }
 
-    console.log("SET COORDINATES FUNCTION: ")
-    console.log("   coordinates array size: ", coordinates.length)
+    //console.log("SET COORDINATES FUNCTION: ")
+    //console.log("   coordinates array size: ", coordinates.length)
 
     return coordinates
 }
@@ -71,8 +71,8 @@ function getPiecesCoordinates(repeater, width, height, pieceSeparatorX, pieceSep
         coordinates.push(repeater.itemAt(i).y + pieceSeparatorY + height);       // bottomRightY
     }
 
-    console.log("SET COORDINATES FUNCTION: ")
-    console.log("   coordinates array size: ", coordinates.length)
+    //console.log("SET COORDINATES FUNCTION: ")
+    //console.log("   coordinates array size: ", coordinates.length)
 
     return coordinates
 }
@@ -150,9 +150,9 @@ function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme,
                            fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                            pieceSeparatorX, pieceSeparatorY) {
 
-    console.log("UPDATE COORDINATES FUNCTION: ")
-    console.log("   field repeater size: ", fieldRep.count)
-    console.log("   piece repeater size: ", pieceRep.count)
+    //console.log("UPDATE COORDINATES FUNCTION: ")
+    //console.log("   field repeater size: ", fieldRep.count)
+    //console.log("   piece repeater size: ", pieceRep.count)
     var fieldsCoordinates = getCoordinates(fieldRep, fieldWidth, fieldHeight)
     var piecesCoordinates = getPiecesCoordinates(fieldRep, pieceWidth, pieceHeight,  pieceSeparatorX, pieceSeparatorY)
     checkersModelInstance.updateFieldsCoordinates(fieldsCoordinates)
@@ -160,19 +160,19 @@ function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme,
 
     for(let row = 0, no = 0; row < checkersModelInstance.getRowsNo(); row++) {
         for( let col = 0; col < checkersModelInstance.getColumnsNo(); col++, no++  ) {
-            console.log("row: ", row, "column: ", col, "index: ", no)
+            //console.log("row: ", row, "column: ", col, "index: ", no)
             var modelIndex = checkersModelInstance.getIndex(row, col)
             var coordinates = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole)
 
-            console.log("   coordinates: ", coordinates)
+            //console.log("   coordinates: ", coordinates)
             var topLeft = coordinates.topLeft
             var topRight = coordinates.topRight
             var bottomLeft = coordinates.bottomLeft
             var bottomRight = coordinates.bottomRight
-            console.log("   topLeft: ", topLeft)
-            console.log("   topRight: ", topRight )
-            console.log("   bottomLeft: ", bottomLeft)
-            console.log("   bottomRight: ", bottomRight )
+            //console.log("   topLeft: ", topLeft)
+            //console.log("   topRight: ", topRight )
+            //console.log("   bottomLeft: ", bottomLeft)
+            //console.log("   bottomRight: ", bottomRight )
 
             pieceRep.itemAt(no).x = topLeft.x
             pieceRep.itemAt(no).y = topLeft.y

@@ -203,8 +203,6 @@ Item {
                     if( (checkersModelInstance.getPieceColor(modelIndex) === true && game.player === CheckersModel.Player.white ) ||
                         (checkersModelInstance.getPieceColor(modelIndex) === false && game.player === CheckersModel.Player.black ) ) {
 
-
-
                         //***
                         if(checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)) {
                             console.log("move valid")
@@ -273,8 +271,8 @@ Item {
     onWidthChanged: {
         if(completed) {
 
-            console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-            console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
+            //console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+            //console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
@@ -284,8 +282,8 @@ Item {
     onHeightChanged: {
         if(completed) {
 
-            console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-            console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
+            //console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+            //console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
@@ -295,9 +293,9 @@ Item {
     Component.onCompleted: {
         if(!completed) {
 
-            console.log("ON COMPLETED: ")
-            console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-            console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
+            //console.log("ON COMPLETED: ")
+            //console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
+            //console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
 
             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
