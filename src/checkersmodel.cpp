@@ -778,8 +778,34 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
     return possibleMoves;
 }
 //***************************************************************************************************************************************************************************************************************************************
-bool CheckersModel::isCaptureAvailable(const QModelIndex &index, bool isWhite)
+bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
 {
+    if(isPiecePresent(index)) {
+        bool isWhite = getPieceColor(index);
+        bool isKing = getPieceType(index);
+
+        if(isKing) {
+            if(isWhite) {
+
+            }
+            else {
+
+            }
+        }
+        else {
+            if(isWhite) {
+
+            }
+            else {
+
+            }
+        }
+    }
+    else {
+        qDebug() << "isCaptureAvailable function. Piece not present";
+        return false;
+    }
+
     return false;
 }
 //***************************************************************************************************************************************************************************************************************************************
