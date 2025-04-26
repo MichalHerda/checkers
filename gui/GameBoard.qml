@@ -168,9 +168,9 @@ Item {
                     //getCoo(piece)
                 }
                 onPressed: {
-                    console.log("PRESSED:")
-                    console.log("   model index:", modelIndex)
-                    console.log("   pieceRep index: ", index)
+                    //console.log("PRESSED:")
+                    //console.log("   model index:", modelIndex)
+                    //console.log("   pieceRep index: ", index)
                 }
                 onReleased: {
                     var newCooLeftUpX = pieceRep.itemAt(index).x
@@ -184,7 +184,7 @@ Item {
 
                     var newAverageX = ( newCooLeftUpX + newCooRightUpX + newCooLeftBottomX + newCooRightBottomX ) / 4
                     var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
-
+/*
                     console.log("RELEASED:")
                     console.log("   pieceWidth:", pieceWidth)
                     console.log("   pieceHeight: ", pieceHeight)
@@ -198,7 +198,7 @@ Item {
                     console.log("   newCooRightBottomY: ", newCooRightBottomY)
                     console.log("   newAverageX: ", newAverageX)
                     console.log("   newAverageY: ", newAverageY)
-
+*/
                     //***
                     if( (checkersModelInstance.getPieceColor(modelIndex) === true && game.player === CheckersModel.Player.white ) ||
                         (checkersModelInstance.getPieceColor(modelIndex) === false && game.player === CheckersModel.Player.black ) ) {

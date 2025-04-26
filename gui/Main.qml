@@ -35,7 +35,7 @@ Window {
         PlayerTimersRow {
             id: playerTimersRow
 
-            width: anchorItem.width * 0.75
+            width: anchorItem.width * 0.9
             height: anchorItem.height * 0.1
             anchors.horizontalCenter: anchorItem.horizontalCenter
             visible: !isMainMenu
@@ -137,8 +137,8 @@ Window {
         repeat: true
         running: true
         onTriggered: {
-            console.log("game.player: ", game.player)
-            console.log("game.gameon: ", game.gameOn)
+            //console.log("game.player: ", game.player)
+            //console.log("game.gameon: ", game.gameOn)
         }
     }
 }

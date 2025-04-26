@@ -87,7 +87,6 @@ Item {
     Timer {
         id: countdownTimer
         interval: 1000
-        //running: game.gameOn
         repeat: true
 
         onTriggered: {
@@ -98,7 +97,6 @@ Item {
                 root.timeout()
             }
         }
-
     }
 
     Connections {
@@ -113,5 +111,4 @@ Item {
             }
         }
     }
-
 }

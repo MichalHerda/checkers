@@ -80,34 +80,34 @@ function getPiecesCoordinates(repeater, width, height, pieceSeparatorX, pieceSep
 
 function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, repeater, pieceRepeater) {
 
-    console.log("centerAllPiecesOnFields function")
-    console.log("   pieceRepeater size: ", pieceRepeater.count)
+    //console.log("centerAllPiecesOnFields function")
+    //console.log("   pieceRepeater size: ", pieceRepeater.count)
     var itemsNo = repeater.count
     var modelNo = checkersModelInstance.getRowsNo() * checkersModelInstance.getColumnsNo()
 
     if(itemsNo === modelNo) {
-        console.log("   modelNo equals itemNo !")
+        //console.log("   modelNo equals itemNo !")
         var repeaterIndex = 0
 
         for(let row = 0; row < checkersModelInstance.getRowsNo(); row++) {
             for(let col = 0; col < checkersModelInstance.getColumnsNo(); col++) {
-                console.log("   repeater index: ", repeaterIndex)
+                //console.log("   repeater index: ", repeaterIndex)
 
                 var modelIndex = checkersModelInstance.getIndex(row, col)
                 //if(checkersModelInstance.isPiecePresent(modelIndex)) {
 
-                    console.log("   center piece, row: ", row, "column: ", col )
+                    //console.log("   center piece, row: ", row, "column: ", col )
 
                     var coordinates = checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole);
-                    console.log("   coordinates: ", coordinates)
+                    //console.log("   coordinates: ", coordinates)
                     var topLeft = coordinates.topLeft
                     var topRight = coordinates.topRight
                     var bottomLeft = coordinates.bottomLeft
                     var bottomRight = coordinates.bottomRight
-                    console.log("   topLeft: ", topLeft)
-                    console.log("   topRight: ", topRight )
-                    console.log("   bottomLeft: ", bottomLeft)
-                    console.log("   bottomRight: ", bottomRight )
+                    //console.log("   topLeft: ", topLeft)
+                    //console.log("   topRight: ", topRight )
+                    //console.log("   bottomLeft: ", bottomLeft)
+                    //console.log("   bottomRight: ", bottomRight )
 
                     pieceRepeater.itemAt(repeaterIndex).x = topLeft.x
                     pieceRepeater.itemAt(repeaterIndex).y = topLeft.y

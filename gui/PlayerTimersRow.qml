@@ -3,26 +3,28 @@ import checkers.model
 
 Row {
     id: root
-    //anchors.fill: parent
 
-    //property double horizontalSpacing: parent.width * 0.1
-    //property double playerTimerWidth: parent.width * 0.35
-    //property double playerTimerHeight: parent.height * 0.75
+    property double playerTimerWidth: root.width * 0.4
+    property double playerTimerHeight: root.height
 
     PlayerTimer {
         id: playerOneTimer
-        //x: horizontalSpacing
-        width: root.width * 0.5 //playerTimerWidth
-        height: root.height //playerTimerHeight
+        width: playerTimerWidth
+        height: playerTimerHeight
         playerName: playerOneName
         countdownTimer.running: (game.player === CheckersModel.Player.white)
     }
 
+    Item {
+        id: separatorTimer
+        width: root.width - (playerTimerWidth * 2)
+        height: playerTimerHeight
+    }
+
     PlayerTimer {
         id: playerTwoTimer
-        //x: ( horizontalSpacing * 5 ) + playerTimerWidth
-        width: root.width * 0.5 //playerTimerWidth
-        height: root.height //playerTimerHeight
+        width: playerTimerWidth
+        height: playerTimerHeight
         playerName: playerTwoName
         countdownTimer.running: (game.player === CheckersModel.Player.black)
     }
