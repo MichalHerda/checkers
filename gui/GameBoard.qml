@@ -69,6 +69,7 @@ Item {
                     onClicked: {
                         console.log("model index: ", modelIndex)
                         console.log("capture available role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
+                        console.log("multi capture role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                     /*
                         checkersModelInstance.deselectAllFields()
                         console.log("1.model index: ", modelIndex)

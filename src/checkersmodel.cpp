@@ -95,6 +95,8 @@ void CheckersModel::resetModel()
 
             //set all fields as not selected
             //CheckersModel::selectField(index, false);
+            setData(index, false, CaptureAvailableRole);
+            setData(index, false, MultiCaptureRole);
         }
     }
     CheckersModel::deselectAllFields();
