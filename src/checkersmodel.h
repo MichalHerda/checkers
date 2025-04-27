@@ -125,6 +125,9 @@ private:
 
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
+
+    bool isCaptureAvailable(const QModelIndex &index);
+    bool isInsideBoard(int row, int col);
 };
 
 struct Piece {
