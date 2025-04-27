@@ -18,8 +18,8 @@ Rectangle {
         onClicked: {
             //root.isMainMenu === true
             root.isMainMenu = !root.isMainMenu
-            game.gameOn = true;
-            game.player = CheckersModel.Player.white
+            checkersModelInstance.gameOn = true;
+            checkersModelInstance.player = CheckersModel.Player.white
         }
     }
 }

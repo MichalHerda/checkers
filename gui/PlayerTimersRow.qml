@@ -12,7 +12,7 @@ Row {
         width: playerTimerWidth
         height: playerTimerHeight
         playerName: playerOneName
-        countdownTimer.running: (game.player === CheckersModel.Player.white)
+        countdownTimer.running: (checkersModelInstance.player === CheckersModel.Player.white)
     }
 
     Item {
@@ -26,7 +26,7 @@ Row {
         width: playerTimerWidth
         height: playerTimerHeight
         playerName: playerTwoName
-        countdownTimer.running: (game.player === CheckersModel.Player.black)
+        countdownTimer.running: (checkersModelInstance.player === CheckersModel.Player.black)
     }
 }
 

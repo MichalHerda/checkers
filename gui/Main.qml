@@ -133,13 +133,13 @@ Window {
     }
     Timer {
         id: debugTimer
-        interval: 5000
+        interval: 10000
         repeat: true
         running: true
         onTriggered: {
-            //console.log("game.player: ", game.player)
-            //console.log("game.gameon: ", game.gameOn)
-            console.log("must capture, player", game.player, ": ", checkersModelInstance.mustCapture(game.player))
+            console.log("checkersModelInstance.player: ", checkersModelInstance.player)
+            console.log("checkersModelInstance.gameon: ", checkersModelInstance.gameOn)
+            console.log("must capture, player", checkersModelInstance.player, ": ", checkersModelInstance.mustCapture(checkersModelInstance.player))
         }
     }
 }
