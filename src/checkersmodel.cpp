@@ -745,11 +745,56 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
 QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, bool isWhite)
 {
     QList <QPair <char, int> > possibleMoves {};
+    auto isCaptureAvailable = data(index, CaptureAvailableRole);
 
     int rowNo = index.row();
     int colNo = index.column();
     int direction = isWhite ? -1 : 1;
+    int captureDirection = (isWhite ? -2 : 2);
 
+    if (isCaptureAvailable == false) {
+        // Normalny ruch do przodu
+        QList<QPoint> moveOffsets = { {direction, -1}, {direction, 1} };
+
+        for (const QPoint& offset : moveOffsets) {
+            int newRow = rowNo + offset.x();
+            int newCol = colNo + offset.y();
+            if (isInsideBoard(newRow, newCol)) {
+                QModelIndex checkIndex = getIndex(newRow, newCol);
+                if (!isPiecePresent(checkIndex)) {
+                    QVariant move = data(checkIndex, FieldNameRole);
+                    possibleMoves.push_back(move.value<QPair<char, int>>());
+                }
+            }
+        }
+    } else {
+        // Bicie w 4 kierunkach
+        QList<QPoint> captureOffsets = { {captureDirection, -2}, {captureDirection, 2},
+                                        {-captureDirection, -2}, {-captureDirection, 2} };
+
+        for (const QPoint& offset : captureOffsets) {
+            int newRow = rowNo + offset.x();
+            int newCol = colNo + offset.y();
+            int middleRow = rowNo + offset.x() / 2;
+            int middleCol = colNo + offset.y() / 2;
+
+            if (isInsideBoard(newRow, newCol) && isInsideBoard(middleRow, middleCol)) {
+                QModelIndex targetIndex = getIndex(newRow, newCol);
+                QModelIndex middleIndex = getIndex(middleRow, middleCol);
+
+                if (!isPiecePresent(targetIndex)) { // cel musi być pusty
+                    if (isPiecePresent(middleIndex)) { // na środku musi być pionek
+                        bool middleIsWhite = getPieceColor(middleIndex);
+                        if (middleIsWhite != isWhite) { // i przeciwnika
+                            QVariant move = data(targetIndex, FieldNameRole);
+                            possibleMoves.push_back(move.value<QPair<char, int>>());
+                        }
+                    }
+                }
+            }
+        }
+    }
+/* POPRZEDNIA WERSJA:
     if( (colNo != 0) && (colNo != (m_columns -1)) ) {
         QModelIndex checkindex1 = getIndex(rowNo + direction, colNo - 1);
         QModelIndex checkindex2 = getIndex(rowNo + direction, colNo + 1);
@@ -778,7 +823,7 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
             possibleMoves.push_back(move.value<QPair<char, int>>());
         }
     }
-
+*/
     return possibleMoves;
 }
 //***************************************************************************************************************************************************************************************************************************************
