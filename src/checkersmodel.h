@@ -92,6 +92,8 @@ public:
 
     Q_INVOKABLE void setAllPiecesRange();
 
+    Q_INVOKABLE bool mustCapture(Player player);
+
 signals:
 
 private:

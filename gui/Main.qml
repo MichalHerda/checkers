@@ -139,6 +139,7 @@ Window {
         onTriggered: {
             //console.log("game.player: ", game.player)
             //console.log("game.gameon: ", game.gameOn)
+            console.log("must capture, player", game.player, ": ", checkersModelInstance.mustCapture(game.player))
         }
     }
 }
