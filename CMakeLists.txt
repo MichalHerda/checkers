@@ -28,7 +28,7 @@ qt_add_qml_module(appCheckers
         QML_FILES gui/GameBoard.qml
         QML_FILES gui/Piece.qml
         QML_FILES gui/frontEnd.js
-        SOURCES src/game.h src/game.cpp
+        SOURCES
         QML_FILES gui/Menu.qml
         QML_FILES gui/PlayerTimer.qml
         QML_FILES gui/PlayerTimersRow.qml
