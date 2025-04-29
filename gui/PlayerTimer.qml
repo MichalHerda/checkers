@@ -101,10 +101,10 @@ Item {
 
     Connections {
         id: countdownTimerConnection
-        target: game
+        target: checkersModelInstance
          function onGameOnChanged() {
             console.log("GAME ON CHANGED !!!")
-            if (game.gameOn) {
+            if (checkersModelInstance.gameOn) {
                 countdownTimer.start()
             } else {
                 countdownTimer.stop()
