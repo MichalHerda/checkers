@@ -433,6 +433,28 @@ void CheckersModel::updatePiecesCoordinates(const QVariantList &piecesCoordinate
     //qDebug() << "end of updatePiecesCoordinates function";
 }
 //***************************************************************************************************************************************************************************************************************************************
+void CheckersModel::removePiece(QModelIndex from, QModelIndex to)
+{
+    qDebug() << "capture! remove pieces between: " << from << " and " << to;
+
+    //znajdź większy index dla row i column:
+    int maxRow = std::max(from.row(), to.row());
+    int maxCol = std::max(from.column(), to.column());
+    int minRow = std::min(from.row(), to.row());
+    int minCol = std::min(from.column(), to.column());
+
+    qDebug() << "maxRow: " << maxRow << ", minRow: " << minRow;
+    qDebug() << "maxCol: " << maxCol << ", minCol: " << minCol;
+
+    int removeRow = (from.row() + to.row()) / 2;
+    int removeCol = (from.column() + to.column()) / 2;
+
+    QModelIndex indexToRemove = getIndex(removeRow, removeCol);
+    qDebug() << "indexToRemove: " << indexToRemove;
+
+    setEmptyField(indexToRemove);
+}
+//***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
 {
     qDebug() << "isMoveValid, index passed: " << index;

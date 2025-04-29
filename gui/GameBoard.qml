@@ -70,6 +70,7 @@ Item {
                         console.log("model index: ", modelIndex)
                         console.log("capture available role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
                         console.log("multi capture role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
+                        console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
                     /*
                         checkersModelInstance.deselectAllFields()
                         console.log("1.model index: ", modelIndex)
@@ -227,6 +228,10 @@ Item {
 
                             checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
                             checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
+
+                            if(checkersModelInstance.mustCapture(checkersModelInstance.player) ) {
+                                checkersModelInstance.removePiece(modelIndex, modelIndexToMove)
+                            }
 
                             //console.log("field to move after swap: ", checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole))
                             //console.log("field to move after swap data color: ", emptyPieceData.player)
