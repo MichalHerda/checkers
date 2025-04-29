@@ -461,6 +461,11 @@ bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double avera
     QVariantList range = data(index, RangeRole).toList();
     qDebug() << "passed index range: "  << range;
 
+    auto hasCapture = m_model.data(index, CaptureAvailableRole);
+    if(!hasCapture.toBool() && mustCapture(player)) {
+        return false;
+    }
+
     QPointF pieceCenter(averageX, averageY);
     QModelIndex targetFieldIndex = CheckersModel::findFieldIndexForPieceCenter(pieceCenter);
     qDebug() << "piece center is now inside field: " << targetFieldIndex;
