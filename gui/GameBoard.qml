@@ -145,6 +145,8 @@ Item {
             visible: checkersModelInstance.isPiecePresent(modelIndex)
             color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
             border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
+            kingSign.color: border.color
+            isKing: checkersModelInstance.getPieceType(modelIndex)
 
             Component.onCompleted: {
                 //console.log("**************************************************************************************")
