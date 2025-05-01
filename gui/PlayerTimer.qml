@@ -8,6 +8,8 @@ Item {
     property int countdown: 180
     property alias countdownTimer: countdownTimer
     property alias name: name.text
+    property alias nameRect: nameRect
+    property alias timeRect: timeRect
 
     signal timeout()
 
