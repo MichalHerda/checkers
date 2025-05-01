@@ -249,6 +249,10 @@ Item {
                             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                                  pieceSeparatorX, pieceSeparatorY)
 
+                            //***
+                            checkersModelInstance.evaluatePromotionToKing(modelIndexToMove)
+                            //pieceRep.itemAt(modelIndexToMove).isKing = true
+
                             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
 
                             if(checkersModelInstance.player === CheckersModel.Player.white) {

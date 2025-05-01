@@ -95,6 +95,8 @@ public:
 
     Q_INVOKABLE bool mustCapture(Player player);
 
+    Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index);
+
     Q_PROPERTY (bool gameOn                    READ gameOnRead     WRITE gameOnWrite     NOTIFY gameOnChanged     )
     Q_PROPERTY (CheckersModel::Player player   READ playerRead     WRITE playerWrite     NOTIFY playerChanged     )
 

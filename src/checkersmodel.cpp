@@ -667,6 +667,30 @@ bool CheckersModel::mustCapture(Player player)
     return false;
 }
 //***************************************************************************************************************************************************************************************************************************************
+void CheckersModel::evaluatePromotionToKing(QModelIndex index)
+{
+    qDebug() << "evaluate promotion to king: ";
+    qDebug() << "player: " << player;
+    qDebug() << "getPieceType: " << getPieceType(index);
+    qDebug() << "row: " << index.row();
+
+    if(player == Player::white &&
+       getPieceType(index) == false &&
+       index.row() == 0) {
+            qDebug() << "promote to king";
+            setEmptyField(index);
+            setPiece(index, player, Type::king);
+    }
+
+    if(player == Player::black &&
+        getPieceType(index) == false &&
+        index.row() == 7) {
+            qDebug() << "promote to king";
+            setEmptyField(index);
+            setPiece(index, player, Type::king);
+    }
+}
+//***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::gameOnRead()const {
     return gameOn;
 }
@@ -922,7 +946,7 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
     return false;
     */
     if (!isPiecePresent(index)) {
-        qDebug() << "isCaptureAvailable function. Piece not present";
+        //qDebug() << "isCaptureAvailable function. Piece not present";
         return false;
     }
 
