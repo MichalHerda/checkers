@@ -644,6 +644,8 @@ void CheckersModel::setAllPiecesRange()
             else {
                 //qDebug() << "no piece";
                 setData(index, QVariantList(), RangeRole);
+                setData(index, QVariant::fromValue(false), CaptureAvailableRole);
+                setData(index, QVariant::fromValue(false), MultiCaptureRole);
             }
         }
     }
@@ -669,10 +671,10 @@ bool CheckersModel::mustCapture(Player player)
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::evaluatePromotionToKing(QModelIndex index)
 {
-    qDebug() << "evaluate promotion to king: ";
-    qDebug() << "player: " << player;
-    qDebug() << "getPieceType: " << getPieceType(index);
-    qDebug() << "row: " << index.row();
+    //qDebug() << "evaluate promotion to king: ";
+    //qDebug() << "player: " << player;
+    //qDebug() << "getPieceType: " << getPieceType(index);
+    //qDebug() << "row: " << index.row();
 
     if(player == Player::white &&
        getPieceType(index) == false &&
