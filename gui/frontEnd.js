@@ -121,6 +121,13 @@ function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersT
                         pieceRepeater.itemAt(repeaterIndex).color =  CheckersTheme.blackPlayerColor
                     }
 
+                    if(checkersModelInstance.getPieceType(modelIndex)) {
+                        pieceRepeater.itemAt(repeaterIndex).isKing = true;
+                    }
+                    else {
+                        pieceRepeater.itemAt(repeaterIndex).isKing = false;
+                    }
+
                     checkersModelInstance.setAllPiecesRange()
                 //}
                 //else {
