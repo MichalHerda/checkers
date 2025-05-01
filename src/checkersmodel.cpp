@@ -446,6 +446,13 @@ void CheckersModel::removePiece(QModelIndex from, QModelIndex to)
     qDebug() << "maxRow: " << maxRow << ", minRow: " << minRow;
     qDebug() << "maxCol: " << maxCol << ", minCol: " << minCol;
 
+    //nie wiem, czy to rozwiązanie jest na dłużej, ale w pewnych okolicznościach usuwało pionki
+    //gdy różnica między kolumnami/rzędami wynosiła 1, stąd poniższa instrukcja "if":
+
+    if(maxRow - minRow < 2 || maxCol - minCol < 2) {
+        return;
+    }
+
     int removeRow = (from.row() + to.row()) / 2;
     int removeCol = (from.column() + to.column()) / 2;
 
