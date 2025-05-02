@@ -437,29 +437,62 @@ void CheckersModel::removePiece(QModelIndex from, QModelIndex to)
 {
     qDebug() << "capture! remove pieces between: " << from << " and " << to;
 
-    //znajdź większy index dla row i column:
-    int maxRow = std::max(from.row(), to.row());
-    int maxCol = std::max(from.column(), to.column());
-    int minRow = std::min(from.row(), to.row());
-    int minCol = std::min(from.column(), to.column());
+    bool isKing = getPieceType(from);
+    qDebug() << "isKing: " << isKing;
 
-    qDebug() << "maxRow: " << maxRow << ", minRow: " << minRow;
-    qDebug() << "maxCol: " << maxCol << ", minCol: " << minCol;
+    if(!isKing) {
+        qDebug() << "man captures";
+        //znajdź większy index dla row i column:
+        int maxRow = std::max(from.row(), to.row());
+        int maxCol = std::max(from.column(), to.column());
+        int minRow = std::min(from.row(), to.row());
+        int minCol = std::min(from.column(), to.column());
 
-    //nie wiem, czy to rozwiązanie jest na dłużej, ale w pewnych okolicznościach usuwało pionki
-    //gdy różnica między kolumnami/rzędami wynosiła 1, stąd poniższa instrukcja "if":
+        qDebug() << "maxRow: " << maxRow << ", minRow: " << minRow;
+        qDebug() << "maxCol: " << maxCol << ", minCol: " << minCol;
 
-    if(maxRow - minRow < 2 || maxCol - minCol < 2) {
-        return;
+        //nie wiem, czy to rozwiązanie jest na dłużej, ale w pewnych okolicznościach usuwało pionki
+        //gdy różnica między kolumnami/rzędami wynosiła 1, stąd poniższa instrukcja "if":
+
+        if(maxRow - minRow < 2 || maxCol - minCol < 2) {
+            return;
+        }
+
+        int removeRow = (from.row() + to.row()) / 2;
+        int removeCol = (from.column() + to.column()) / 2;
+
+        QModelIndex indexToRemove = getIndex(removeRow, removeCol);
+        qDebug() << "indexToRemove (MAN): " << indexToRemove;
+
+        setEmptyField(indexToRemove);
     }
+    else {
+        qDebug() << "king captures";
+        int fromRow = from.row();
+        int fromCol = from.column();
+        int toRow = to.row();
+        int toCol = to.column();
 
-    int removeRow = (from.row() + to.row()) / 2;
-    int removeCol = (from.column() + to.column()) / 2;
+        int dRow = (toRow - fromRow) > 0 ? 1 : -1;
+        int dCol = (toCol - fromCol) > 0 ? 1 : -1;
 
-    QModelIndex indexToRemove = getIndex(removeRow, removeCol);
-    qDebug() << "indexToRemove: " << indexToRemove;
+        int row = fromRow + dRow;
+        int col = fromCol + dCol;
 
-    setEmptyField(indexToRemove);
+        while (row != toRow && col != toCol) {
+            QModelIndex current = getIndex(row, col);
+
+            if (isPiecePresent(current)) {
+                // Znaleziono figurę przeciwnika do zbicia
+                qDebug() << "indexToRemove (KING): " << current;
+                setEmptyField(current);
+                return;
+            }
+
+            row += dRow;
+            col += dCol;
+        }
+    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
@@ -848,15 +881,16 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
             QModelIndex currentIndex = getIndex(r, c);
 
             if (!isPiecePresent(currentIndex)) {
-                if (!captureAvailable) {
+                if (!captureAvailable && !foundOpponent) {
                     // Normalny ruch króla, jeśli bicie NIE jest dostępne
                     QVariant move = data(currentIndex, FieldNameRole);
                     possibleMoves.push_back(move.value<QPair<char, int>>());
-                } else if (foundOpponent) {
-                    // Ruch po biciu – tylko pole bezpośrednio za przeciwnikiem
+                } else if (captureAvailable && foundOpponent) {
+                    // 🛠️ ZMIENIONY FRAGMENT:
+                    // Dodaj WSZYSTKIE wolne pola ZA przeciwnikiem
                     QVariant move = data(currentIndex, FieldNameRole);
                     possibleMoves.push_back(move.value<QPair<char, int>>());
-                    break; // tylko jedno pole za przeciwnikiem w ramach jednego bicia
+                    // NIE BREAKUJEMY — kontynuujemy za przeciwnikiem
                 }
 
                 r += dr[dir];
@@ -868,7 +902,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
                     r += dr[dir];
                     c += dc[dir];
                 } else {
-                    // Albo własny pionek, albo już znaleziono przeciwnika – koniec kierunku
+                    // Własny pionek lub już był przeciwnik — koniec kierunku
                     break;
                 }
             }
