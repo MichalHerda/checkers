@@ -832,9 +832,48 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
 {
     QList <QPair <char, int> > possibleMoves {};
 
-    //int rowNo = index.row();
-    //int colNo = index.column();
+    int rowNo = index.row();
+    int colNo = index.column();
+    bool captureAvailable = isCaptureAvailable(index);
 
+    const int dr[] = {-1, -1, 1, 1}; // góra-lewo, góra-prawo, dół-lewo, dół-prawo
+    const int dc[] = {-1, 1, -1, 1};
+
+    for (int dir = 0; dir < 4; ++dir) {
+        int r = rowNo + dr[dir];
+        int c = colNo + dc[dir];
+        bool foundOpponent = false;
+
+        while (isInsideBoard(r, c)) {
+            QModelIndex currentIndex = getIndex(r, c);
+
+            if (!isPiecePresent(currentIndex)) {
+                if (!captureAvailable) {
+                    // Normalny ruch króla, jeśli bicie NIE jest dostępne
+                    QVariant move = data(currentIndex, FieldNameRole);
+                    possibleMoves.push_back(move.value<QPair<char, int>>());
+                } else if (foundOpponent) {
+                    // Ruch po biciu – tylko pole bezpośrednio za przeciwnikiem
+                    QVariant move = data(currentIndex, FieldNameRole);
+                    possibleMoves.push_back(move.value<QPair<char, int>>());
+                    break; // tylko jedno pole za przeciwnikiem w ramach jednego bicia
+                }
+
+                r += dr[dir];
+                c += dc[dir];
+            }
+            else {
+                if (getPieceColor(currentIndex) != isWhite && !foundOpponent) {
+                    foundOpponent = true;
+                    r += dr[dir];
+                    c += dc[dir];
+                } else {
+                    // Albo własny pionek, albo już znaleziono przeciwnika – koniec kierunku
+                    break;
+                }
+            }
+        }
+    }
     return possibleMoves;
 }
 //***************************************************************************************************************************************************************************************************************************************

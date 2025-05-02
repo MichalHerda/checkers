@@ -71,6 +71,7 @@ Item {
                         console.log("capture available role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
                         //console.log("multi capture role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                         console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
+                        console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
                     /*
                         checkersModelInstance.deselectAllFields()
                         console.log("1.model index: ", modelIndex)
