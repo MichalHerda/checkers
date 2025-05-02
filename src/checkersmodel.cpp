@@ -890,70 +890,13 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
             }
         }
     }
-/* POPRZEDNIA WERSJA:
-    if( (colNo != 0) && (colNo != (m_columns -1)) ) {
-        QModelIndex checkindex1 = getIndex(rowNo + direction, colNo - 1);
-        QModelIndex checkindex2 = getIndex(rowNo + direction, colNo + 1);
-        if(!isPiecePresent(checkindex1)) {
-            QVariant move = data(checkindex1, FieldNameRole);
-            possibleMoves.push_back(move.value<QPair<char, int>>());
-        }
-        if(!isPiecePresent(checkindex2)) {
-            QVariant move = data(checkindex2, FieldNameRole);
-            possibleMoves.push_back(move.value<QPair<char, int>>());
-        }
-    }
 
-    if( colNo == 0) {
-        QModelIndex checkindex = getIndex(rowNo + direction, colNo + 1);
-        if(!isPiecePresent(checkindex)) {
-            QVariant move = data(checkindex, FieldNameRole);
-            possibleMoves.push_back(move.value<QPair<char, int>>());
-        }
-    }
-
-    if( colNo == ( m_columns -1) ) {
-        QModelIndex checkindex = getIndex(rowNo + direction, colNo - 1);
-        if(!isPiecePresent(checkindex)) {
-            QVariant move = data(checkindex, FieldNameRole);
-            possibleMoves.push_back(move.value<QPair<char, int>>());
-        }
-    }
-*/
     return possibleMoves;
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
 {
-    /*
-    if(isPiecePresent(index)) {
-        bool isWhite = getPieceColor(index);
-        bool isKing = getPieceType(index);
 
-        if(isKing) {
-            if(isWhite) {
-
-            }
-            else {
-
-            }
-        }
-        else {
-            if(isWhite) {
-
-            }
-            else {
-
-            }
-        }
-    }
-    else {
-        qDebug() << "isCaptureAvailable function. Piece not present";
-        return false;
-    }
-
-    return false;
-    */
     if (!isPiecePresent(index)) {
         //qDebug() << "isCaptureAvailable function. Piece not present";
         return false;
