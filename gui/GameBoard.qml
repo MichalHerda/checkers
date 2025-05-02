@@ -72,6 +72,7 @@ Item {
                         //console.log("multi capture role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                         console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
                         console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
+                        console.log("is king: ", checkersModelInstance.getPieceType(modelIndex))
                     /*
                         checkersModelInstance.deselectAllFields()
                         console.log("1.model index: ", modelIndex)
@@ -232,12 +233,16 @@ Item {
                             //console.log("piece data color: ", pieceData.player)
                             //console.log("piece data type: ", pieceData.type)
 
-                            checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
-                            checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
+                            //REMOVE AFTER TESTS:
+                            //checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
+                            //checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
 
                             if(checkersModelInstance.mustCapture(checkersModelInstance.player) ) {
                                 checkersModelInstance.removePiece(modelIndex, modelIndexToMove)
                             }
+
+                            checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
+                            checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
 
                             //console.log("field to move after swap: ", checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole))
                             //console.log("field to move after swap data color: ", emptyPieceData.player)
