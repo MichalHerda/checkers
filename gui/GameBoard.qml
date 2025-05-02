@@ -141,6 +141,7 @@ Item {
             //y: row * fieldHeight + (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
             x: (column * fieldWidth) + pieceSeparatorX //(fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
             y: (row * fieldHeight) + pieceSeparatorY //+ (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
+            z: 0
 
             visible: checkersModelInstance.isPiecePresent(modelIndex)
             color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
@@ -167,18 +168,20 @@ Item {
                 drag.minimumY: 0
                 drag.maximumX: gameBoard.width - piece.width
                 drag.maximumY: gameBoard.height - piece.height
-                onClicked: {
+                onClicked: {                  
                     //console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
                     //console.log("   piece clicked. its range: ", piece.pieceRange)
                     //console.log("   coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole))
                     //getCoo(piece)
                 }
                 onPressed: {
+                    pieceRep.itemAt(index).z = 1
                     //console.log("PRESSED:")
                     //console.log("   model index:", modelIndex)
                     //console.log("   pieceRep index: ", index)
                 }
                 onReleased: {
+                    pieceRep.itemAt(index).z = 0
                     var newCooLeftUpX = pieceRep.itemAt(index).x
                     var newCooLeftUpY = pieceRep.itemAt(index).y
                     var newCooRightUpX = pieceRep.itemAt(index).x + pieceWidth
