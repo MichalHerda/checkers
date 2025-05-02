@@ -74,6 +74,9 @@ void CheckersModel::resetModel()
     m_model.setRowCount(m_rows);
     m_model.setColumnCount(m_columns);
 
+    m_whiteScore = 0;
+    m_blackScore = 0;
+
     //Initialize board coordinates and 'black' and 'white fields
     for(int row = 0, rowCoo = 8; row < m_rows; row++, rowCoo--) {
         for(int col = 0 ; col < m_columns; col++) {
@@ -493,6 +496,13 @@ void CheckersModel::removePiece(QModelIndex from, QModelIndex to)
             col += dCol;
         }
     }
+
+    if(getPieceColor(from)) {
+        m_blackScore--;
+    }
+    else {
+        m_whiteScore--;
+    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
@@ -593,6 +603,7 @@ void CheckersModel::initializePieces()
             QVariant playable = m_model.data(index, CheckersRoles::IsPlayableRole);
             if(playable.toBool()){
                 CheckersModel::setPiece(index, Player::black);
+                m_blackScore++;
             }
             else {
                 //Player player = Player::null;
@@ -602,6 +613,7 @@ void CheckersModel::initializePieces()
                 //piece.type = Type::null;
                 //setData(index, QVariant::fromValue(piece), PieceRole);
                 CheckersModel::setEmptyField(index);
+                m_whiteScore++;
             }
         }
     }
@@ -731,6 +743,12 @@ void CheckersModel::evaluatePromotionToKing(QModelIndex index)
             setEmptyField(index);
             setPiece(index, player, Type::king);
     }
+}
+//***************************************************************************************************************************************************************************************************************************************
+void CheckersModel::showScore()
+{
+    qDebug() << "white score: " << m_whiteScore;
+    qDebug() << "black score: " << m_blackScore;
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::gameOnRead()const {

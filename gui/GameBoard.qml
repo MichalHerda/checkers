@@ -73,6 +73,7 @@ Item {
                         console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
                         console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
                         console.log("is king: ", checkersModelInstance.getPieceType(modelIndex))
+                        console.log("score: \n", checkersModelInstance.showScore())
                     /*
                         checkersModelInstance.deselectAllFields()
                         console.log("1.model index: ", modelIndex)

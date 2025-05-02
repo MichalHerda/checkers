@@ -97,6 +97,8 @@ public:
 
     Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index);
 
+    Q_INVOKABLE void showScore();
+
     Q_PROPERTY (bool gameOn                    READ gameOnRead     WRITE gameOnWrite     NOTIFY gameOnChanged     )
     Q_PROPERTY (CheckersModel::Player player   READ playerRead     WRITE playerWrite     NOTIFY playerChanged     )
 
@@ -117,6 +119,9 @@ private:
     int m_columns = 8;
     int m_rows = 8;
     int m_pieceRows = 3;
+
+    int m_whiteScore = 0;
+    int m_blackScore = 0;
 
 //    QMetaEnum m_rolesMetaEnum;
 //    QHash<int, QByteArray> m_rolesMap;
