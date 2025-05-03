@@ -152,6 +152,7 @@ private:
 
     bool isCaptureAvailable(const QModelIndex &index);
     bool isInsideBoard(int row, int col);
+    bool canKingContinueCaptureFrom(int row, int col, bool isWhite);
 };
 
 struct Piece {

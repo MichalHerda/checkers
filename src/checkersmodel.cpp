@@ -1051,6 +1051,39 @@ bool CheckersModel::isInsideBoard(int row, int col)
     return (row >= 0 && row < 8 && col >= 0 && col < 8);
 }
 //***************************************************************************************************************************************************************************************************************************************
+bool CheckersModel::canKingContinueCaptureFrom(int row, int col, bool isWhite)
+{
+    const int dr[] = {-1, -1, 1, 1};
+    const int dc[] = {-1, 1, -1, 1};
+
+    for (int dir = 0; dir < 4; ++dir) {
+        int r = row + dr[dir];
+        int c = col + dc[dir];
+        bool foundOpponent = false;
+
+        while (isInsideBoard(r, c)) {
+            QModelIndex currentIndex = getIndex(r, c);
+
+            if (!isPiecePresent(currentIndex)) {
+                if (foundOpponent) {
+                    return true; // Jest przeciwnik i wolne pole za nim
+                }
+                r += dr[dir];
+                c += dc[dir];
+            } else {
+                if (getPieceColor(currentIndex) != isWhite && !foundOpponent) {
+                    foundOpponent = true;
+                    r += dr[dir];
+                    c += dc[dir];
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+    return false;
+}
+//***************************************************************************************************************************************************************************************************************************************
 QDebug operator<<(QDebug debug, const CornersCoordinates &coords) {
     debug.nospace() << "CornersCoordinates("
                     << "topLeft: " << coords.topLeft
