@@ -171,7 +171,7 @@ Item {
                 drag.minimumY: 0
                 drag.maximumX: gameBoard.width - piece.width
                 drag.maximumY: gameBoard.height - piece.height
-                onClicked: {                  
+                onClicked: {
                     //console.log("INDEX: ", index, "COO: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
                     //console.log("   piece clicked. its range: ", piece.pieceRange)
                     //console.log("   coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceCoordinatesRole))

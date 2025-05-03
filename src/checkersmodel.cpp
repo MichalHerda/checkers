@@ -900,32 +900,56 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
 
             if (!isPiecePresent(currentIndex)) {
                 if (!captureAvailable && !foundOpponent) {
+                    qDebug() << "if (!captureAvailable && !foundOpponent)";
                     // Normalny ruch króla, jeśli bicie NIE jest dostępne
                     QVariant move = data(currentIndex, FieldNameRole);
                     possibleMoves.push_back(move.value<QPair<char, int>>());
-                } else if (captureAvailable && foundOpponent) {
-                    // 🛠️ ZMIENIONY FRAGMENT:
-                    // Dodaj WSZYSTKIE wolne pola ZA przeciwnikiem
-                    QVariant move = data(currentIndex, FieldNameRole);
-                    possibleMoves.push_back(move.value<QPair<char, int>>());
-                    // NIE BREAKUJEMY — kontynuujemy za przeciwnikiem
                 }
+                //else if (captureAvailable && foundOpponent) {
+                //    // Dodaj WSZYSTKIE wolne pola ZA przeciwnikiem
+                //    QVariant move = data(currentIndex, FieldNameRole);
+                //    possibleMoves.push_back(move.value<QPair<char, int>>());
+                //    // NIE BREAKUJEMY — kontynuujemy za przeciwnikiem
+                // }
+                else if (captureAvailable && foundOpponent) {
+                    qDebug() << "else if (captureAvailable && foundOpponent)";
+                    QVariant move = data(currentIndex, FieldNameRole);
+                    QPair<char, int> movePair = move.value<QPair<char, int>>();
+
+                    // 🔍 sprawdź, czy z pola za przeciwnikiem można kontynuować bicie
+                    if (canKingContinueCaptureFrom(r, c, isWhite)) {
+                        possibleMoves.clear(); // Jeśli znajdziemy pole z dalszym biciem, odrzucamy wcześniejsze
+                        possibleMoves.push_back(movePair);
+                        // Możesz dodać break jeśli chcesz zatrzymać się po pierwszym takim
+                    } else {
+                        // Dodaj tylko jeśli nie mamy jeszcze pola z dalszym biciem
+                        if (possibleMoves.empty())
+                            possibleMoves.push_back(movePair);
+                    }
+                }
+                else break;
 
                 r += dr[dir];
                 c += dc[dir];
+
             }
             else {
+                qDebug() << "else";
                 if (getPieceColor(currentIndex) != isWhite && !foundOpponent) {
+                    qDebug() << "1";
                     foundOpponent = true;
                     r += dr[dir];
                     c += dc[dir];
-                } else {
+                }
+                else {
+                    qDebug() << "2";
                     // Własny pionek lub już był przeciwnik — koniec kierunku
                     break;
                 }
             }
         }
     }
+
     return possibleMoves;
 }
 //***************************************************************************************************************************************************************************************************************************************
@@ -1070,12 +1094,14 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, bool isWhite)
                 }
                 r += dr[dir];
                 c += dc[dir];
-            } else {
+            }
+            else {
                 if (getPieceColor(currentIndex) != isWhite && !foundOpponent) {
                     foundOpponent = true;
                     r += dr[dir];
                     c += dc[dir];
-                } else {
+                }
+                else {
                     break;
                 }
             }
