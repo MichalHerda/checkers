@@ -1027,20 +1027,42 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
     const int dc[] = {-1, 1, -1, 1};
 
     if (isKing) {
+        qDebug() << "isCaptureAvailable Role KING, player: " << player;
         for (int dir = 0; dir < 4; ++dir) {
             int r = row + dr[dir];
             int c = col + dc[dir];
             bool foundOpponent = false;
             while (isInsideBoard(r, c)) {
                 QModelIndex nextIdx = m_model.index(r, c);
+                QModelIndex opponentIdx;
                 if (isPiecePresent(nextIdx)) {
-                    if (getPieceColor(nextIdx) != isWhite) {
-                        foundOpponent = true;
+                    if (player == Player::white && !getPieceColor(nextIdx) ||
+                        player == Player::black && getPieceColor(nextIdx)) {
+                            qDebug() << "opponent found at: " << nextIdx;
+                            opponentIdx = nextIdx;
+                            foundOpponent = true;
                     }
-                    else break;
+                    if (player == Player::white && getPieceColor(nextIdx) ||
+                        player == Player::black && !getPieceColor(nextIdx)) {
+                            qDebug() << "your soldier found at: " << nextIdx;
+                            break;
+                    }
+                    //else break;
                 }
                 else {
-                    if (foundOpponent) return true;
+                    if (foundOpponent) {
+                        int checkR = opponentIdx.row() + dr[dir];
+                        int checkC = opponentIdx.column() + dc[dir];
+                        QModelIndex checkIdx = m_model.index(checkR, checkC);
+                        if (isInsideBoard(checkR, checkC) &&
+                            !isPiecePresent(checkIdx) ) {
+                            //if()
+                            return true;
+                        }
+                        else {
+                            break;
+                        }
+                    }
                 }
                 r += dr[dir];
                 c += dc[dir];
@@ -1048,6 +1070,7 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
         }
     }
     else {
+        //qDebug() << "isCaptureAvailable Role MAN";
         for (int dir = 0; dir < 4; ++dir) {
             int midR = row + dr[dir];
             int midC = col + dc[dir];
