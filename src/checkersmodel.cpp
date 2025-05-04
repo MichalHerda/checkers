@@ -887,6 +887,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
     int rowNo = index.row();
     int colNo = index.column();
     bool captureAvailable = isCaptureAvailable(index);
+    Player playerForCheck = getPlayerForCheck(index);
 
     const int dr[] = {-1, -1, 1, 1}; // góra-lewo, góra-prawo, dół-lewo, dół-prawo
     const int dc[] = {-1, 1, -1, 1};
@@ -913,9 +914,10 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
                     QPair<char, int> movePair = move.value<QPair<char, int>>();
 
                     // 🔍 sprawdź, czy z pola za przeciwnikiem można kontynuować bicie
-                    if (canKingContinueCaptureFrom(r, c, isWhite)) {
-                        possibleMoves.clear(); // Jeśli znajdziemy pole z dalszym biciem, odrzucamy wcześniejsze
+                    if (canKingContinueCaptureFrom(r, c, index)) {
+                        //possibleMoves.clear(); // Jeśli znajdziemy pole z dalszym biciem, odrzucamy wcześniejsze
                         possibleMoves.push_back(movePair);
+                        break;
                         // Możesz dodać break jeśli chcesz zatrzymać się po pierwszym takim
                     } else {
                         // Dodaj tylko jeśli nie mamy jeszcze pola z dalszym biciem
@@ -931,7 +933,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
             }
             else {
                 qDebug() << "else";
-                if (isOpponentAt(currentIndex) && !foundOpponent) {
+                if (isOpponentAt(currentIndex, playerForCheck) && !foundOpponent) {
                     qDebug() << "1";
                     foundOpponent = true;
                     r += dr[dir];
@@ -1016,6 +1018,8 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
     bool isWhite = getPieceColor(index);
     bool isKing = getPieceType(index);
 
+    Player playerForCheck = getPlayerForCheck(index);
+
     int row = index.row();
     int col = index.column();
 
@@ -1032,7 +1036,7 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
                 QModelIndex nextIdx = m_model.index(r, c);
                 QModelIndex opponentIdx;
                 if (isPiecePresent(nextIdx)) {
-                    if (isOpponentAt(nextIdx)) {
+                    if (isOpponentAt(nextIdx, playerForCheck)) {
                             qDebug() << "opponent found at: " << nextIdx;
                             opponentIdx = nextIdx;
                             foundOpponent = true;
@@ -1092,10 +1096,12 @@ bool CheckersModel::isInsideBoard(int row, int col)
     return (row >= 0 && row < 8 && col >= 0 && col < 8);
 }
 //***************************************************************************************************************************************************************************************************************************************
-bool CheckersModel::canKingContinueCaptureFrom(int row, int col, bool isWhite)
+bool CheckersModel::canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx)
 {
     const int dr[] = {-1, -1, 1, 1};
     const int dc[] = {-1, 1, -1, 1};
+
+    Player playerForCheck = getPlayerForCheck(initialKingIdx);
 
     for (int dir = 0; dir < 4; ++dir) {
         int r = row + dr[dir];
@@ -1113,7 +1119,7 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, bool isWhite)
                 c += dc[dir];
             }
             else {
-                if (isOpponentAt(currentIndex) && !foundOpponent) {
+                if (isOpponentAt(currentIndex, playerForCheck) && !foundOpponent) {
                     foundOpponent = true;
                     r += dr[dir];
                     c += dc[dir];
@@ -1127,10 +1133,22 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, bool isWhite)
     return false;
 }
 //***************************************************************************************************************************************************************************************************************************************
-bool CheckersModel::isOpponentAt(const QModelIndex &index)
+bool CheckersModel::isOpponentAt(const QModelIndex &index, Player playerForCheck)
 {
-    return player == Player::white && !getPieceColor(index) ||
-           player == Player::black && getPieceColor(index);
+    return playerForCheck == Player::white && !getPieceColor(index) ||
+           playerForCheck == Player::black && getPieceColor(index);
+}
+//***************************************************************************************************************************************************************************************************************************************
+CheckersModel::Player CheckersModel::getPlayerForCheck(const QModelIndex &index)
+{
+    Player playerForCheck;
+
+    if(getPieceColor(index)) {
+        return playerForCheck = Player::white;
+    }
+    else {
+        return playerForCheck = Player::black;
+    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 QDebug operator<<(QDebug debug, const CornersCoordinates &coords) {

@@ -133,7 +133,7 @@ Window {
     }
     Timer {
         id: debugTimer
-        interval: 10000
+        interval: 20000
         repeat: true
         running: true
         onTriggered: {

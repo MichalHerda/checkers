@@ -152,8 +152,9 @@ private:
 
     bool isCaptureAvailable(const QModelIndex &index);
     bool isInsideBoard(int row, int col);
-    bool canKingContinueCaptureFrom(int row, int col, bool isWhite);
-    bool isOpponentAt(const QModelIndex &index);
+    bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx);
+    bool isOpponentAt(const QModelIndex &index, Player playerForCheck);
+    Player getPlayerForCheck(const QModelIndex &index);
 };
 
 struct Piece {
