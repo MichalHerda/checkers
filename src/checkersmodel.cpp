@@ -1036,14 +1036,12 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
                 QModelIndex nextIdx = m_model.index(r, c);
                 QModelIndex opponentIdx;
                 if (isPiecePresent(nextIdx)) {
-                    if (player == Player::white && !getPieceColor(nextIdx) ||
-                        player == Player::black && getPieceColor(nextIdx)) {
+                    if (isOpponentAt(nextIdx)) {
                             qDebug() << "opponent found at: " << nextIdx;
                             opponentIdx = nextIdx;
                             foundOpponent = true;
                     }
-                    if (player == Player::white && getPieceColor(nextIdx) ||
-                        player == Player::black && !getPieceColor(nextIdx)) {
+                    else {
                             qDebug() << "your soldier found at: " << nextIdx;
                             break;
                     }
@@ -1131,6 +1129,12 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, bool isWhite)
         }
     }
     return false;
+}
+//***************************************************************************************************************************************************************************************************************************************
+bool CheckersModel::isOpponentAt(const QModelIndex &index)
+{
+    return player == Player::white && !getPieceColor(index) ||
+           player == Player::black && getPieceColor(index);
 }
 //***************************************************************************************************************************************************************************************************************************************
 QDebug operator<<(QDebug debug, const CornersCoordinates &coords) {
