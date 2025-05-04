@@ -234,11 +234,8 @@ Item {
                             //console.log("piece data color: ", pieceData.player)
                             //console.log("piece data type: ", pieceData.type)
 
-                            //REMOVE AFTER TESTS:
-                            //checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
-                            //checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
-
-                            if(checkersModelInstance.mustCapture(checkersModelInstance.player) ) {
+                            var isCapture = checkersModelInstance.mustCapture(checkersModelInstance.player)
+                            if(isCapture) {
                                 checkersModelInstance.removePiece(modelIndex, modelIndexToMove)
                             }
 
@@ -258,18 +255,22 @@ Item {
 
                             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                                  pieceSeparatorX, pieceSeparatorY)
+                            //checkersModelInstance.setAllPiecesRange()
+                            var hasMultiCapture = checkersModelInstance.isCaptureAvailable(modelIndexToMove);
 
-                            //***
-                            checkersModelInstance.evaluatePromotionToKing(modelIndexToMove)
-                            //pieceRep.itemAt(modelIndexToMove).isKing = true
+                            if(!hasMultiCapture) {
+                                checkersModelInstance.evaluatePromotionToKing(modelIndexToMove)
+                            }
 
                             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
 
-                            if(checkersModelInstance.player === CheckersModel.Player.white) {
-                                checkersModelInstance.player = CheckersModel.Player.black
-                            }
-                            else {
-                                checkersModelInstance.player = CheckersModel.Player.white
+                            if(!hasMultiCapture || !isCapture) {
+                                if(checkersModelInstance.player === CheckersModel.Player.white) {
+                                    checkersModelInstance.player = CheckersModel.Player.black
+                                }
+                                else {
+                                    checkersModelInstance.player = CheckersModel.Player.white
+                                }
                             }
                         }
                         else {

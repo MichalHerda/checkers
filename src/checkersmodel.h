@@ -94,6 +94,7 @@ public:
     Q_INVOKABLE void setAllPiecesRange();
 
     Q_INVOKABLE bool mustCapture(Player player);
+    Q_INVOKABLE bool isCaptureAvailable(const QModelIndex &index);
 
     Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index);
 
@@ -150,7 +151,7 @@ private:
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
 
-    bool isCaptureAvailable(const QModelIndex &index);
+    //bool isCaptureAvailable(const QModelIndex &index);
     bool isInsideBoard(int row, int col);
     bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx);
     bool isOpponentAt(const QModelIndex &index, Player playerForCheck);
