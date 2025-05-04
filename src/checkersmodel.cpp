@@ -1032,9 +1032,9 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
             int r = row + dr[dir];
             int c = col + dc[dir];
             bool foundOpponent = false;
+            QModelIndex opponentIdx;
             while (isInsideBoard(r, c)) {
                 QModelIndex nextIdx = m_model.index(r, c);
-                QModelIndex opponentIdx;
                 if (isPiecePresent(nextIdx)) {
                     if (isOpponentAt(nextIdx, playerForCheck)) {
                             qDebug() << "opponent found at: " << nextIdx;
@@ -1052,16 +1052,19 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
                         int checkR = opponentIdx.row() + dr[dir];
                         int checkC = opponentIdx.column() + dc[dir];
                         QModelIndex checkIdx = m_model.index(checkR, checkC);
+                        qDebug() << "checkIdx: " << checkIdx << "row: " << checkR << "column: " << checkC;
                         if (isInsideBoard(checkR, checkC) &&
                             !isPiecePresent(checkIdx) ) {
-                            //if()
+                            qDebug() << "empty field found, capture available for king";
                             return true;
                         }
                         else {
+                            qDebug() << "neither empty field found nor piece present";
                             break;
                         }
                     }
                 }
+                qDebug() << "continue searching for next field...";
                 r += dr[dir];
                 c += dc[dir];
             }

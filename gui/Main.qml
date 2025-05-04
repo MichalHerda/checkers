@@ -7,8 +7,8 @@ import "frontEnd.js" as Js
 
 Window {
     id: root
-    width: 640
-    height: 480
+    width: 800//640
+    height: 600//480
     visible: true
     title: qsTr("Checkers")
     color: CheckersTheme.backgroundColor
