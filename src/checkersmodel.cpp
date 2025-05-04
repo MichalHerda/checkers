@@ -881,6 +881,7 @@ QModelIndex CheckersModel::findFieldIndexForPieceCenter(const QPointF &pieceCent
 //***************************************************************************************************************************************************************************************************************************************
 QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
 {
+    qDebug() << "getKingMoves function: ";
     QList <QPair <char, int> > possibleMoves {};
 
     int rowNo = index.row();
@@ -899,20 +900,15 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
             QModelIndex currentIndex = getIndex(r, c);
 
             if (!isPiecePresent(currentIndex)) {
+                qDebug() << "   piece not present";
                 if (!captureAvailable && !foundOpponent) {
-                    qDebug() << "if (!captureAvailable && !foundOpponent)";
-                    // Normalny ruch króla, jeśli bicie NIE jest dostępne
+                    qDebug() << "       opponent not found, capture not available: " << currentIndex;
                     QVariant move = data(currentIndex, FieldNameRole);
                     possibleMoves.push_back(move.value<QPair<char, int>>());
                 }
-                //else if (captureAvailable && foundOpponent) {
-                //    // Dodaj WSZYSTKIE wolne pola ZA przeciwnikiem
-                //    QVariant move = data(currentIndex, FieldNameRole);
-                //    possibleMoves.push_back(move.value<QPair<char, int>>());
-                //    // NIE BREAKUJEMY — kontynuujemy za przeciwnikiem
-                // }
+
                 else if (captureAvailable && foundOpponent) {
-                    qDebug() << "else if (captureAvailable && foundOpponent)";
+                    qDebug() << "       opponent found, capture available: " << currentIndex;
                     QVariant move = data(currentIndex, FieldNameRole);
                     QPair<char, int> movePair = move.value<QPair<char, int>>();
 
@@ -935,7 +931,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
             }
             else {
                 qDebug() << "else";
-                if (getPieceColor(currentIndex) != isWhite && !foundOpponent) {
+                if (isOpponentAt(currentIndex) && !foundOpponent) {
                     qDebug() << "1";
                     foundOpponent = true;
                     r += dr[dir];
@@ -1117,7 +1113,7 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, bool isWhite)
                 c += dc[dir];
             }
             else {
-                if (getPieceColor(currentIndex) != isWhite && !foundOpponent) {
+                if (isOpponentAt(currentIndex) && !foundOpponent) {
                     foundOpponent = true;
                     r += dr[dir];
                     c += dc[dir];
