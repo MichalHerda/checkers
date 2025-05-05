@@ -901,46 +901,56 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
             QModelIndex currentIndex = getIndex(r, c);
 
             if (!isPiecePresent(currentIndex)) {
-                qDebug() << "   piece not present";
-                if (!captureAvailable && !foundOpponent) {
-                    qDebug() << "       opponent not found, capture not available: " << currentIndex;
-                    QVariant move = data(currentIndex, FieldNameRole);
-                    possibleMoves.push_back(move.value<QPair<char, int>>());
-                }
-
-                else if (captureAvailable && foundOpponent) {
-                    qDebug() << "       opponent found, capture available: " << currentIndex;
-                    QVariant move = data(currentIndex, FieldNameRole);
-                    QPair<char, int> movePair = move.value<QPair<char, int>>();
-
-                    // 🔍 sprawdź, czy z pola za przeciwnikiem można kontynuować bicie
-                    if (canKingContinueCaptureFrom(r, c, index)) {
-                        //possibleMoves.clear(); // Jeśli znajdziemy pole z dalszym biciem, odrzucamy wcześniejsze
-                        possibleMoves.push_back(movePair);
-                        break;
-                        // Możesz dodać break jeśli chcesz zatrzymać się po pierwszym takim
-                    } else {
-                        // Dodaj tylko jeśli nie mamy jeszcze pola z dalszym biciem
-                        if (possibleMoves.empty())
-                            possibleMoves.push_back(movePair);
+                qDebug() << "   piece not present at " << currentIndex;
+                if (!foundOpponent) {
+                    if(!captureAvailable) {
+                        qDebug() << "       opponent not found, capture not available, add: " << currentIndex;
+                        QVariant move = data(currentIndex, FieldNameRole);
+                        possibleMoves.push_back(move.value <QPair <char, int> > ());
+                    }
+                    else {
+                        qDebug() << "       opponent not found, capture available, no moves to add";
                     }
                 }
-                else break;
+                else {
+                    if(!captureAvailable) {
+                        qDebug() << "       opponent found at " << currentIndex << ", capture available, no moves to add";
+                    }
+                    else {
+                        qDebug() << "       opponent found, capture available, add: " << currentIndex;
+                        QVariant move = data(currentIndex, FieldNameRole);
+                        QPair <char, int> movePair = move.value <QPair <char, int> > ();
+                        possibleMoves.push_back(movePair);
+
+                        // TODO: osobna funkcja:
+
+                        // sprawdź, czy z pola za przeciwnikiem można kontynuować bicie
+                        /*
+                        int nextR = r + dr[dir];
+                        int nextC = c + dc[dir];
+                        if (canKingContinueCaptureFrom(nextR, nextC, index)) {
+                            //possibleMoves.clear(); // Jeśli znajdziemy pole z dalszym biciem, odrzucamy wcześniejsze
+                            break;
+                        }
+                        */
+                    }
+                }
+                //else break;
 
                 r += dr[dir];
                 c += dc[dir];
 
             }
             else {
-                qDebug() << "else";
+                qDebug() << "   piece present at " << currentIndex;
                 if (isOpponentAt(currentIndex, playerForCheck) && !foundOpponent) {
-                    qDebug() << "1";
+                    qDebug() << "       opponent found at: " << currentIndex;
                     foundOpponent = true;
                     r += dr[dir];
                     c += dc[dir];
                 }
                 else {
-                    qDebug() << "2";
+                    qDebug() << "       your soldier or opponent at " << currentIndex << ", go to next iteration";
                     // Własny pionek lub już był przeciwnik — koniec kierunku
                     break;
                 }
@@ -1027,15 +1037,17 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
     const int dc[] = {-1, 1, -1, 1};
 
     if (isKing) {
-        qDebug() << "isCaptureAvailable Role KING, player: " << player;
+        qDebug() << "isCaptureAvailable Role KING, index: " << index << "player for check: " << playerForCheck;
         for (int dir = 0; dir < 4; ++dir) {
             int r = row + dr[dir];
             int c = col + dc[dir];
             bool foundOpponent = false;
-            QModelIndex opponentIdx;
+            QModelIndex opponentIdx = QModelIndex();
             while (isInsideBoard(r, c)) {
+                qDebug() << "r: " << r;
+                qDebug() << "c: " << c;
                 QModelIndex nextIdx = m_model.index(r, c);
-                if (isPiecePresent(nextIdx)) {
+                if (isPiecePresent(nextIdx) && !foundOpponent) {
                     if (isOpponentAt(nextIdx, playerForCheck)) {
                             qDebug() << "opponent found at: " << nextIdx;
                             opponentIdx = nextIdx;
@@ -1052,11 +1064,16 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
                         int checkR = opponentIdx.row() + dr[dir];
                         int checkC = opponentIdx.column() + dc[dir];
                         QModelIndex checkIdx = m_model.index(checkR, checkC);
-                        qDebug() << "checkIdx: " << checkIdx << "row: " << checkR << "column: " << checkC;
-                        if (isInsideBoard(checkR, checkC) &&
-                            !isPiecePresent(checkIdx) ) {
-                            qDebug() << "empty field found, capture available for king";
-                            return true;
+                        qDebug() << "nextIdx: " << checkIdx << "row: " << r << "column: " << c;
+                        if (isInsideBoard(r, c) &&
+                            !isPiecePresent(nextIdx) ) {
+                                qDebug() << "empty field found: " << nextIdx << ", capture available for king";
+                                return true;
+                        }
+                        else if ( (isInsideBoard(r,c)) &&
+                                   isPiecePresent(nextIdx) ) {
+                                        qDebug() << "piece present, cannot move " << nextIdx;
+                                        break;
                         }
                         else {
                             qDebug() << "neither empty field found nor piece present";
@@ -1064,7 +1081,7 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
                         }
                     }
                 }
-                qDebug() << "continue searching for next field...";
+                //qDebug() << "continue searching for next field...";
                 r += dr[dir];
                 c += dc[dir];
             }
@@ -1075,8 +1092,8 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
         for (int dir = 0; dir < 4; ++dir) {
             int midR = row + dr[dir];
             int midC = col + dc[dir];
-            int landR = row + 2*dr[dir];
-            int landC = col + 2*dc[dir];
+            int landR = row + 2 * dr[dir];
+            int landC = col + 2 * dc[dir];
 
             if (isInsideBoard(landR, landC)) {
                 QModelIndex midIdx = m_model.index(midR, midC);
@@ -1138,8 +1155,8 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, QModelIndex ini
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isOpponentAt(const QModelIndex &index, Player playerForCheck)
 {
-    return playerForCheck == Player::white && !getPieceColor(index) ||
-           playerForCheck == Player::black && getPieceColor(index);
+    return ( (playerForCheck == Player::white)  &&  (!getPieceColor(index)) ) ||
+           ( (playerForCheck == Player::black)  &&  ( getPieceColor(index)) );
 }
 //***************************************************************************************************************************************************************************************************************************************
 CheckersModel::Player CheckersModel::getPlayerForCheck(const QModelIndex &index)
