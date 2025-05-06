@@ -962,6 +962,9 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
         return possibleMoves;
     }
     else {
+        if(captureMoves.length() > 1) {
+            reduceToBestKingCaptures(index, captureMoves);
+        }
         return captureMoves;
     }
 }
@@ -991,7 +994,8 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
                 }
             }
         }
-    } else {
+    }
+    else {
         // Bicie w 4 kierunkach
         QList<QPoint> captureOffsets = { {captureDirection, -2}, {captureDirection, 2},
                                         {-captureDirection, -2}, {-captureDirection, 2} };
@@ -1022,9 +1026,29 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
     return possibleMoves;
 }
 //***************************************************************************************************************************************************************************************************************************************
+void CheckersModel::reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QPair<char, int> > &captureMoves)
+{
+    QList<QPair<char, int>> bestMove;
+    int maxCaptureLength = 0;
+
+    for (const auto &move : captureMoves) {
+        bool canContinueCapture = false;
+        //do {
+        //
+        //}
+        //while(canContinueCapture);
+    }
+}
+//***************************************************************************************************************************************************************************************************************************************
+QModelIndex CheckersModel::indexFromPair(const QPair<char, int> &pos) const
+{
+    int col = pos.first - 'A';      // 'A' -> 0, 'B' -> 1, ..., 'H' -> 7
+    int row = 8 - pos.second;       // 8 -> 0, 7 -> 1, ..., 1 -> 7
+    return m_model.index(row, col);
+}
+//***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
 {
-
     if (!isPiecePresent(index)) {
         //qDebug() << "isCaptureAvailable function. Piece not present";
         return false;
