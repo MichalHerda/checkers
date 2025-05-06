@@ -883,6 +883,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
 {
     qDebug() << "getKingMoves function: ";
     QList <QPair <char, int> > possibleMoves {};
+    QList <QPair <char, int> > captureMoves {};
 
     int rowNo = index.row();
     int colNo = index.column();
@@ -920,7 +921,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
                         qDebug() << "       opponent found, capture available, add: " << currentIndex;
                         QVariant move = data(currentIndex, FieldNameRole);
                         QPair <char, int> movePair = move.value <QPair <char, int> > ();
-                        possibleMoves.push_back(movePair);
+                        captureMoves.push_back(movePair);
 
                         // TODO: osobna funkcja:
 
@@ -957,8 +958,12 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
             }
         }
     }
-
-    return possibleMoves;
+    if(!captureAvailable) {
+        return possibleMoves;
+    }
+    else {
+        return captureMoves;
+    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, bool isWhite)
