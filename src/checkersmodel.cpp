@@ -963,7 +963,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
     }
     else {
         if(captureMoves.length() > 1) {
-            reduceToBestKingCaptures(index, captureMoves);
+            //reduceToBestKingCaptures(index, captureMoves);
         }
         return captureMoves;
     }
@@ -1032,11 +1032,20 @@ void CheckersModel::reduceToBestKingCaptures(const QModelIndex &initialIdx, QLis
     int maxCaptureLength = 0;
 
     for (const auto &move : captureMoves) {
+        int captureLength = 1;
+        QPair<char, int> current = move;
+
         bool canContinueCapture = false;
-        //do {
-        //
-        //}
-        //while(canContinueCapture);
+        do {
+            QModelIndex idx = indexFromPair(current);
+            int row = idx.row();
+            int col = idx.column();
+            canContinueCapture = canKingContinueCaptureFrom(row, col, initialIdx);
+            if(canContinueCapture) {
+                captureLength++;
+            }
+        }
+        while(canContinueCapture);
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
