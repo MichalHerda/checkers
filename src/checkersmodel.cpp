@@ -963,7 +963,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
     }
     else {
         if(captureMoves.length() > 1) {
-            //reduceToBestKingCaptures(index, captureMoves);
+            reduceToBestKingCaptures(index, captureMoves);
         }
         return captureMoves;
     }
@@ -1028,19 +1028,25 @@ QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, 
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QPair<char, int> > &captureMoves)
 {
-    QList<QPair<char, int>> bestMove;
+    QList<QPair<char, int>> bestMoves;
     int maxCaptureLength = 0;
+    QList<QModelIndex> indexesToCheck = QList<QModelIndex>();
 
     for (const auto &move : captureMoves) {
-        int captureLength = 1;
         QPair<char, int> current = move;
+        QModelIndex idx = indexFromPair(current);
+        indexesToCheck.append(idx);
+    }
+
+    for (const auto &move : indexesToCheck) {
+        int captureLength = 1;
 
         bool canContinueCapture = false;
         do {
-            QModelIndex idx = indexFromPair(current);
-            int row = idx.row();
-            int col = idx.column();
-            canContinueCapture = canKingContinueCaptureFrom(row, col, initialIdx);
+            //QModelIndex idx = indexesToCheck(move);
+            int row = move.row();
+            int col = move.column();
+            canContinueCapture = canKingContinueCaptureFrom(row, col, captureLength, initialIdx, indexesToCheck);
             if(canContinueCapture) {
                 captureLength++;
             }
@@ -1154,12 +1160,13 @@ bool CheckersModel::isInsideBoard(int row, int col)
     return (row >= 0 && row < 8 && col >= 0 && col < 8);
 }
 //***************************************************************************************************************************************************************************************************************************************
-bool CheckersModel::canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx)
+bool CheckersModel::canKingContinueCaptureFrom(int row, int col, int &captureLength, QModelIndex initialKingIdx, QList<QModelIndex> &indexesForCheck)
 {
     const int dr[] = {-1, -1, 1, 1};
     const int dc[] = {-1, 1, -1, 1};
 
     Player playerForCheck = getPlayerForCheck(initialKingIdx);
+    indexesForCheck.clear();
 
     for (int dir = 0; dir < 4; ++dir) {
         int r = row + dr[dir];
@@ -1171,7 +1178,8 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, QModelIndex ini
 
             if (!isPiecePresent(currentIndex)) {
                 if (foundOpponent) {
-                    return true; // Jest przeciwnik i wolne pole za nim
+                    indexesForCheck.append(currentIndex);
+                    //return true;
                 }
                 r += dr[dir];
                 c += dc[dir];
@@ -1188,7 +1196,7 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, QModelIndex ini
             }
         }
     }
-    return false;
+    return !indexesForCheck.isEmpty();
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isOpponentAt(const QModelIndex &index, Player playerForCheck)
