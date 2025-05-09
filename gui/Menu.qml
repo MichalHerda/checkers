@@ -1,11 +1,12 @@
 import QtQuick 2.15
 import QtQuick.Controls
 import checkers.model
+import Checkers 1.0
 
 Rectangle {
     id: mainMenu
     anchors.fill: parent
-    color: "black"
+    color: CheckersTheme.backgroundColor2
     property alias startGameButton: startGameButton
 
     Column {
@@ -16,7 +17,7 @@ Rectangle {
 
         Item {
             id: columnSeparator1
-            height: mainMenuColumn.height * 0.15
+            height: mainMenuColumn.height * 0.05
             width: mainMenuColumn.width * 0.75
         }
 /*
@@ -41,11 +42,11 @@ Rectangle {
 */
         Image {
             id: mainMenuImage
-            height: mainMenuColumn.height * 0.5
-            width: mainMenuColumn.width * 0.75
+            height: mainMenuColumn.height * 0.7
+            width: mainMenuColumn.width * 0.9
             visible: true
             anchors.horizontalCenter: parent.horizontalCenter
-            source: "qrc://../resources/CheckersAndShadowsOfDarkness.png"
+            source: "/resources/Sepia-TonedCheckersGameIllustration.png"
 
         }
 
@@ -57,7 +58,7 @@ Rectangle {
 
         Row {
             id: buttonRow
-            height: mainMenuColumn.height * 0.3
+            height: mainMenuColumn.height * 0.175
             width: mainMenuColumn.width
 
             Item {
@@ -69,10 +70,18 @@ Rectangle {
             Button {
                 id: startGameButton
                 width: parent.width * 0.35
-                height: parent.height * 0.5
+                height: parent.height * 0.75
                 //anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter:  parent.verticalCenter
-                text: "START GAME"
+                text: "Start Game"
+                font.family: "Cinzel Decorative"
+                font.pixelSize: startGameButton.height * 0.5
+                background: Rectangle {
+                    color: CheckersTheme.buttonColor2
+                    radius: 6
+                    border.color: "#f5e9d4"
+                }
+
                 onClicked: {
                     //root.isMainMenu === true
                     root.isMainMenu = !root.isMainMenu
@@ -90,10 +99,17 @@ Rectangle {
             Button {
                 id: optionsButton
                 width: parent.width * 0.35
-                height: parent.height * 0.5
+                height: parent.height * 0.75
                 //anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter:  parent.verticalCenter
-                text: "OPTIONS"
+                text: "Options"
+                font.family: "Cinzel Decorative"
+                font.pixelSize: optionsButton.height * 0.5
+                background: Rectangle {
+                    color: CheckersTheme.buttonColor2
+                    radius: 6
+                    border.color: "#f5e9d4"
+                }
                 onClicked: {
                     console.log("options button clicked")
                 }

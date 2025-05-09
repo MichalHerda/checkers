@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/CheckersAndShadowsOfDarkness.png</file>
+        <file>resources/Sepia-TonedCheckersGameIllustration.png</file>
     </qresource>
 </RCC>
