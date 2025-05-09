@@ -115,10 +115,10 @@ function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersT
                     pieceRepeater.itemAt(repeaterIndex).visible = checkersModelInstance.isPiecePresent(modelIndex)
 
                     if(checkersModelInstance.getPieceColor(modelIndex)) {
-                        pieceRepeater.itemAt(repeaterIndex).color =  CheckersTheme.whitePlayerColor
+                        pieceRepeater.itemAt(repeaterIndex).color =  CheckersTheme.whitePlayerColor2
                     }
                     else {
-                        pieceRepeater.itemAt(repeaterIndex).color =  CheckersTheme.blackPlayerColor
+                        pieceRepeater.itemAt(repeaterIndex).color =  CheckersTheme.blackPlayerColor2
                     }
 
                     if(checkersModelInstance.getPieceType(modelIndex)) {
@@ -187,12 +187,12 @@ function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme,
             pieceRep.itemAt(no).visible = checkersModelInstance.isPiecePresent(modelIndex)
 
             if(checkersModelInstance.getPieceColor(modelIndex)) {
-                pieceRep.itemAt(no).color =  CheckersTheme.whitePlayerColor
-                pieceRep.itemAt(no).border.color =  CheckersTheme.whitePieceBorderColor
+                pieceRep.itemAt(no).color =  CheckersTheme.whitePlayerColor2
+                pieceRep.itemAt(no).border.color =  CheckersTheme.whitePieceBorderColor2
             }
             else {
-                pieceRep.itemAt(no).color =  CheckersTheme.blackPlayerColor
-                pieceRep.itemAt(no).border.color =  CheckersTheme.blackPieceBorderColor
+                pieceRep.itemAt(no).color =  CheckersTheme.blackPlayerColor2
+                pieceRep.itemAt(no).border.color =  CheckersTheme.blackPieceBorderColor2
             }
 
             checkersModelInstance.setAllPiecesRange()

@@ -20,45 +20,25 @@ Rectangle {
             height: mainMenuColumn.height * 0.05
             width: mainMenuColumn.width * 0.75
         }
-/*
-        Rectangle {
-            id: imageRectangle
-            height: mainMenuColumn.height * 0.5
-            width: mainMenuColumn.width * 0.75
-            anchors.horizontalCenter: parent.horizontalCenter
-            color: 'black'
-            border {
-                width: parent.width * 0.01
-                color: 'blue'
-            }
 
-            Label {
-                id: temporaryLabel
-                text: "CHECKERS"
-                font.pixelSize: parent.width * 0.15
-                anchors.centerIn: imageRectangle
-            }
-        }
-*/
         Image {
             id: mainMenuImage
-            height: mainMenuColumn.height * 0.7
+            height: mainMenuColumn.height * 0.8
             width: mainMenuColumn.width * 0.9
             visible: true
             anchors.horizontalCenter: parent.horizontalCenter
             source: "/resources/Sepia-TonedCheckersGameIllustration.png"
-
         }
 
         Item {
             id: columnSeparator2
-            height: mainMenuColumn.height * 0.05
+            height: mainMenuColumn.height * 0.025
             width: mainMenuColumn.width * 0.75
         }
 
         Row {
             id: buttonRow
-            height: mainMenuColumn.height * 0.175
+            height: mainMenuColumn.height * 0.1
             width: mainMenuColumn.width
 
             Item {
@@ -71,19 +51,24 @@ Rectangle {
                 id: startGameButton
                 width: parent.width * 0.35
                 height: parent.height * 0.75
-                //anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter:  parent.verticalCenter
-                text: "Start Game"
-                font.family: "Cinzel Decorative"
-                font.pixelSize: startGameButton.height * 0.5
                 background: Rectangle {
                     color: CheckersTheme.buttonColor2
                     radius: 6
                     border.color: "#f5e9d4"
                 }
 
+                Text {
+                    text: "Start Game"
+                    color: CheckersTheme.fontColor
+                    anchors.centerIn: parent
+                    font {
+                        family: "Cinzel Decorative"
+                        pixelSize: startGameButton.height * 0.5
+                    }
+                }
+
                 onClicked: {
-                    //root.isMainMenu === true
                     root.isMainMenu = !root.isMainMenu
                     checkersModelInstance.gameOn = true;
                     checkersModelInstance.player = CheckersModel.Player.white
@@ -100,16 +85,23 @@ Rectangle {
                 id: optionsButton
                 width: parent.width * 0.35
                 height: parent.height * 0.75
-                //anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter:  parent.verticalCenter
-                text: "Options"
-                font.family: "Cinzel Decorative"
-                font.pixelSize: optionsButton.height * 0.5
                 background: Rectangle {
                     color: CheckersTheme.buttonColor2
                     radius: 6
                     border.color: "#f5e9d4"
                 }
+
+                Text {
+                    text: "Options"
+                    color: CheckersTheme.fontColor
+                    anchors.centerIn: parent
+                    font {
+                        family: "Cinzel Decorative"
+                        pixelSize: startGameButton.height * 0.5
+                    }
+                }
+
                 onClicked: {
                     console.log("options button clicked")
                 }

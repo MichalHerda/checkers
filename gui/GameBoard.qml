@@ -52,8 +52,8 @@ Item {
                 property var item: checkersModelInstance.getItem(modelIndex)
 
                 color: checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole) === true  ?
-                       CheckersTheme.playableFieldColor :
-                       CheckersTheme.notPlayableFieldColor
+                       CheckersTheme.playableFieldColor2 :
+                       CheckersTheme.notPlayableFieldColor2
 
                 Text {
                     anchors.centerIn: parent
@@ -147,9 +147,9 @@ Item {
             z: 0
 
             visible: checkersModelInstance.isPiecePresent(modelIndex)
-            color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
-            border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
-            kingSign.color: border.color
+            color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor2 : CheckersTheme.blackPlayerColor2
+            border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor2 : CheckersTheme.blackPieceBorderColor2
+            kingSign.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor2 : CheckersTheme.blackPieceBorderColor2//border.color
             isKing: checkersModelInstance.getPieceType(modelIndex)
 
             Component.onCompleted: {
