@@ -10,6 +10,8 @@ Rectangle {
 
     Column {
         id: mainMenuColumn
+        height: mainMenu.height
+        width: mainMenu.width
         anchors.fill: parent
 
         Item {
@@ -17,7 +19,7 @@ Rectangle {
             height: mainMenuColumn.height * 0.15
             width: mainMenuColumn.width * 0.75
         }
-
+/*
         Rectangle {
             id: imageRectangle
             height: mainMenuColumn.height * 0.5
@@ -35,6 +37,16 @@ Rectangle {
                 font.pixelSize: parent.width * 0.15
                 anchors.centerIn: imageRectangle
             }
+        }
+*/
+        Image {
+            id: mainMenuImage
+            height: mainMenuColumn.height * 0.5
+            width: mainMenuColumn.width * 0.75
+            visible: true
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "qrc://../resources/CheckersAndShadowsOfDarkness.png"
+
         }
 
         Item {

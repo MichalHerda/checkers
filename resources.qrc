@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/CheckersAndShadowsOfDarkness.png</file>
+    </qresource>
+</RCC>
