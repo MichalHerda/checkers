@@ -2,18 +2,7 @@
 //***************************************************************************************************************************************************************************************************************************************
 CheckersModel::CheckersModel()
 {
-    /*
-    m_rolesMetaEnum = QMetaEnum::fromType<CheckersRoles>();
 
-    for(int i = 0; i < m_rolesMetaEnum.keyCount(); i++) {
-        auto s = QString(m_rolesMetaEnum.key(i));
-        qDebug() << "roles map: " << QByteArray(s.replace(0,1,s[0].toLower()).toUtf8());
-        m_rolesMap.insert(
-            m_rolesMetaEnum.value(i),
-            QByteArray(s.replace(0,1,s[0].toLower()).toUtf8())
-        );
-    }
-    */
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isPiecePresent(const QModelIndex &index)
@@ -290,24 +279,6 @@ void CheckersModel::printModel()
         }
     }
 }
-//***************************************************************************************************************************************************************************************************************************************
-/*
-QHash<int, QByteArray> CheckersModel::roleNames() const
-{
-    qDebug() << "roleNames called";
-
-    QHash<int, QByteArray> roles;
-    roles[FieldNameRole] = "FieldNameRole";
-    roles[IsPlayableRole] = "isPlayableRole";
-    roles[PieceRole] = "pieceRole";
-    roles[RangeRole] = "rangeRole";
-    roles[CaptureAvailableRole] = "captureAvailableRole";
-    roles[MultiCaptureRole] = "multiCaptureRole";
-    roles[IsSelectedRole] = "isSelectedRole";
-
-    return m_rolesMap;
-}
-*/
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::setTurn()
 {
@@ -1030,7 +1001,10 @@ void CheckersModel::reduceToBestKingCaptures(const QModelIndex &initialIdx, QLis
 {
     QList<QPair<char, int>> bestMoves;
     int maxCaptureLength = 0;
+    int currentCaptureLength = 1;
     QList<QModelIndex> indexesToCheck = QList<QModelIndex>();
+    QList<QModelIndex> pathMoves = QList<QModelIndex>();
+    QList<QModelIndex> checkedMoves = QList<QModelIndex>();
 
     for (const auto &move : captureMoves) {
         QPair<char, int> current = move;
@@ -1038,21 +1012,47 @@ void CheckersModel::reduceToBestKingCaptures(const QModelIndex &initialIdx, QLis
         indexesToCheck.append(idx);
     }
 
-    for (const auto &move : indexesToCheck) {
-        int captureLength = 1;
-
+    for(int idx = 0; idx < indexesToCheck.length(); idx++) {
+        currentCaptureLength = 1;
+        QModelIndex move = indexesToCheck.at(idx);
+        QVariant currentField = m_model.data(move, CheckersRoles::FieldNameRole);
+        QPair<char, int> currentFieldPairValue = currentField.value<QPair<char, int>>();
         bool canContinueCapture = false;
-        do {
-            //QModelIndex idx = indexesToCheck(move);
-            int row = move.row();
-            int col = move.column();
-            canContinueCapture = canKingContinueCaptureFrom(row, col, captureLength, initialIdx, indexesToCheck);
-            if(canContinueCapture) {
-                captureLength++;
+
+        int row = move.row();
+        int col = move.column();
+        canContinueCapture = canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
+
+        if(!canContinueCapture) {
+            qDebug() << "nie ma możliwości dalszego bicia";
+            continue;
+        }
+        else {
+            qDebug() << "sprawdzam dalszą ścieżkę bicia";
+            for(int i = 0; i < pathMoves.length(); i++) {
+                int row = pathMoves.at(i).row();
+                int col = pathMoves.at(i).column();
+                canContinueCapture = canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
+                if(!canContinueCapture) {
+                    checkedMoves.append(pathMoves.at(i));
+                    pathMoves.removeAt(i);                  // TODO: tutaj znajdź lepsze rozwiązanie
+                }
+                else {
+                    currentCaptureLength++;
+                }
             }
         }
-        while(canContinueCapture);
+
+        if(currentCaptureLength > maxCaptureLength) {
+            bestMoves.clear();
+            bestMoves.append(currentFieldPairValue);
+        }
+
+        if(currentCaptureLength == maxCaptureLength) {
+            bestMoves.append(currentFieldPairValue);
+        }
     }
+    captureMoves = bestMoves;
 }
 //***************************************************************************************************************************************************************************************************************************************
 QModelIndex CheckersModel::indexFromPair(const QPair<char, int> &pos) const
@@ -1160,13 +1160,12 @@ bool CheckersModel::isInsideBoard(int row, int col)
     return (row >= 0 && row < 8 && col >= 0 && col < 8);
 }
 //***************************************************************************************************************************************************************************************************************************************
-bool CheckersModel::canKingContinueCaptureFrom(int row, int col, int &captureLength, QModelIndex initialKingIdx, QList<QModelIndex> &indexesForCheck)
+bool CheckersModel::canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves)
 {
     const int dr[] = {-1, -1, 1, 1};
     const int dc[] = {-1, 1, -1, 1};
 
     Player playerForCheck = getPlayerForCheck(initialKingIdx);
-    indexesForCheck.clear();
 
     for (int dir = 0; dir < 4; ++dir) {
         int r = row + dr[dir];
@@ -1176,9 +1175,13 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, int &captureLen
         while (isInsideBoard(r, c)) {
             QModelIndex currentIndex = getIndex(r, c);
 
+            if (checkedMoves.contains(currentIndex)) {
+                return false;
+            }
+
             if (!isPiecePresent(currentIndex)) {
                 if (foundOpponent) {
-                    indexesForCheck.append(currentIndex);
+                    pathMoves.append(currentIndex);
                     //return true;
                 }
                 r += dr[dir];
@@ -1196,7 +1199,7 @@ bool CheckersModel::canKingContinueCaptureFrom(int row, int col, int &captureLen
             }
         }
     }
-    return !indexesForCheck.isEmpty();
+    return !pathMoves.isEmpty();
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isOpponentAt(const QModelIndex &index, Player playerForCheck)

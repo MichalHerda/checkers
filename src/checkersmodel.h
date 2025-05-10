@@ -143,7 +143,7 @@ private:
     QVector <CornersCoordinates> m_piecesCoordinates;
 
     bool isInsideBoard(int row, int col);
-    bool canKingContinueCaptureFrom(int row, int col, int &captureLength, QModelIndex initialKingIdx, QList<QModelIndex> &indexesForCheck);
+    bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
     bool isOpponentAt(const QModelIndex &index, Player playerForCheck);
     Player getPlayerForCheck(const QModelIndex &index);
 };
