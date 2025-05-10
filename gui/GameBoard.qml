@@ -138,8 +138,8 @@ Item {
             //property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
             //property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
 
-            width: pieceRep.pieceWidth
-            height: pieceRep.pieceHeight
+            width:  Math.min(pieceWidth, pieceHeight)               //pieceRep.pieceWidth
+            height: Math.min(pieceWidth, pieceHeight)               //pieceRep.pieceHeight
             //x: column * fieldWidth + (fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
             //y: row * fieldHeight + (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
             x: (column * fieldWidth) + pieceSeparatorX //(fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )

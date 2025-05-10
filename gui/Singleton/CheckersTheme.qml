@@ -8,6 +8,7 @@ Item {
     property color uiBorderColor: "orange"
     property color buttonColor: "blue"
     property color buttonColor2: "#4a3b2c"
+    property color buttonBorderColor: "#f5e9d4"
     property color fontColor: "#f5e9d4"
     property color playableFieldColor: "slateblue"
     property color playableFieldColor2: "#6b4a3a"

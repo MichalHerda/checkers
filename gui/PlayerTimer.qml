@@ -33,6 +33,7 @@ Item {
                 anchors.fill: parent
                 text: root.playerName
                 horizontalAlignment: "AlignHCenter"
+                verticalAlignment: "AlignVCenter"
                 font.bold: true
                 font.pointSize: 16
                 color: "white"
@@ -59,8 +60,9 @@ Item {
                     height: parent.height
                     text: Math.floor(root.countdown / 60).toString().padStart(2, "0")
                     horizontalAlignment: "AlignHCenter"
+                    verticalAlignment: "AlignVCenter"
                     font.pointSize: 14
-                    color: countdown <= 3 ? "red" : "white"
+                    color: countdown <= 3 ? "red" : CheckersTheme.fontColor
                 }
 
                 Label {
@@ -69,8 +71,9 @@ Item {
                     height: parent.height
                     text: ":"
                     horizontalAlignment: "AlignHCenter"
+                    verticalAlignment: "AlignVCenter"
                     font.pointSize: 14
-                    color: countdown <= 3 ? "red" : "white"
+                    color: countdown <= 3 ? "red" : CheckersTheme.fontColor
                 }
 
                 Label {
@@ -79,8 +82,9 @@ Item {
                     height: parent.height
                     text: (root.countdown % 60).toString().padStart(2, "0")
                     horizontalAlignment: "AlignHCenter"
+                    verticalAlignment: "AlignVCenter"
                     font.pointSize: 14
-                    color: countdown <= 3 ? "red" : "white"
+                    color: countdown <= 3 ? "red" : CheckersTheme.fontColor
                 }
             }
         }

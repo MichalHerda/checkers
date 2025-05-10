@@ -66,14 +66,25 @@ Window {
             id: testButton
             width: buttonWidth
             height: buttonHeight
-            text: "TEST BUTTON"
             x: buttonsSeparatorX
             y: parent.height - ( parent.height * 0.125 )
             visible: !isMainMenu
 
             background: Rectangle {
                 anchors.fill: parent
-                color: CheckersTheme.buttonColor
+                radius: 6
+                color: CheckersTheme.buttonColor2
+                border.color: CheckersTheme.buttonBorderColor
+            }
+
+            Text {
+                text: "Test Button"
+                color: CheckersTheme.fontColor
+                anchors.centerIn: parent
+                font {
+                    family: "Cinzel Decorative"
+                    pixelSize: buttonHeight * 0.5
+                }
             }
 
             onClicked: {
@@ -84,15 +95,26 @@ Window {
         Button {
             id: rotateButton
             width: buttonWidth
-            height: buttonHeight
-            text: "ROTATE"
+            height: buttonHeight        
             x: ( buttonsSeparatorX * 2 ) + buttonWidth
             y: parent.height - ( parent.height * 0.125 )
             visible: !isMainMenu
 
             background: Rectangle {
                 anchors.fill: parent
-                color: CheckersTheme.buttonColor
+                radius: 6
+                color: CheckersTheme.buttonColor2
+                border.color: CheckersTheme.buttonBorderColor
+            }
+
+            Text {
+                text: "Rotate"
+                color: CheckersTheme.fontColor
+                anchors.centerIn: parent
+                font {
+                    family: "Cinzel Decorative"
+                    pixelSize: buttonHeight * 0.5
+                }
             }
 
             onClicked: {
@@ -105,7 +127,6 @@ Window {
             id: restartButton
             width: buttonWidth
             height: buttonHeight
-            text: "RESTART"
             x: ( buttonsSeparatorX * 3 ) + ( buttonWidth * 2 )
             y: parent.height - ( parent.height * 0.125 )
             visible: !isMainMenu
@@ -123,7 +144,19 @@ Window {
 
             background: Rectangle {
                 anchors.fill: parent
-                color: CheckersTheme.buttonColor
+                radius: 6
+                color: CheckersTheme.buttonColor2
+                border.color: CheckersTheme.buttonBorderColor
+            }
+
+            Text {
+                text: "Restart"
+                color: CheckersTheme.fontColor
+                anchors.centerIn: parent
+                font {
+                    family: "Cinzel Decorative"
+                    pixelSize: buttonHeight * 0.5
+                }
             }
 
             onClicked: {
@@ -131,6 +164,7 @@ Window {
             }
         }
     }
+
     Timer {
         id: debugTimer
         interval: 20000

@@ -55,7 +55,7 @@ Rectangle {
                 background: Rectangle {
                     color: CheckersTheme.buttonColor2
                     radius: 6
-                    border.color: "#f5e9d4"
+                    border.color: CheckersTheme.buttonBorderColor
                 }
 
                 Text {
@@ -89,7 +89,7 @@ Rectangle {
                 background: Rectangle {
                     color: CheckersTheme.buttonColor2
                     radius: 6
-                    border.color: "#f5e9d4"
+                    border.color: CheckersTheme.buttonBorderColor
                 }
 
                 Text {

@@ -852,7 +852,7 @@ QModelIndex CheckersModel::findFieldIndexForPieceCenter(const QPointF &pieceCent
 //***************************************************************************************************************************************************************************************************************************************
 QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
 {
-    /qDebug() << "getKingMoves function: ";
+    //qDebug() << "getKingMoves function: ";
     QList <QPair <char, int> > possibleMoves {};
     QList <QPair <char, int> > captureMoves {};
 
