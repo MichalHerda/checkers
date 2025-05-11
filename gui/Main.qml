@@ -14,6 +14,7 @@ Window {
     color: CheckersTheme.backgroundColor2
 
     property bool isMainMenu: true
+    property bool isOptionsMenu: false
     property bool rotateGameBoard: false
     property bool completed: false
 
@@ -30,6 +31,13 @@ Window {
 
         Menu {
             visible: isMainMenu
+        }
+
+        Options {
+            width: parent.width * 0.95
+            height: parent.height * 0.95
+            visible: isOptionsMenu
+            anchors.centerIn: parent
         }
 
         PlayerTimersRow {

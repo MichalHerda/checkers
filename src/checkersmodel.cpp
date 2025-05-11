@@ -1016,16 +1016,20 @@ void CheckersModel::reduceToBestKingCaptures(const QModelIndex &initialIdx, QLis
         }
         else {
             qDebug() << "sprawdzam dalszą ścieżkę bicia";
-            for(int i = 0; i < pathMoves.length(); i++) {
+            int i = 0;
+            //for(int i = 0; i < pathMoves.length(); i++) {
+            while(i < pathMoves.length()) {
                 int row = pathMoves.at(i).row();
                 int col = pathMoves.at(i).column();
                 canContinueCapture = canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
                 if(!canContinueCapture) {
                     checkedMoves.append(pathMoves.at(i));
-                    pathMoves.removeAt(i);                  // TODO: tutaj znajdź lepsze rozwiązanie
+                    pathMoves.removeAt(i);
                 }
                 else {
+                    checkedMoves.append(pathMoves.at(i));
                     currentCaptureLength++;
+                    i++;
                 }
             }
         }

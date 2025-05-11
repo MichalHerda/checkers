@@ -103,7 +103,8 @@ Rectangle {
                 }
 
                 onClicked: {
-                    console.log("options button clicked")
+                    root.isOptionsMenu = !root.isOptionsMenu
+                    console.log("options button clicked, root.isOptionsMenu: ", root.isOptionsMenu )
                 }
             }
 
