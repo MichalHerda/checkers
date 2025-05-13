@@ -6,7 +6,7 @@ import Checkers 1.0
 Rectangle {
     id: mainMenu
     anchors.fill: parent
-    color: CheckersTheme.backgroundColor2
+    color: CheckersTheme.backgroundColor
     property alias startGameButton: startGameButton
 
     Column {

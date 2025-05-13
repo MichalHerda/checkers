@@ -1,13 +1,133 @@
 import QtQuick 2.15
 import QtQuick.Controls
 import Checkers 1.0
+import checkers.model
+import "frontEnd.js" as Js
 
 Rectangle {
     id: optionsMenu
-    color: CheckersTheme.backgroundColor2
+    color: CheckersTheme.backgroundColor
+
+    Column {
+        id: optionsColumn
+        width: parent.width * 0.8
+        height: parent.height * 0.7
+        anchors.top: parent.top
+
+        Row {
+            id: gameModeRow
+            width: parent.width
+            height: parent.height * 0.2
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Label {
+                id: gameModeLabel
+                width: gameModeRow.width * 0.5
+                height: gameModeRow.height * 0.9
+                text: "Game Mode: "
+            }
+
+            ComboBox {
+                id: gameModeComboBox
+                width: gameModeRow.width * 0.5
+                height: gameModeRow.height * 0.9
+                model: ["human vs computer", "human vs human hot seat", "human vs human online"]
+            }
+        }
+
+        Row {
+            id: gameStyleRow
+            width: parent.width
+            height: parent.height * 0.2
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Label {
+                id: gameStyleLabel
+                width: gameStyleRow.width * 0.5
+                height: gameStyleRow.height * 0.9
+                text: "Game Style: "
+            }
+
+            ComboBox {
+                id: gameStyleComboBox
+                width: gameModeRow.width * 0.5
+                height: gameModeRow.height * 0.9
+                model: ["dark", "cosmic", "fantasy", "brony"]
+
+                onCurrentIndexChanged: {
+                    if(currentIndex == 0) {
+                        console.log("dark")
+                        CheckersTheme.backgroundColor = CheckersTheme.backgroundColor2
+                        CheckersTheme.buttonColor = CheckersTheme.buttonColor2
+                        CheckersTheme.buttonBorderColor = CheckersTheme.buttonBorderColor2
+                        CheckersTheme.fontColor = CheckersTheme.fontColor2
+                        CheckersTheme.playableFieldColor = CheckersTheme.playableFieldColor2
+                        CheckersTheme.notPlayableFieldColor = CheckersTheme.notPlayableFieldColor2
+                        CheckersTheme.fieldBorderColor = CheckersTheme.fieldBorderColor2
+                        //CheckersTheme.selectedBorderColor = CheckersTheme.selectedBorderColor2
+                        CheckersTheme.blackPlayerColor = CheckersTheme.blackPlayerColor2
+                        CheckersTheme.whitePlayerColor = CheckersTheme.whitePlayerColor2
+                        CheckersTheme.blackPieceBorderColor = CheckersTheme.blackPieceBorderColor2
+                        CheckersTheme.whitePieceBorderColor = CheckersTheme.whitePieceBorderColor2
+                    }
+
+                    if(currentIndex == 1) {
+                        console.log("cosmic")
+                        CheckersTheme.backgroundColor = CheckersTheme.backgroundColor3
+                        CheckersTheme.buttonColor = CheckersTheme.buttonColor3
+                        CheckersTheme.buttonBorderColor = CheckersTheme.buttonBorderColor3
+                        CheckersTheme.fontColor = CheckersTheme.fontColor3
+                        CheckersTheme.playableFieldColor = CheckersTheme.playableFieldColor3
+                        CheckersTheme.notPlayableFieldColor = CheckersTheme.notPlayableFieldColor3
+                        CheckersTheme.fieldBorderColor = CheckersTheme.fieldBorderColor3
+                        //CheckersTheme.selectedBorderColor = CheckersTheme.selectedBorderColor3
+                        CheckersTheme.blackPlayerColor = CheckersTheme.blackPlayerColor3
+                        CheckersTheme.whitePlayerColor = CheckersTheme.whitePlayerColor3
+                        CheckersTheme.blackPieceBorderColor = CheckersTheme.blackPieceBorderColor3
+                        CheckersTheme.whitePieceBorderColor = CheckersTheme.whitePieceBorderColor3
+                    }
+
+                    if(currentIndex == 2) {
+                        console.log("fantasy")
+                        CheckersTheme.backgroundColor = CheckersTheme.backgroundColor4
+                        CheckersTheme.buttonColor = CheckersTheme.buttonColor4
+                        CheckersTheme.buttonBorderColor = CheckersTheme.buttonBorderColor4
+                        CheckersTheme.fontColor = CheckersTheme.fontColor4
+                        CheckersTheme.playableFieldColor = CheckersTheme.playableFieldColor4
+                        CheckersTheme.notPlayableFieldColor = CheckersTheme.notPlayableFieldColor4
+                        CheckersTheme.fieldBorderColor = CheckersTheme.fieldBorderColor4
+                        //CheckersTheme.selectedBorderColor = CheckersTheme.selectedBorderColor4
+                        CheckersTheme.blackPlayerColor = CheckersTheme.blackPlayerColor4
+                        CheckersTheme.whitePlayerColor = CheckersTheme.whitePlayerColor4
+                        CheckersTheme.blackPieceBorderColor = CheckersTheme.blackPieceBorderColor4
+                        CheckersTheme.whitePieceBorderColor = CheckersTheme.whitePieceBorderColor4
+                    }
+
+                    if(currentIndex == 3) {
+                        console.log("brony")
+                        CheckersTheme.backgroundColor = CheckersTheme.backgroundColor5
+                        CheckersTheme.buttonColor =  CheckersTheme.buttonColor5
+                        CheckersTheme.buttonBorderColor = CheckersTheme.buttonBorderColor5
+                        CheckersTheme.fontColor = CheckersTheme.fontColor5
+                        CheckersTheme.playableFieldColor = CheckersTheme.playableFieldColor5
+                        CheckersTheme.notPlayableFieldColor = CheckersTheme.notPlayableFieldColor5
+                        CheckersTheme.fieldBorderColor = CheckersTheme.fieldBorderColor5
+                        //CheckersTheme.selectedBorderColor = CheckersTheme.selectedBorderColor5
+                        CheckersTheme.blackPlayerColor = CheckersTheme.blackPlayerColor5
+                        CheckersTheme.whitePlayerColor = CheckersTheme.whitePlayerColor5
+                        CheckersTheme.blackPieceBorderColor = CheckersTheme.blackPieceBorderColor5
+                        CheckersTheme.whitePieceBorderColor = CheckersTheme.whitePieceBorderColor5
+                    }
+                    checkersModelInstance.resetModel()
+                    //Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+                    //                     pieceSeparatorX, pieceSeparatorY)
+                }
+            }
+        }
+    }
 
     Row {
-        id: optionsButtondRow
+        id: optionsButtonsRow
         width: parent.width
         height: parent.height * 0.2
         anchors.bottom: parent.bottom

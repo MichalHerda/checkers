@@ -11,7 +11,7 @@ Window {
     height: 600//480
     visible: true
     title: qsTr("Checkers")
-    color: CheckersTheme.backgroundColor2
+    color: CheckersTheme.backgroundColor
 
     property bool isMainMenu: true
     property bool isOptionsMenu: false
