@@ -35,6 +35,28 @@ Rectangle {
             }
         }
 
+
+        Row {
+            id: gameTimeRow
+            width: parent.width
+            height: parent.height * 0.2
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Label {
+                id: gameTimeLabel
+                width: gameTimeRow.width * 0.5
+                height: gameTimeRow.height * 0.9
+                text: "Game Time: "
+            }
+
+            ComboBox {
+                id: gameTimeComboBox
+                width: gameTimeRow.width * 0.5
+                height: gameTimeRow.height * 0.9
+                model: ["1 minute", "2 minutes", "5 minutes", "10 minutes", "15 minutes", "20 minutes", "30 minutes"]
+            }
+        }
+
         Row {
             id: gameStyleRow
             width: parent.width
