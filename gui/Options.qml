@@ -53,7 +53,7 @@ Rectangle {
                 id: gameTimeComboBox
                 width: gameTimeRow.width * 0.5
                 height: gameTimeRow.height * 0.9
-                model: ["1 minute", "2 minutes", "5 minutes", "10 minutes", "15 minutes", "20 minutes", "30 minutes"]
+                model: ["1 minute", "2 minutes", "5 minutes", "10 minutes", "15 minutes", "20 minutes", "30 minutes", "no time limit"]
             }
         }
 

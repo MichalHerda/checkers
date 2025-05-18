@@ -2,12 +2,15 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "checkersmodel.h"
+#include "gamesettingsmanager.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     CheckersModel checkersModelInstance;
+    GameSettingsManager gameSettingsManager;
+
     checkersModelInstance.resetModel();
 
     qRegisterMetaType<CornersCoordinates>("CheckersModel::CornersCoordinates");
@@ -17,7 +20,9 @@ int main(int argc, char *argv[])
     qRegisterMetaType<CheckersModel::Type>("CheckersModel::Type");
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);
+
+    engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);    
+    engine.rootContext()->setContextProperty("gameSettingsManager", &gameSettingsManager);
 
     qmlRegisterUncreatableMetaObject(CheckersModel::staticMetaObject,
                                      "CheckersEnums", 1, 0,
