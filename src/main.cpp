@@ -19,6 +19,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<CheckersModel::Player>("CheckersModel::Player");
     qRegisterMetaType<CheckersModel::Type>("CheckersModel::Type");
 
+    qRegisterMetaType<GameSettingsManager::GameMode>("GameSettingsManager::GameMode");
+
     QQmlApplicationEngine engine;
 
     engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);    
@@ -30,9 +32,12 @@ int main(int argc, char *argv[])
                                      "Error: Only enums");
 
     qmlRegisterType<CheckersModel>("checkers.model", 1, 0, "CheckersModel");
+    qmlRegisterType<GameSettingsManager>("game.settings", 1, 0, "GameSettingsManager");
 
     qmlRegisterUncreatableType<CornersCoordinates>("Checkers", 1, 0, "cornersCoordinates", "CornersCoordinates cannot be created in QML");
     qmlRegisterUncreatableType<Piece>("Checkers", 1, 0, "piece", "Piece cannot be created in QML");
+
+    qmlRegisterUncreatableType<GameSettingsManager>("GameSettingsManager", 1, 0, "GameMode", "Only enums exposed");
 
     const QUrl url(QStringLiteral("qrc:/Checkers/gui/Main.qml"));
     QObject::connect(

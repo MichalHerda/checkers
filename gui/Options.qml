@@ -1,7 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Controls
 import Checkers 1.0
+import GameSettingsManager 1.0
 import checkers.model
+import game.settings
 import "frontEnd.js" as Js
 
 Rectangle {
@@ -31,7 +33,27 @@ Rectangle {
                 id: gameModeComboBox
                 width: gameModeRow.width * 0.5
                 height: gameModeRow.height * 0.9
-                model: ["human vs computer", "human vs human hot seat", "human vs human online"]
+                model: [
+                        { text: "Human vs Computer", value: GameSettingsManager.GameMode.humanVsComputer},
+                        { text: "Human vs Human (Hot Seat)", value: GameSettingsManager.GameMode.humanVsHumanHotSeat },
+                        { text: "Human vs Human (Online)", value: GameSettingsManager.GameMode.humanVsHumanOnline }
+                ]
+                textRole: "text"
+                valueRole: "value"
+
+                // Ustawienie początkowej wartości na podstawie stanu z C++
+
+                Component.onCompleted: {
+                     for (var i = 0; i < model.length; i++) {
+                           if (model[i].value === gameSettingsManager.gameMode)
+                               currentIndex = i;
+                               console.log("current index ", currentIndex)
+                       }
+                }
+
+                onCurrentIndexChanged: {
+                    gameSettingsManager.gameMode = model[currentIndex].value;
+                }
             }
         }
 

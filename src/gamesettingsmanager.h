@@ -30,8 +30,11 @@ public:
 
     explicit GameSettingsManager(QObject *parent = nullptr);
 
-    Q_PROPERTY(GameMode gameMode READ gameModeRead WRITE gameModeWrite NOTIFY gameModeChanged)
-    Q_PROPERTY(GameTime gameTime READ gameTimeRead WRITE gameTimeWrite NOTIFY gameTimeChanged)
+    Q_PROPERTY(GameSettingsManager::GameMode gameMode READ gameModeRead WRITE gameModeWrite NOTIFY gameModeChanged)
+    Q_PROPERTY(GameSettingsManager::GameTime gameTime READ gameTimeRead WRITE gameTimeWrite NOTIFY gameTimeChanged)
+
+    GameSettingsManager::GameMode gameMode = GameSettingsManager::GameMode::humanVsHumanHotSeat;
+    GameSettingsManager::GameTime gameTime = GameSettingsManager::GameTime::minutes5;
 
     GameSettingsManager::GameMode gameModeRead()const;
     GameSettingsManager::GameTime gameTimeRead()const;
@@ -47,8 +50,6 @@ signals:
     void gameTimeChanged(GameSettingsManager::GameTime _gameTime);
 
 private:
-    GameMode m_gameMode = GameSettingsManager::GameMode::humanVsHumanHotSeat;
-    GameTime m_gameTime = GameSettingsManager::GameTime::minutes5;
 
 };
 
