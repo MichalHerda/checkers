@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<CheckersModel::Type>("CheckersModel::Type");
 
     qRegisterMetaType<GameSettingsManager::GameMode>("GameSettingsManager::GameMode");
+    qRegisterMetaType<GameSettingsManager::GameTime>("GameSettingsManager::GameTime");
 
     QQmlApplicationEngine engine;
 

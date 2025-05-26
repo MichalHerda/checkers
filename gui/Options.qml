@@ -33,6 +33,9 @@ Rectangle {
                 id: gameModeComboBox
                 width: gameModeRow.width * 0.5
                 height: gameModeRow.height * 0.9
+
+                property bool initializing: true
+
                 model: [
                         { text: "Human vs Computer", value: GameSettingsManager.GameMode.humanVsComputer},
                         { text: "Human vs Human (Hot Seat)", value: GameSettingsManager.GameMode.humanVsHumanHotSeat },
@@ -41,18 +44,19 @@ Rectangle {
                 textRole: "text"
                 valueRole: "value"
 
-                // Ustawienie początkowej wartości na podstawie stanu z C++
+                onCurrentIndexChanged: {
+                    if(!initializing) {
+                        gameSettingsManager.gameMode = model[currentIndex].value;
+                    }
+                }
 
                 Component.onCompleted: {
                      for (var i = 0; i < model.length; i++) {
                            if (model[i].value === gameSettingsManager.gameMode)
                                currentIndex = i;
                                console.log("current index ", currentIndex)
-                       }
-                }
-
-                onCurrentIndexChanged: {
-                    gameSettingsManager.gameMode = model[currentIndex].value;
+                     }
+                     initializing = false;
                 }
             }
         }
@@ -75,7 +79,36 @@ Rectangle {
                 id: gameTimeComboBox
                 width: gameTimeRow.width * 0.5
                 height: gameTimeRow.height * 0.9
-                model: ["1 minute", "2 minutes", "5 minutes", "10 minutes", "15 minutes", "20 minutes", "30 minutes", "no time limit"]
+
+                property bool initializing: true
+
+                model: [
+                        {text: "1 minute", value: GameSettingsManager.GameTime.minute1},
+                        {text: "2 minutes", value: GameSettingsManager.GameTime.minutes2},
+                        {text: "5 minutes", value: GameSettingsManager.GameTime.minutes5},
+                        {text: "10 minutes", value: GameSettingsManager.GameTime.minutes10},
+                        {text: "15 minutes", value: GameSettingsManager.GameTime.minutes15},
+                        {text: "20 minutes", value: GameSettingsManager.GameTime.minutes20},
+                        {text: "30 minutes", value: GameSettingsManager.GameTime.minutes30},
+                        {text: "no time limit", value: GameSettingsManager.GameTime.nolimit}
+                    ]
+                textRole: "text"
+                valueRole: "value"
+
+                onCurrentIndexChanged: {
+                    if(!initializing) {
+                        gameSettingsManager.gameTime = model[currentIndex].value;
+                    }
+                }
+
+                Component.onCompleted: {
+                     for (var i = 0; i < model.length; i++) {
+                           if (model[i].value === gameSettingsManager.gameTime)
+                               currentIndex = i;
+                               console.log("current index ", currentIndex)
+                     }
+                     initializing = false;
+                }
             }
         }
 
