@@ -124,7 +124,7 @@ Rectangle {
                 height: gameStyleRow.height * 0.9
                 text: "Game Style: "
             }
-
+        /*
             ComboBox {
                 id: gameStyleComboBox
                 width: gameModeRow.width * 0.5
@@ -200,6 +200,7 @@ Rectangle {
                     //                     pieceSeparatorX, pieceSeparatorY)
                 }
             }
+        */
         }
     }
 

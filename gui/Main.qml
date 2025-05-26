@@ -81,7 +81,7 @@ Window {
             background: Rectangle {
                 anchors.fill: parent
                 radius: 6
-                color: CheckersTheme.buttonColor2
+                color: CheckersTheme.buttonColor
                 border.color: CheckersTheme.buttonBorderColor
             }
 
@@ -111,7 +111,7 @@ Window {
             background: Rectangle {
                 anchors.fill: parent
                 radius: 6
-                color: CheckersTheme.buttonColor2
+                color: CheckersTheme.buttonColor
                 border.color: CheckersTheme.buttonBorderColor
             }
 
@@ -153,7 +153,7 @@ Window {
             background: Rectangle {
                 anchors.fill: parent
                 radius: 6
-                color: CheckersTheme.buttonColor2
+                color: CheckersTheme.buttonColor
                 border.color: CheckersTheme.buttonBorderColor
             }
 

@@ -53,7 +53,7 @@ Rectangle {
                 height: parent.height * 0.75
                 anchors.verticalCenter:  parent.verticalCenter
                 background: Rectangle {
-                    color: CheckersTheme.buttonColor2
+                    color: CheckersTheme.buttonColor
                     radius: 6
                     border.color: CheckersTheme.buttonBorderColor
                 }
@@ -87,7 +87,7 @@ Rectangle {
                 height: parent.height * 0.75
                 anchors.verticalCenter:  parent.verticalCenter
                 background: Rectangle {
-                    color: CheckersTheme.buttonColor2
+                    color: CheckersTheme.buttonColor
                     radius: 6
                     border.color: CheckersTheme.buttonBorderColor
                 }

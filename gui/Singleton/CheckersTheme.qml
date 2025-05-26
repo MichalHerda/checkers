@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick 2.15
 
 Item {
+    /*
     //global:
     property color backgroundColor: "black"
     property color uiBorderColor: "orange"
@@ -17,19 +18,20 @@ Item {
     property color whitePlayerColor: "bisque"
     property color blackPieceBorderColor: "gold"
     property color whitePieceBorderColor: "red"
-
+    */
     //dark:
-    property color backgroundColor2: "#1a0f0b"
-    property color buttonColor2: "#4a3b2c"
-    property color buttonBorderColor2: "#f5e9d4"
-    property color fontColor2: "#f5e9d4"
-    property color playableFieldColor2: "#6b4a3a"
-    property color notPlayableFieldColor2: "#b69c82"
-    property color fieldBorderColor2: "#3a2b21"
-    property color blackPlayerColor2: "#3a2b21"
-    property color whitePlayerColor2: "#e5d5bb"    
-    property color blackPieceBorderColor2: "#a28c6c"
-    property color whitePieceBorderColor2: "#a28c6c"
+    property color backgroundColor: "#1a0f0b"
+    property color buttonColor: "#4a3b2c"
+    property color buttonBorderColor: "#f5e9d4"
+    property color fontColor: "#f5e9d4"
+    property color playableFieldColor: "#6b4a3a"
+    property color notPlayableFieldColor: "#b69c82"
+    property color fieldBorderColor: "#3a2b21"
+    property color blackPlayerColor: "#3a2b21"
+    property color whitePlayerColor: "#e5d5bb"
+    property color blackPieceBorderColor: "#a28c6c"
+    property color whitePieceBorderColor: "#a28c6c"
+    property color uiBorderColor: "#8B0000"
 
     //cosmic:
     property color backgroundColor3: "#040616"

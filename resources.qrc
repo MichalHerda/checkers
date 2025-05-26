@@ -2,8 +2,5 @@
     <qresource prefix="/">
         <file>resources/Sepia-TonedCheckersGameIllustration.png</file>
         <file>gui/Options.qml</file>
-        <file>resources/CosmicCheckersInDeepSpace.png</file>
-        <file>resources/MagicalCheckerboardSky.png</file>
-        <file>resources/MysticalCheckersOfTheEther.png</file>
     </qresource>
 </RCC>
