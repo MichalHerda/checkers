@@ -29,6 +29,14 @@ Item {
         }
     }
 
+    function handleVisibilityChanged() {
+        console.log("handle visibility changed function")
+        if(completed) {
+            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+                                 pieceSeparatorX, pieceSeparatorY)
+        }
+    }
+
     Grid {
         id: gameBoard
         anchors.fill: parent

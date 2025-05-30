@@ -13,6 +13,8 @@ Window {
     title: qsTr("Checkers")
     color: CheckersTheme.backgroundColor
 
+    //signal windowVisibilityChanged()
+
     property bool isMainMenu: true
     property bool isOptionsMenu: false
     property bool rotateGameBoard: false
@@ -24,6 +26,11 @@ Window {
 
     property string playerOneName: "Player 1"
     property string playerTwoName: "Player 2"
+
+    property int widthStash: 800
+    property int heightStash: 600
+
+    property bool isMaximized: false
 
     Item {
         id: anchorItem
@@ -179,11 +186,53 @@ Window {
         repeat: true
         running: true
         onTriggered: {
-            console.log("gameSettingsManager.gameMode: ", gameSettingsManager.gameMode)
-            console.log("gameSettingsManager.gameTime: ", gameSettingsManager.gameTime)
+            //console.log("gameSettingsManager.gameMode: ", gameSettingsManager.gameMode)
+            //console.log("gameSettingsManager.gameTime: ", gameSettingsManager.gameTime)
             //console.log("checkersModelInstance.player: ", checkersModelInstance.player)
             //console.log("checkersModelInstance.gameon: ", checkersModelInstance.gameOn)
             //console.log("must capture, player", checkersModelInstance.player, ": ", checkersModelInstance.mustCapture(checkersModelInstance.player))
         }
+    }
+
+    onVisibilityChanged: {
+        console.log("Zmieniono visibility:")
+        widthStash = root.width
+        heightStash = root.height
+        if(visibility === Window.Maximized) {
+            console.log("maximized")
+            if(!isMaximized) {
+                console.log("!isMaximized, widthStash: ", widthStash, ", heightStash: ", heightStash)
+                widthStash = root.width
+                heightStash = root.height
+                root.width = screen.width
+                root.height = screen.height
+                isMaximized = true
+            }
+
+            else {
+                //console.log("!isMinimized, widthStash: ", widthStash, ", heightStash: ", heightStash)
+                root.width = widthStash
+                root.height = heightStash
+                isMaximized = false
+                //checkersGameBoard.handleVisibilityChanged()
+            }
+
+        }
+        /*
+        if(visibility === Window.Windowed) {
+            if(isMaximized) {
+            console.log("!isMinimized, widthStash: ", widthStash, ", heightStash: ", heightStash)
+            root.width = widthStash
+            root.height = heightStash
+            isMaximized = false
+            //checkersGameBoard.handleVisibilityChanged()
+            }
+        }
+        */
+
+        checkersGameBoard.handleVisibilityChanged()
+        //if(!isMaximized) {
+        //    showNormal()
+        //}
     }
 }
