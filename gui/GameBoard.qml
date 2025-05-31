@@ -234,6 +234,7 @@ Item {
                         console.log("players own piece")
                         //***
                         if(gameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
+                            /*
                             //console.log("move valid")
                             var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
                             //console.log("model index: ", modelIndex)
@@ -258,7 +259,8 @@ Item {
 
                             checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
                             checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
-
+                            */
+                            gameController.executeMove(modelIndex, newAverageX, newAverageY)
                             //console.log("field to move after swap: ", checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole))
                             //console.log("field to move after swap data color: ", emptyPieceData.player)
                             //console.log("field to move after swap data type: ", emptyPieceData.type)

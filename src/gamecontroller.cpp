@@ -45,3 +45,31 @@ bool GameController::isMoveValid(QModelIndex index, double averageX, double aver
     qDebug() << "Pole docelowe nie znajduje się w zakresie pionka";
     return false;
 }
+
+void GameController::executeMove(QModelIndex index, double averageX, double averageY)
+{
+    //console.log("move valid")
+    QModelIndex modelIndexToMove = s_model->getModelIndexFromGivenCoordinates(averageX, averageY);
+    //console.log("model index: ", modelIndex)
+    //console.log("model index to move: ", modelIndexToMove)
+
+    //SWAP FIELDS VALUES:
+
+    QVariant emptyPieceData = s_model->data(modelIndexToMove, CheckersModel::PieceRole);
+                         //console.log("field to move before swap: ", emptyPieceData)
+                         //console.log("field to move data color: ", emptyPieceData.player)
+                         //console.log("field to move data type: ", emptyPieceData.type)
+
+    QVariant pieceData = s_model->data(index, CheckersModel::PieceRole);
+          //console.log("piece data: ", pieceData)
+          //console.log("piece data color: ", pieceData.player)
+          //console.log("piece data type: ", pieceData.type)
+
+    bool isCapture = s_model->mustCapture(s_model->player);
+    if(isCapture) {
+        s_model->removePiece(index, modelIndexToMove);
+    }
+
+    s_model->setData(modelIndexToMove, pieceData, CheckersModel::PieceRole);
+    s_model->setData(index, emptyPieceData, CheckersModel::PieceRole);
+}
