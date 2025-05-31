@@ -99,3 +99,17 @@ void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, 
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
+void GameController::changePlayer()
+{
+    bool isCapture = s_model -> mustCapture(s_model->player);
+
+    if(!m_hasMultiCapture || !isCapture) {
+        if(s_model->player == CheckersModel::Player::white) {
+            s_model->player = CheckersModel::Player::black;
+        }
+        else {
+            s_model->player = CheckersModel::Player::white;
+        }
+    }
+}
+//***************************************************************************************************************************************************************************************************************************************

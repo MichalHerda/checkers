@@ -282,9 +282,9 @@ Item {
                                 checkersModelInstance.evaluatePromotionToKing(modelIndexToMove)
                             }
                             */
-                            gameController.evaluatePromotionToKing(index, newAverageX, newAverageY)
+                            gameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
                             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
-
+                            /*
                             if(!hasMultiCapture || !isCapture) {
                                 if(checkersModelInstance.player === CheckersModel.Player.white) {
                                     checkersModelInstance.player = CheckersModel.Player.black
@@ -293,6 +293,8 @@ Item {
                                     checkersModelInstance.player = CheckersModel.Player.white
                                 }
                             }
+                            */
+                            gameController.changePlayer()
                         }
                         else {
                             console.log("move not valid")

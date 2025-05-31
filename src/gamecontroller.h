@@ -17,6 +17,7 @@ public:
     Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE void executeMove(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index, double averageX, double averageY);
+    Q_INVOKABLE void changePlayer();
 
 signals:
 
