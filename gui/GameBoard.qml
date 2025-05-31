@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls
 import Checkers 1.0
 import checkers.model
+import game.controller
 import "frontEnd.js" as Js
 
 Item {
@@ -35,6 +36,10 @@ Item {
             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
+    }
+
+    GameController {
+        id: gameController
     }
 
     Grid {
@@ -223,9 +228,10 @@ Item {
                     console.log("   newAverageY: ", newAverageY)
 */
                     //***
-                    if( (checkersModelInstance.getPieceColor(modelIndex) === true && checkersModelInstance.player === CheckersModel.Player.white ) ||
-                        (checkersModelInstance.getPieceColor(modelIndex) === false && checkersModelInstance.player === CheckersModel.Player.black ) ) {
-
+                    //if( (checkersModelInstance.getPieceColor(modelIndex) === true && checkersModelInstance.player === CheckersModel.Player.white ) ||
+                    //    (checkersModelInstance.getPieceColor(modelIndex) === false && checkersModelInstance.player === CheckersModel.Player.black ) ) {
+                    if(gameController.isPlayersOwnPiece(modelIndex)) {
+                        console.log("players own piece")
                         //***
                         if(checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)) {
                             //console.log("move valid")

@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     CheckersModel checkersModelInstance;
-    GameController gameController(&checkersModelInstance);
+    GameController::s_model = &checkersModelInstance;
     GameSettingsManager gameSettingsManager;
     ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
 
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);    
     engine.rootContext()->setContextProperty("gameSettingsManager", &gameSettingsManager);
-    engine.rootContext()->setContextProperty("gameController", &gameController);
+    //engine.rootContext()->setContextProperty("gameController", &gameController);
 
     qmlRegisterUncreatableMetaObject(CheckersModel::staticMetaObject,
                                      "CheckersEnums", 1, 0,
