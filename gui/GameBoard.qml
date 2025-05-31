@@ -275,12 +275,14 @@ Item {
                             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                                  pieceSeparatorX, pieceSeparatorY)
                             //checkersModelInstance.setAllPiecesRange()
+                            /*
                             var hasMultiCapture = checkersModelInstance.isCaptureAvailable(modelIndexToMove);
 
                             if(!hasMultiCapture) {
                                 checkersModelInstance.evaluatePromotionToKing(modelIndexToMove)
                             }
-
+                            */
+                            gameController.evaluatePromotionToKing(index, newAverageX, newAverageY)
                             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
 
                             if(!hasMultiCapture || !isCapture) {

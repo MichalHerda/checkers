@@ -16,10 +16,14 @@ public:
     Q_INVOKABLE bool isPlayersOwnPiece(const QModelIndex idx);
     Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE void executeMove(QModelIndex index, double averageX, double averageY);
+    Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index, double averageX, double averageY);
+
 signals:
 
 private:
     CheckersModel* m_model;
+    QModelIndex m_modelIndexToMove;
+    bool m_hasMultiCapture = false;
 };
 
 #endif // GAMECONTROLLER_H

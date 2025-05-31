@@ -25,6 +25,8 @@ class CheckersModel : public QStandardItemModel
 {
     Q_OBJECT
 
+    friend class GameController;
+
 public:
     enum CheckersRoles {
         FieldNameRole = Qt::UserRole + 1,
