@@ -36,6 +36,7 @@ qt_add_qml_module(appCheckers
         QML_FILES gui/Options.qml
         RESOURCES resources.qrc
         SOURCES src/gamesettingsmanager.h src/gamesettingsmanager.cpp
+        SOURCES src/computerplayer.h src/computerplayer.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

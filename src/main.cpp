@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include "checkersmodel.h"
 #include "gamesettingsmanager.h"
+#include "computerplayer.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,6 +11,7 @@ int main(int argc, char *argv[])
 
     CheckersModel checkersModelInstance;
     GameSettingsManager gameSettingsManager;
+    ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
 
     checkersModelInstance.resetModel();
 
