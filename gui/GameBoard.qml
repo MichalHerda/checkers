@@ -193,6 +193,9 @@ Item {
                 }
                 onReleased: {
                     pieceRep.itemAt(index).z = 0
+                    var newAverageX = Js.calculatePieceCenterX(pieceRep, pieceWidth, index)
+                    var newAverageY = Js.calcultaePieceCenterY(pieceRep, pieceHeight, index)
+/*
                     var newCooLeftUpX = pieceRep.itemAt(index).x
                     var newCooLeftUpY = pieceRep.itemAt(index).y
                     var newCooRightUpX = pieceRep.itemAt(index).x + pieceWidth
@@ -204,7 +207,7 @@ Item {
 
                     var newAverageX = ( newCooLeftUpX + newCooRightUpX + newCooLeftBottomX + newCooRightBottomX ) / 4
                     var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
-/*
+
                     console.log("RELEASED:")
                     console.log("   pieceWidth:", pieceWidth)
                     console.log("   pieceHeight: ", pieceHeight)
