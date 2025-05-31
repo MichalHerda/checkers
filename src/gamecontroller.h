@@ -14,7 +14,7 @@ public:
     static CheckersModel *s_model;
 
     Q_INVOKABLE bool isPlayersOwnPiece(const QModelIndex idx);
-
+    Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
 signals:
 
 private:

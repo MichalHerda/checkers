@@ -233,7 +233,7 @@ Item {
                     if(gameController.isPlayersOwnPiece(modelIndex)) {
                         console.log("players own piece")
                         //***
-                        if(checkersModelInstance.isMoveValid(modelIndex, newAverageX, newAverageY)) {
+                        if(gameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
                             //console.log("move valid")
                             var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
                             //console.log("model index: ", modelIndex)

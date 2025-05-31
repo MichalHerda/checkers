@@ -81,7 +81,7 @@ public:
     Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
     Q_INVOKABLE void removePiece(QModelIndex from, QModelIndex to);
 
-    Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
+    //Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
     Q_INVOKABLE void setAllPiecesRange();
@@ -104,6 +104,8 @@ public:
 
     void gameOnWrite(bool gameOn);
     void playerWrite(CheckersModel::Player _player);
+
+    QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
 
 signals:
     void gameOnChanged(bool _gameOn);
@@ -132,7 +134,7 @@ private:
     void setFieldCenterRole();
     void setPiecesCoordinatesRole();
 
-    QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
+
 
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);

@@ -476,6 +476,7 @@ void CheckersModel::removePiece(QModelIndex from, QModelIndex to)
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
+/*
 bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
 {
     qDebug() << "isMoveValid, index passed: " << index;
@@ -504,6 +505,7 @@ bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double avera
     qDebug() << "Pole docelowe nie znajduje się w zakresie pionka";
     return false;
 }
+*/
 //***************************************************************************************************************************************************************************************************************************************
 QModelIndex CheckersModel::getModelIndexFromGivenCoordinates(double averageX, double averageY)
 {
