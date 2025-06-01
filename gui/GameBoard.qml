@@ -104,11 +104,6 @@ Item {
                         //getCoo(rec)
                     }
                 }
-
-                Component.onCompleted: {
-                    //console.log("Rectangle idx: ", index, "column: ", column, "row: ", row)
-                    //console.log("role: ", checkersModelInstance.data(modelIndex, CheckersModel.isPlayableRole))
-                }
             }
         }
 
@@ -143,32 +138,17 @@ Item {
             property var pieceStatus: checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
             property var pieceRange: checkersModelInstance.data(modelIndex, CheckersModel.RangeRole)
 
-            //property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
-            //property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
-
-            width:  Math.min(pieceWidth, pieceHeight)               //pieceRep.pieceWidth
-            height: Math.min(pieceWidth, pieceHeight)               //pieceRep.pieceHeight
-            //x: column * fieldWidth + (fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
-            //y: row * fieldHeight + (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
-            x: (column * fieldWidth) + pieceSeparatorX //(fieldWidth * ( CheckersTheme.pieceDimensionModificator / 5) )
-            y: (row * fieldHeight) + pieceSeparatorY //+ (fieldHeight * ( CheckersTheme.pieceDimensionModificator / 5) )
+            width:  Math.min(pieceWidth, pieceHeight)
+            height: Math.min(pieceWidth, pieceHeight)
+            x: (column * fieldWidth) + pieceSeparatorX
+            y: (row * fieldHeight) + pieceSeparatorY
             z: 0
 
             visible: checkersModelInstance.isPiecePresent(modelIndex)
             color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePlayerColor : CheckersTheme.blackPlayerColor
             border.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
-            kingSign.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor//border.color
+            kingSign.color: checkersModelInstance.getPieceColor(modelIndex) ? CheckersTheme.whitePieceBorderColor : CheckersTheme.blackPieceBorderColor
             isKing: checkersModelInstance.getPieceType(modelIndex)
-
-            Component.onCompleted: {
-                //console.log("**************************************************************************************")
-                //console.log("INDEX: ", index, "piece: ", piece)
-                //console.log("piece on completed: ", pieceStatus)
-                //console.log("x: ", piece.x, "y: ", piece.y)                                                           // coordinates somehow not initialized and not visible at the moment
-                //console.log("playable: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
-                //console.log("coordinates: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
-                //console.log("**************************************************************************************")
-            }
 
             MouseArea {
                 id: pieceMouseArea
@@ -187,110 +167,27 @@ Item {
                 }
                 onPressed: {
                     pieceRep.itemAt(index).z = 1
-                    //console.log("PRESSED:")
-                    //console.log("   model index:", modelIndex)
-                    //console.log("   pieceRep index: ", index)
                 }
                 onReleased: {
                     pieceRep.itemAt(index).z = 0
                     var newAverageX = Js.calculatePieceCenterX(pieceRep, pieceWidth, index)
                     var newAverageY = Js.calcultaePieceCenterY(pieceRep, pieceHeight, index)
-/*
-                    var newCooLeftUpX = pieceRep.itemAt(index).x
-                    var newCooLeftUpY = pieceRep.itemAt(index).y
-                    var newCooRightUpX = pieceRep.itemAt(index).x + pieceWidth
-                    var newCooRightUpY = pieceRep.itemAt(index).y
-                    var newCooLeftBottomX = pieceRep.itemAt(index).x
-                    var newCooLeftBottomY = pieceRep.itemAt(index).y + pieceHeight
-                    var newCooRightBottomX = pieceRep.itemAt(index).x + pieceWidth
-                    var newCooRightBottomY = pieceRep.itemAt(index).y
 
-                    var newAverageX = ( newCooLeftUpX + newCooRightUpX + newCooLeftBottomX + newCooRightBottomX ) / 4
-                    var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
-
-                    console.log("RELEASED:")
-                    console.log("   pieceWidth:", pieceWidth)
-                    console.log("   pieceHeight: ", pieceHeight)
-                    console.log("   newCooLeftUpX: ", newCooLeftUpX)
-                    console.log("   newCooLeftUpY: ", newCooLeftUpY)
-                    console.log("   newCooRightUpX: ", newCooRightUpX)
-                    console.log("   newCooRightUpY: ", newCooRightUpY)
-                    console.log("   newCooLeftBottomX: ", newCooLeftBottomX)
-                    console.log("   newCooLeftBottomY: ", newCooLeftBottomY)
-                    console.log("   newCooRightBottomX: ", newCooRightBottomX)
-                    console.log("   newCooRightBottomY: ", newCooRightBottomY)
-                    console.log("   newAverageX: ", newAverageX)
-                    console.log("   newAverageY: ", newAverageY)
-*/
-                    //***
-                    //if( (checkersModelInstance.getPieceColor(modelIndex) === true && checkersModelInstance.player === CheckersModel.Player.white ) ||
-                    //    (checkersModelInstance.getPieceColor(modelIndex) === false && checkersModelInstance.player === CheckersModel.Player.black ) ) {
-                    console.log("model index: ", modelIndex)
                     if(GameController.isPlayersOwnPiece(modelIndex)) {
                         console.log("players own piece")
-                        //***
                         if(GameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
                             var mustCapture = GameController.mustCapture(checkersModelInstance.player)
-                            /*
-                            //console.log("move valid")
-                            var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
-                            //console.log("model index: ", modelIndex)
-                            //console.log("model index to move: ", modelIndexToMove)
-
-                            //SWAP FIELDS VALUES:
-
-                            var emptyPieceData = checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole)
-                            //console.log("field to move before swap: ", emptyPieceData)
-                            //console.log("field to move data color: ", emptyPieceData.player)
-                            //console.log("field to move data type: ", emptyPieceData.type)
-
-                            var pieceData = checkersModelInstance.data(modelIndex, CheckersModel.PieceRole)
-                            //console.log("piece data: ", pieceData)
-                            //console.log("piece data color: ", pieceData.player)
-                            //console.log("piece data type: ", pieceData.type)
-
-                            var isCapture = checkersModelInstance.mustCapture(checkersModelInstance.player)
-                            if(isCapture) {
-                                checkersModelInstance.removePiece(modelIndex, modelIndexToMove)
-                            }
-
-                            checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
-                            checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
-                            */
                             GameController.executeMove(modelIndex, newAverageX, newAverageY)
-                            //console.log("field to move after swap: ", checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole))
-                            //console.log("field to move after swap data color: ", emptyPieceData.player)
-                            //console.log("field to move after swap data type: ", emptyPieceData.type)
-
-                            //console.log("piece data after swap: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
-                            //console.log("piece data color after swap: ", pieceData.player)
-                            //console.log("piece data type after swap: ", pieceData.type)
 
                             var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
                             var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
                             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                                  pieceSeparatorX, pieceSeparatorY)
-                            //checkersModelInstance.setAllPiecesRange()
-                            /*
-                            var hasMultiCapture = checkersModelInstance.isCaptureAvailable(modelIndexToMove);
 
-                            if(!hasMultiCapture) {
-                                checkersModelInstance.evaluatePromotionToKing(modelIndexToMove)
-                            }
-                            */
                             GameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
                             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
-                            /*
-                            if(!hasMultiCapture || !isCapture) {
-                                if(checkersModelInstance.player === CheckersModel.Player.white) {
-                                    checkersModelInstance.player = CheckersModel.Player.black
-                                }
-                                else {
-                                    checkersModelInstance.player = CheckersModel.Player.white
-                                }
-                            }
-                            */
+
                             GameController.changePlayer(newAverageX, newAverageY, mustCapture)
                         }
                         else {
@@ -315,10 +212,6 @@ Item {
 
     onWidthChanged: {
         if(completed) {
-
-            //console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-            //console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
-
             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
@@ -326,10 +219,6 @@ Item {
 
     onHeightChanged: {
         if(completed) {
-
-            //console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-            //console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
-
             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
@@ -337,14 +226,8 @@ Item {
 
     Component.onCompleted: {
         if(!completed) {
-
-            //console.log("ON COMPLETED: ")
-            //console.log("   fieldWidth: ", fieldWidth, "fieldHeight: ", fieldHeight)
-            //console.log("   pieceWidth: ", pieceWidth, "pieceHeight: ", pieceHeight)
-
             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
-
             completed = true
         }
     }

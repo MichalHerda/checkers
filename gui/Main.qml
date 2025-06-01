@@ -7,13 +7,11 @@ import "frontEnd.js" as Js
 
 Window {
     id: root
-    width: 800//640
-    height: 600//480
+    width: 800
+    height: 600
     visible: true
     title: qsTr("Checkers")
     color: CheckersTheme.backgroundColor
-
-    //signal windowVisibilityChanged()
 
     property bool isMainMenu: true
     property bool isOptionsMenu: false
@@ -65,9 +63,6 @@ Window {
             property double pieceHeight: fieldHeight * CheckersTheme.pieceDimensionModificator
             property double pieceSeparatorX: (fieldWidth - pieceWidth) / 2
             property double pieceSeparatorY: (fieldHeight - pieceHeight) / 2
-
-            //property var fieldRep: checkersGameBoard.fieldRep
-            //property var pieceRep: checkersGameBoard.pieceRep
 
             anchors.centerIn: parent
             width: root.width * 0.5
@@ -188,7 +183,7 @@ Window {
         onTriggered: {
             //console.log("gameSettingsManager.gameMode: ", gameSettingsManager.gameMode)
             //console.log("gameSettingsManager.gameTime: ", gameSettingsManager.gameTime)
-            //console.log("checkersModelInstance.player: ", checkersModelInstance.player)
+            console.log("checkersModelInstance.player: ", checkersModelInstance.player)
             //console.log("checkersModelInstance.gameon: ", checkersModelInstance.gameOn)
             //console.log("must capture, player", checkersModelInstance.player, ": ", checkersModelInstance.mustCapture(checkersModelInstance.player))
         }
@@ -218,21 +213,6 @@ Window {
             }
 
         }
-        /*
-        if(visibility === Window.Windowed) {
-            if(isMaximized) {
-            console.log("!isMinimized, widthStash: ", widthStash, ", heightStash: ", heightStash)
-            root.width = widthStash
-            root.height = heightStash
-            isMaximized = false
-            //checkersGameBoard.handleVisibilityChanged()
-            }
-        }
-        */
-
         checkersGameBoard.handleVisibilityChanged()
-        //if(!isMaximized) {
-        //    showNormal()
-        //}
     }
 }

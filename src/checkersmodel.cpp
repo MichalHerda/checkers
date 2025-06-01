@@ -17,7 +17,6 @@ bool CheckersModel::isPiecePresent(const QModelIndex &index)
 
     //qDebug() << "isPiecePresent function, player:" << player;
 
-    //return player != CheckersModel::Type::null;
     return type != CheckersModel::Type::null;
 }
 //***************************************************************************************************************************************************************************************************************************************
@@ -40,7 +39,6 @@ bool CheckersModel::getPieceColor(const QModelIndex &index)                     
 bool CheckersModel::getPieceType(const QModelIndex &index)                                      //return true: type == king
 {                                                                                               //      false: type == man
     auto pieceRole = data(index, PieceRole);
-    //auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
     auto piece = pieceRole.value<Piece>();
 
     CheckersModel::Type type = piece.type;
@@ -548,12 +546,6 @@ void CheckersModel::initializePieces()
                 m_blackScore++;
             }
             else {
-                //Player player = Player::null;
-                //Type type = Type::null;
-                //Piece piece;
-                //piece.player = Player::null;
-                //piece.type = Type::null;
-                //setData(index, QVariant::fromValue(piece), PieceRole);
                 CheckersModel::setEmptyField(index);
                 m_whiteScore++;
             }
@@ -584,11 +576,6 @@ void CheckersModel::initializePieces()
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::setPiece(QModelIndex index, Player player, Type type)
 {
-    //Player playerToSet = player;
-    //Type typeToSet = type;
-
-    //QPair<Player, Type> piece(playerToSet, typeToSet);
-
     Piece piece;
     piece.player = player;
     piece.type = type;
@@ -613,8 +600,6 @@ void CheckersModel::setAllPiecesRange()
     for(int row = 0; row < m_rows; row++) {
         for(int col = 0; col < m_columns; col++) {
             QModelIndex index = m_model.index(row, col);
-            //int rowNo = index.row();
-            //int colNo = index.column();
             //qDebug() << "setAllPiecesRange. index: " << index << "row: " << rowNo << "column: "<< colNo;
 
             if(isPiecePresent(index)) {
@@ -724,7 +709,6 @@ void CheckersModel::setFieldCenterRole()
                 QModelIndex index = getIndex(row, column);
                 QVariant isPlayable = data(index, IsPlayableRole);
                 if(!isPlayable.toBool() ) {
-                    //QPointF fieldCenter = {-1, -1};
                     setData(index, QVariant::fromValue(QPointF(-1, -1)), FieldCenterRole);
                 }
                 else {
@@ -842,7 +826,6 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
                         captureMoves.push_back(movePair);
                     }
                 }
-                //else break;
 
                 r += dr[dir];
                 c += dc[dir];

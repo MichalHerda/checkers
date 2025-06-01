@@ -9,8 +9,6 @@ GameController::GameController(QObject *parent)
 
 }
 //***************************************************************************************************************************************************************************************************************************************
-CheckersModel* GameController::s_model = nullptr;
-
 bool GameController::isPlayersOwnPiece(const QModelIndex idx)
 {
     return m_model->CheckersModel::getPieceColor(idx) && m_model->player == CheckersModel::Player::white ||
@@ -72,7 +70,6 @@ void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, 
     bool hasMultiCapture = m_model->isCaptureAvailable(m_modelIndexToMove);
 
     if(!m_hasMultiCapture) {
-        //checkersModelInstance.evaluatePromotionToKing(m_modelIndexToMove)
         if(m_model->player == CheckersModel::Player::white &&
             m_model->getPieceType(index) == false &&
             modelIndexToMove.row() == 0) {
@@ -97,7 +94,6 @@ void GameController::changePlayer(double averageX, double averageY, bool mustCap
     qDebug() << "   player: " << m_model->player;
     QModelIndex indexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
     qDebug() << "   indexToMove: " << indexToMove;
-    //bool isCapture = m_model -> mustCapture(m_model->player);
     qDebug() << "   isCapture: " << mustCapture;
     bool hasMultiCapture = m_model->isCaptureAvailable(indexToMove);
     qDebug() << "   hasMultiCapture: " << hasMultiCapture;
