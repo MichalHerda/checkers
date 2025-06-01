@@ -69,25 +69,25 @@ void GameController::executeMove(QModelIndex index, double averageX, double aver
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, double averageY)
 {
-    m_modelIndexToMove = s_model->getModelIndexFromGivenCoordinates(averageX, averageY);
-    m_hasMultiCapture = s_model->isCaptureAvailable(m_modelIndexToMove);
+    QModelIndex modelIndexToMove = s_model->getModelIndexFromGivenCoordinates(averageX, averageY);
+    bool hasMultiCapture = s_model->isCaptureAvailable(m_modelIndexToMove);
 
     if(!m_hasMultiCapture) {
         //checkersModelInstance.evaluatePromotionToKing(m_modelIndexToMove)
         if(s_model->player == CheckersModel::Player::white &&
             s_model->getPieceType(index) == false &&
-            index.row() == 0) {
+            modelIndexToMove.row() == 0) {
             qDebug() << "promote to king";
-            s_model->setEmptyField(index);
-            s_model->setPiece(index, s_model->player, CheckersModel::Type::king);
+            s_model->setEmptyField(modelIndexToMove);
+            s_model->setPiece(modelIndexToMove, s_model->player, CheckersModel::Type::king);
         }
 
         if(s_model->player == CheckersModel::Player::black &&
             s_model->getPieceType(index) == false &&
-            index.row() == 7) {
+            modelIndexToMove.row() == 7) {
             qDebug() << "promote to king";
-            s_model->setEmptyField(index);
-            s_model->setPiece(index, s_model->player, CheckersModel::Type::king);
+            s_model->setEmptyField(modelIndexToMove);
+            s_model->setPiece(modelIndexToMove, s_model->player, CheckersModel::Type::king);
         }
     }
 }
