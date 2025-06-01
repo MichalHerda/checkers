@@ -11,7 +11,10 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     CheckersModel checkersModelInstance;
-    GameController::s_model = &checkersModelInstance;
+    GameController gameController(&checkersModelInstance);
+
+    qmlRegisterSingletonInstance("Checkers", 1, 0, "GameController", &gameController);
+
     GameSettingsManager gameSettingsManager;
     ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
 
@@ -30,7 +33,6 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("checkersModelInstance", &checkersModelInstance);    
     engine.rootContext()->setContextProperty("gameSettingsManager", &gameSettingsManager);
-    //engine.rootContext()->setContextProperty("gameController", &gameController);
 
     qmlRegisterUncreatableMetaObject(CheckersModel::staticMetaObject,
                                      "CheckersEnums", 1, 0,
@@ -39,7 +41,6 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<CheckersModel>("checkers.model", 1, 0, "CheckersModel");
     qmlRegisterType<GameSettingsManager>("game.settings", 1, 0, "GameSettingsManager");
-    qmlRegisterType<GameController>("game.controller", 1, 0, "GameController");
 
     qmlRegisterUncreatableType<CornersCoordinates>("Checkers", 1, 0, "cornersCoordinates", "CornersCoordinates cannot be created in QML");
     qmlRegisterUncreatableType<Piece>("Checkers", 1, 0, "piece", "Piece cannot be created in QML");

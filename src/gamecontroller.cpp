@@ -1,8 +1,9 @@
 #include "gamecontroller.h"
 //***************************************************************************************************************************************************************************************************************************************
-//GameController::GameController(CheckersModel* model, QObject *parent)
-//    : QObject{parent}
-//{}
+GameController::GameController(CheckersModel* model, QObject *parent)
+    : QObject{parent}, m_model(model)
+{}
+//***************************************************************************************************************************************************************************************************************************************
 GameController::GameController(QObject *parent)
 {
 
@@ -12,27 +13,26 @@ CheckersModel* GameController::s_model = nullptr;
 
 bool GameController::isPlayersOwnPiece(const QModelIndex idx)
 {
-    return s_model->CheckersModel::getPieceColor(idx) && s_model->player == CheckersModel::Player::white ||
-          !s_model->CheckersModel::getPieceColor(idx) && s_model->player == CheckersModel::Player::black;
+    return m_model->CheckersModel::getPieceColor(idx) && m_model->player == CheckersModel::Player::white ||
+          !m_model->CheckersModel::getPieceColor(idx) && m_model->player == CheckersModel::Player::black;
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool GameController::isMoveValid(QModelIndex index, double averageX, double averageY)
 {
-    //return s_model->CheckersModel::isMoveValid(index, averageX, averageY);
     qDebug() << "isMoveValid, index passed: " << index;
-    QVariantList range = s_model -> data(index, CheckersModel::RangeRole).toList();
+    QVariantList range = m_model -> data(index, CheckersModel::RangeRole).toList();
     qDebug() << "passed index range: "  << range;
 
-    auto hasCapture = s_model -> data(index, CheckersModel::CaptureAvailableRole);
-    if(!hasCapture.toBool() && s_model->mustCapture(s_model->player)) {
+    auto hasCapture = m_model -> data(index, CheckersModel::CaptureAvailableRole);
+    if(!hasCapture.toBool() && m_model->mustCapture(m_model->player)) {
         return false;
     }
 
     QPointF pieceCenter(averageX, averageY);
-    QModelIndex targetFieldIndex = s_model->findFieldIndexForPieceCenter(pieceCenter);
+    QModelIndex targetFieldIndex = m_model->findFieldIndexForPieceCenter(pieceCenter);
     qDebug() << "piece center is now inside field: " << targetFieldIndex;
 
-    std::pair<char, int> targetCoordinate = s_model->data(targetFieldIndex, CheckersModel::FieldNameRole).value<std::pair<char, int>>();
+    std::pair<char, int> targetCoordinate = m_model->data(targetFieldIndex, CheckersModel::FieldNameRole).value<std::pair<char, int>>();
     qDebug() << "target coordinate: " << targetCoordinate;
     for (const QVariant &item : range) {
         std::pair<char, int> rangeCoordinate = item.value<std::pair<char, int>>();
@@ -48,46 +48,45 @@ bool GameController::isMoveValid(QModelIndex index, double averageX, double aver
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::executeMove(QModelIndex index, double averageX, double averageY)
 {
-    m_modelIndexToMove = s_model->getModelIndexFromGivenCoordinates(averageX, averageY);
+    m_modelIndexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
 
-    QVariant emptyPieceData = s_model->data(m_modelIndexToMove, CheckersModel::PieceRole);
+    QVariant emptyPieceData = m_model->data(m_modelIndexToMove, CheckersModel::PieceRole);
 
-    QVariant pieceData = s_model->data(index, CheckersModel::PieceRole);
+    QVariant pieceData = m_model->data(index, CheckersModel::PieceRole);
 
-    bool isCapture = s_model->mustCapture(s_model->player);
+    bool isCapture = m_model->mustCapture(m_model->player);
 
     if(isCapture) {
-        s_model->removePiece(index, m_modelIndexToMove);
+        m_model->removePiece(index, m_modelIndexToMove);
     }
 
-    s_model->setData(m_modelIndexToMove, pieceData, CheckersModel::PieceRole);
-    s_model->setData(index, emptyPieceData, CheckersModel::PieceRole);
+    m_model->setData(m_modelIndexToMove, pieceData, CheckersModel::PieceRole);
+    m_model->setData(index, emptyPieceData, CheckersModel::PieceRole);
 
-    //m_hasMultiCapture = s_model->isCaptureAvailable(m_modelIndexToMove);
-    s_model->setAllPiecesRange();
+    m_model->setAllPiecesRange();
 }
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, double averageY)
 {
-    QModelIndex modelIndexToMove = s_model->getModelIndexFromGivenCoordinates(averageX, averageY);
-    bool hasMultiCapture = s_model->isCaptureAvailable(m_modelIndexToMove);
+    QModelIndex modelIndexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
+    bool hasMultiCapture = m_model->isCaptureAvailable(m_modelIndexToMove);
 
     if(!m_hasMultiCapture) {
         //checkersModelInstance.evaluatePromotionToKing(m_modelIndexToMove)
-        if(s_model->player == CheckersModel::Player::white &&
-            s_model->getPieceType(index) == false &&
+        if(m_model->player == CheckersModel::Player::white &&
+            m_model->getPieceType(index) == false &&
             modelIndexToMove.row() == 0) {
             qDebug() << "promote to king";
-            s_model->setEmptyField(modelIndexToMove);
-            s_model->setPiece(modelIndexToMove, s_model->player, CheckersModel::Type::king);
+            m_model->setEmptyField(modelIndexToMove);
+            m_model->setPiece(modelIndexToMove, m_model->player, CheckersModel::Type::king);
         }
 
-        if(s_model->player == CheckersModel::Player::black &&
-            s_model->getPieceType(index) == false &&
+        if(m_model->player == CheckersModel::Player::black &&
+            m_model->getPieceType(index) == false &&
             modelIndexToMove.row() == 7) {
             qDebug() << "promote to king";
-            s_model->setEmptyField(modelIndexToMove);
-            s_model->setPiece(modelIndexToMove, s_model->player, CheckersModel::Type::king);
+            m_model->setEmptyField(modelIndexToMove);
+            m_model->setPiece(modelIndexToMove, m_model->player, CheckersModel::Type::king);
         }
     }
 }
@@ -95,26 +94,26 @@ void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, 
 void GameController::changePlayer(double averageX, double averageY, bool mustCapture)
 {
     qDebug() << "CHANGE PLAYER: ";
-    qDebug() << "   player: " << s_model->player;
-    QModelIndex indexToMove = s_model->getModelIndexFromGivenCoordinates(averageX, averageY);
+    qDebug() << "   player: " << m_model->player;
+    QModelIndex indexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
     qDebug() << "   indexToMove: " << indexToMove;
-    //bool isCapture = s_model -> mustCapture(s_model->player);
+    //bool isCapture = m_model -> mustCapture(m_model->player);
     qDebug() << "   isCapture: " << mustCapture;
-    bool hasMultiCapture = s_model->isCaptureAvailable(indexToMove);
+    bool hasMultiCapture = m_model->isCaptureAvailable(indexToMove);
     qDebug() << "   hasMultiCapture: " << hasMultiCapture;
 
     if(!hasMultiCapture || !mustCapture) {
-        if(s_model->player == CheckersModel::Player::white) {
-            s_model->player = CheckersModel::Player::black;
+        if(m_model->player == CheckersModel::Player::white) {
+            m_model->player = CheckersModel::Player::black;
         }
         else {
-            s_model->player = CheckersModel::Player::white;
+            m_model->player = CheckersModel::Player::white;
         }
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool GameController::mustCapture(CheckersModel::Player player)
 {
-    return s_model -> mustCapture(player);
+    return m_model -> mustCapture(player);
 }
 //***************************************************************************************************************************************************************************************************************************************

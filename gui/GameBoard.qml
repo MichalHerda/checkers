@@ -2,7 +2,6 @@ import QtQuick 2.15
 import QtQuick.Controls
 import Checkers 1.0
 import checkers.model
-import game.controller
 import "frontEnd.js" as Js
 
 Item {
@@ -36,10 +35,6 @@ Item {
             Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
-    }
-
-    GameController {
-        id: gameController
     }
 
     Grid {
@@ -230,11 +225,12 @@ Item {
                     //***
                     //if( (checkersModelInstance.getPieceColor(modelIndex) === true && checkersModelInstance.player === CheckersModel.Player.white ) ||
                     //    (checkersModelInstance.getPieceColor(modelIndex) === false && checkersModelInstance.player === CheckersModel.Player.black ) ) {
-                    if(gameController.isPlayersOwnPiece(modelIndex)) {
+                    console.log("model index: ", modelIndex)
+                    if(GameController.isPlayersOwnPiece(modelIndex)) {
                         console.log("players own piece")
                         //***
-                        if(gameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
-                            var mustCapture = gameController.mustCapture(checkersModelInstance.player)
+                        if(GameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
+                            var mustCapture = GameController.mustCapture(checkersModelInstance.player)
                             /*
                             //console.log("move valid")
                             var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
@@ -261,7 +257,7 @@ Item {
                             checkersModelInstance.setData(modelIndexToMove, pieceData, CheckersModel.PieceRole)
                             checkersModelInstance.setData(modelIndex, emptyPieceData, CheckersModel.PieceRole)
                             */
-                            gameController.executeMove(modelIndex, newAverageX, newAverageY)
+                            GameController.executeMove(modelIndex, newAverageX, newAverageY)
                             //console.log("field to move after swap: ", checkersModelInstance.data(modelIndexToMove, CheckersModel.PieceRole))
                             //console.log("field to move after swap data color: ", emptyPieceData.player)
                             //console.log("field to move after swap data type: ", emptyPieceData.type)
@@ -283,7 +279,7 @@ Item {
                                 checkersModelInstance.evaluatePromotionToKing(modelIndexToMove)
                             }
                             */
-                            gameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
+                            GameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
                             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
                             /*
                             if(!hasMultiCapture || !isCapture) {
@@ -295,7 +291,7 @@ Item {
                                 }
                             }
                             */
-                            gameController.changePlayer(newAverageX, newAverageY, mustCapture)
+                            GameController.changePlayer(newAverageX, newAverageY, mustCapture)
                         }
                         else {
                             console.log("move not valid")

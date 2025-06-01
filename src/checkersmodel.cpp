@@ -476,37 +476,6 @@ void CheckersModel::removePiece(QModelIndex from, QModelIndex to)
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
-/*
-bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
-{
-    qDebug() << "isMoveValid, index passed: " << index;
-    QVariantList range = data(index, RangeRole).toList();
-    qDebug() << "passed index range: "  << range;
-
-    auto hasCapture = m_model.data(index, CaptureAvailableRole);
-    if(!hasCapture.toBool() && mustCapture(player)) {
-        return false;
-    }
-
-    QPointF pieceCenter(averageX, averageY);
-    QModelIndex targetFieldIndex = CheckersModel::findFieldIndexForPieceCenter(pieceCenter);
-    qDebug() << "piece center is now inside field: " << targetFieldIndex;
-
-    std::pair<char, int> targetCoordinate = data(targetFieldIndex, FieldNameRole).value<std::pair<char, int>>();
-    qDebug() << "target coordinate: " << targetCoordinate;
-    for (const QVariant &item : range) {
-        std::pair<char, int> rangeCoordinate = item.value<std::pair<char, int>>();
-        if (rangeCoordinate == targetCoordinate) {
-            qDebug() << "Pole docelowe znajduje się w zakresie ruchu pionka.";
-            return true;
-        }
-    }
-
-    qDebug() << "Pole docelowe nie znajduje się w zakresie pionka";
-    return false;
-}
-*/
-//***************************************************************************************************************************************************************************************************************************************
 QModelIndex CheckersModel::getModelIndexFromGivenCoordinates(double averageX, double averageY)
 {
     //qDebug() << "getModelIndexFromGivenCoordinates function: ";
@@ -692,30 +661,6 @@ bool CheckersModel::mustCapture(Player player)
         }
     }
     return false;
-}
-//***************************************************************************************************************************************************************************************************************************************
-void CheckersModel::evaluatePromotionToKing(QModelIndex index)
-{
-    //qDebug() << "evaluate promotion to king: ";
-    //qDebug() << "player: " << player;
-    //qDebug() << "getPieceType: " << getPieceType(index);
-    //qDebug() << "row: " << index.row();
-
-    if(player == Player::white &&
-       getPieceType(index) == false &&
-       index.row() == 0) {
-            qDebug() << "promote to king";
-            setEmptyField(index);
-            setPiece(index, player, Type::king);
-    }
-
-    if(player == Player::black &&
-        getPieceType(index) == false &&
-        index.row() == 7) {
-            qDebug() << "promote to king";
-            setEmptyField(index);
-            setPiece(index, player, Type::king);
-    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::showScore()
