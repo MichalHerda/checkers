@@ -101,9 +101,11 @@ void GameController::changePlayer(double averageX, double averageY, bool mustCap
     if(!hasMultiCapture || !mustCapture) {
         if(m_model->player == CheckersModel::Player::white) {
             m_model->player = CheckersModel::Player::black;
+            emit m_model->playerChanged(CheckersModel::Player::black);
         }
         else {
             m_model->player = CheckersModel::Player::white;
+            emit m_model->playerChanged(CheckersModel::Player::white);
         }
     }
 }
