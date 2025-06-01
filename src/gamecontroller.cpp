@@ -48,30 +48,23 @@ bool GameController::isMoveValid(QModelIndex index, double averageX, double aver
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::executeMove(QModelIndex index, double averageX, double averageY)
 {
-    //console.log("move valid")
     m_modelIndexToMove = s_model->getModelIndexFromGivenCoordinates(averageX, averageY);
-    //console.log("model index: ", modelIndex)
-    //console.log("model index to move: ", modelIndexToMove)
-
-    //SWAP FIELDS VALUES:
 
     QVariant emptyPieceData = s_model->data(m_modelIndexToMove, CheckersModel::PieceRole);
-                         //console.log("field to move before swap: ", emptyPieceData)
-                         //console.log("field to move data color: ", emptyPieceData.player)
-                         //console.log("field to move data type: ", emptyPieceData.type)
 
     QVariant pieceData = s_model->data(index, CheckersModel::PieceRole);
-          //console.log("piece data: ", pieceData)
-          //console.log("piece data color: ", pieceData.player)
-          //console.log("piece data type: ", pieceData.type)
 
     bool isCapture = s_model->mustCapture(s_model->player);
+
     if(isCapture) {
         s_model->removePiece(index, m_modelIndexToMove);
     }
 
     s_model->setData(m_modelIndexToMove, pieceData, CheckersModel::PieceRole);
     s_model->setData(index, emptyPieceData, CheckersModel::PieceRole);
+
+    //m_hasMultiCapture = s_model->isCaptureAvailable(m_modelIndexToMove);
+    s_model->setAllPiecesRange();
 }
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, double averageY)
@@ -99,11 +92,18 @@ void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, 
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
-void GameController::changePlayer()
+void GameController::changePlayer(double averageX, double averageY, bool mustCapture)
 {
-    bool isCapture = s_model -> mustCapture(s_model->player);
+    qDebug() << "CHANGE PLAYER: ";
+    qDebug() << "   player: " << s_model->player;
+    QModelIndex indexToMove = s_model->getModelIndexFromGivenCoordinates(averageX, averageY);
+    qDebug() << "   indexToMove: " << indexToMove;
+    //bool isCapture = s_model -> mustCapture(s_model->player);
+    qDebug() << "   isCapture: " << mustCapture;
+    bool hasMultiCapture = s_model->isCaptureAvailable(indexToMove);
+    qDebug() << "   hasMultiCapture: " << hasMultiCapture;
 
-    if(!m_hasMultiCapture || !isCapture) {
+    if(!hasMultiCapture || !mustCapture) {
         if(s_model->player == CheckersModel::Player::white) {
             s_model->player = CheckersModel::Player::black;
         }
@@ -111,5 +111,10 @@ void GameController::changePlayer()
             s_model->player = CheckersModel::Player::white;
         }
     }
+}
+//***************************************************************************************************************************************************************************************************************************************
+bool GameController::mustCapture(CheckersModel::Player player)
+{
+    return s_model -> mustCapture(player);
 }
 //***************************************************************************************************************************************************************************************************************************************

@@ -234,6 +234,7 @@ Item {
                         console.log("players own piece")
                         //***
                         if(gameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
+                            var mustCapture = gameController.mustCapture(checkersModelInstance.player)
                             /*
                             //console.log("move valid")
                             var modelIndexToMove = checkersModelInstance.getModelIndexFromGivenCoordinates(newAverageX, newAverageY)
@@ -294,7 +295,7 @@ Item {
                                 }
                             }
                             */
-                            gameController.changePlayer()
+                            gameController.changePlayer(newAverageX, newAverageY, mustCapture)
                         }
                         else {
                             console.log("move not valid")

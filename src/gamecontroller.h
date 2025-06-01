@@ -17,7 +17,8 @@ public:
     Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE void executeMove(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index, double averageX, double averageY);
-    Q_INVOKABLE void changePlayer();
+    Q_INVOKABLE void changePlayer(double averageX, double averageY, bool mustCapture);
+    Q_INVOKABLE bool mustCapture(CheckersModel::Player player);
 
 signals:
 
