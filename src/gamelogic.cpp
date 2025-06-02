@@ -28,3 +28,9 @@ bool GameLogic::mustCapture(CheckersModel::Player player)
     return false;
 }
 //***************************************************************************************************************************************************************************************************************************************
+bool GameLogic::isOpponentAt(const QModelIndex &index, CheckersModel::Player playerForCheck)
+{
+    return ( (playerForCheck == CheckersModel::Player::white)  &&  (!m_model->getPieceColor(index)) ) ||
+           ( (playerForCheck == CheckersModel::Player::black)  &&  ( m_model->getPieceColor(index)) );
+}
+//***************************************************************************************************************************************************************************************************************************************

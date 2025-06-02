@@ -24,7 +24,7 @@ bool GameController::isMoveValid(QModelIndex index, double averageX, double aver
     qDebug() << "passed index range: "  << range;
 
     auto hasCapture = m_model -> data(index, CheckersModel::CaptureAvailableRole);
-    if(!hasCapture.toBool() && m_model->mustCapture(m_model->player)) {
+    if(!hasCapture.toBool() && mustCapture(m_model->player)) {
         return false;
     }
 
@@ -54,7 +54,7 @@ void GameController::executeMove(QModelIndex index, double averageX, double aver
 
     QVariant pieceData = m_model->data(index, CheckersModel::PieceRole);
 
-    bool isCapture = m_model->mustCapture(m_model->player);
+    bool isCapture = mustCapture(m_model->player);
 
     if(isCapture) {
         m_model->removePiece(index, m_modelIndexToMove);

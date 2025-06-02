@@ -30,6 +30,7 @@ public:
     explicit GameLogic(CheckersModel* model, int rows, int columns);
 
     bool mustCapture(CheckersModel::Player player);
+    bool isOpponentAt(const QModelIndex &index, CheckersModel::Player playerForCheck);
 
 signals:
 
