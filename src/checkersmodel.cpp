@@ -17,7 +17,6 @@ bool CheckersModel::isPiecePresent(const QModelIndex &index)
 
     //qDebug() << "isPiecePresent function, player:" << player;
 
-    //return player != CheckersModel::Type::null;
     return type != CheckersModel::Type::null;
 }
 //***************************************************************************************************************************************************************************************************************************************
@@ -40,7 +39,6 @@ bool CheckersModel::getPieceColor(const QModelIndex &index)                     
 bool CheckersModel::getPieceType(const QModelIndex &index)                                      //return true: type == king
 {                                                                                               //      false: type == man
     auto pieceRole = data(index, PieceRole);
-    //auto piecePair = pieceRole.value<std::pair<CheckersModel::Player, CheckersModel::Type>>();
     auto piece = pieceRole.value<Piece>();
 
     CheckersModel::Type type = piece.type;
@@ -476,35 +474,6 @@ void CheckersModel::removePiece(QModelIndex from, QModelIndex to)
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
-bool CheckersModel::isMoveValid(QModelIndex index, double averageX, double averageY)
-{
-    qDebug() << "isMoveValid, index passed: " << index;
-    QVariantList range = data(index, RangeRole).toList();
-    qDebug() << "passed index range: "  << range;
-
-    auto hasCapture = m_model.data(index, CaptureAvailableRole);
-    if(!hasCapture.toBool() && mustCapture(player)) {
-        return false;
-    }
-
-    QPointF pieceCenter(averageX, averageY);
-    QModelIndex targetFieldIndex = CheckersModel::findFieldIndexForPieceCenter(pieceCenter);
-    qDebug() << "piece center is now inside field: " << targetFieldIndex;
-
-    std::pair<char, int> targetCoordinate = data(targetFieldIndex, FieldNameRole).value<std::pair<char, int>>();
-    qDebug() << "target coordinate: " << targetCoordinate;
-    for (const QVariant &item : range) {
-        std::pair<char, int> rangeCoordinate = item.value<std::pair<char, int>>();
-        if (rangeCoordinate == targetCoordinate) {
-            qDebug() << "Pole docelowe znajduje się w zakresie ruchu pionka.";
-            return true;
-        }
-    }
-
-    qDebug() << "Pole docelowe nie znajduje się w zakresie pionka";
-    return false;
-}
-//***************************************************************************************************************************************************************************************************************************************
 QModelIndex CheckersModel::getModelIndexFromGivenCoordinates(double averageX, double averageY)
 {
     //qDebug() << "getModelIndexFromGivenCoordinates function: ";
@@ -577,12 +546,6 @@ void CheckersModel::initializePieces()
                 m_blackScore++;
             }
             else {
-                //Player player = Player::null;
-                //Type type = Type::null;
-                //Piece piece;
-                //piece.player = Player::null;
-                //piece.type = Type::null;
-                //setData(index, QVariant::fromValue(piece), PieceRole);
                 CheckersModel::setEmptyField(index);
                 m_whiteScore++;
             }
@@ -613,11 +576,6 @@ void CheckersModel::initializePieces()
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::setPiece(QModelIndex index, Player player, Type type)
 {
-    //Player playerToSet = player;
-    //Type typeToSet = type;
-
-    //QPair<Player, Type> piece(playerToSet, typeToSet);
-
     Piece piece;
     piece.player = player;
     piece.type = type;
@@ -642,8 +600,6 @@ void CheckersModel::setAllPiecesRange()
     for(int row = 0; row < m_rows; row++) {
         for(int col = 0; col < m_columns; col++) {
             QModelIndex index = m_model.index(row, col);
-            //int rowNo = index.row();
-            //int colNo = index.column();
             //qDebug() << "setAllPiecesRange. index: " << index << "row: " << rowNo << "column: "<< colNo;
 
             if(isPiecePresent(index)) {
@@ -690,30 +646,6 @@ bool CheckersModel::mustCapture(Player player)
         }
     }
     return false;
-}
-//***************************************************************************************************************************************************************************************************************************************
-void CheckersModel::evaluatePromotionToKing(QModelIndex index)
-{
-    //qDebug() << "evaluate promotion to king: ";
-    //qDebug() << "player: " << player;
-    //qDebug() << "getPieceType: " << getPieceType(index);
-    //qDebug() << "row: " << index.row();
-
-    if(player == Player::white &&
-       getPieceType(index) == false &&
-       index.row() == 0) {
-            qDebug() << "promote to king";
-            setEmptyField(index);
-            setPiece(index, player, Type::king);
-    }
-
-    if(player == Player::black &&
-        getPieceType(index) == false &&
-        index.row() == 7) {
-            qDebug() << "promote to king";
-            setEmptyField(index);
-            setPiece(index, player, Type::king);
-    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::showScore()
@@ -777,7 +709,6 @@ void CheckersModel::setFieldCenterRole()
                 QModelIndex index = getIndex(row, column);
                 QVariant isPlayable = data(index, IsPlayableRole);
                 if(!isPlayable.toBool() ) {
-                    //QPointF fieldCenter = {-1, -1};
                     setData(index, QVariant::fromValue(QPointF(-1, -1)), FieldCenterRole);
                 }
                 else {
@@ -895,7 +826,6 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
                         captureMoves.push_back(movePair);
                     }
                 }
-                //else break;
 
                 r += dr[dir];
                 c += dc[dir];

@@ -25,6 +25,8 @@ class CheckersModel : public QStandardItemModel
 {
     Q_OBJECT
 
+    friend class GameController;
+
 public:
     enum CheckersRoles {
         FieldNameRole = Qt::UserRole + 1,
@@ -81,15 +83,12 @@ public:
     Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
     Q_INVOKABLE void removePiece(QModelIndex from, QModelIndex to);
 
-    Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
     Q_INVOKABLE void setAllPiecesRange();
 
     Q_INVOKABLE bool mustCapture(Player player);
     Q_INVOKABLE bool isCaptureAvailable(const QModelIndex &index);
-
-    Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index);
 
     Q_INVOKABLE void showScore();
 
@@ -104,6 +103,8 @@ public:
 
     void gameOnWrite(bool gameOn);
     void playerWrite(CheckersModel::Player _player);
+
+    QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
 
 signals:
     void gameOnChanged(bool _gameOn);
@@ -131,8 +132,6 @@ private:
     void setFieldsCoordinatesRole();
     void setFieldCenterRole();
     void setPiecesCoordinatesRole();
-
-    QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
 
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);

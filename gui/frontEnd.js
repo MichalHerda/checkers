@@ -199,3 +199,23 @@ function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme,
         }
     }
 }
+
+function calculatePieceCenterX(pieceRep,  pieceWidth, index) {
+    var newCooLeftUpX = pieceRep.itemAt(index).x
+    var newCooRightUpX = pieceRep.itemAt(index).x + pieceWidth
+    var newCooLeftBottomX = pieceRep.itemAt(index).x
+    var newCooRightBottomX = pieceRep.itemAt(index).x + pieceWidth
+
+    var newAverageX = ( newCooLeftUpX + newCooRightUpX + newCooLeftBottomX + newCooRightBottomX ) / 4
+    return newAverageX
+}
+
+function calcultaePieceCenterY(pieceRep, pieceHeight, index) {
+    var newCooLeftUpY = pieceRep.itemAt(index).y
+    var newCooRightUpY = pieceRep.itemAt(index).y
+    var newCooLeftBottomY = pieceRep.itemAt(index).y + pieceHeight
+    var newCooRightBottomY = pieceRep.itemAt(index).y
+
+    var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
+    return newAverageY
+}

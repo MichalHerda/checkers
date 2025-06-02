@@ -4,12 +4,17 @@
 #include "checkersmodel.h"
 #include "gamesettingsmanager.h"
 #include "computerplayer.h"
+#include "gamecontroller.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     CheckersModel checkersModelInstance;
+    GameController gameController(&checkersModelInstance);
+
+    qmlRegisterSingletonInstance("Checkers", 1, 0, "GameController", &gameController);
+
     GameSettingsManager gameSettingsManager;
     ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
 
