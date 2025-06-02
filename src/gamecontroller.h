@@ -2,7 +2,9 @@
 #define GAMECONTROLLER_H
 
 #include <QObject>
+#include <memory>
 #include "checkersmodel.h"
+#include "gamelogic.h"
 
 class GameController : public QObject
 {
@@ -22,6 +24,7 @@ signals:
 
 private:
     CheckersModel* m_model;
+    std::unique_ptr<GameLogic> m_logic;
     QModelIndex m_modelIndexToMove;
     bool m_hasMultiCapture = false;
 };
