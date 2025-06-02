@@ -3,7 +3,7 @@
 GameController::GameController(CheckersModel* model, QObject *parent)
     : QObject{parent}, m_model(model)
 {
-    m_logic = std::make_unique<GameLogic>(model->getRowsNo(), model->getColumnsNo());
+    m_logic = std::make_unique<GameLogic>(model, model->getRowsNo(), model->getColumnsNo());
 }
 //***************************************************************************************************************************************************************************************************************************************
 GameController::GameController(QObject *parent)
@@ -114,6 +114,12 @@ void GameController::changePlayer(double averageX, double averageY, bool mustCap
 //***************************************************************************************************************************************************************************************************************************************
 bool GameController::mustCapture(CheckersModel::Player player)
 {
-    return m_model -> mustCapture(player);
+    if(m_logic) {
+        return m_logic -> mustCapture(player);
+    }
+    else {
+        qDebug() << "m_logic is nullptr!";
+        return false;
+    }
 }
 //***************************************************************************************************************************************************************************************************************************************
