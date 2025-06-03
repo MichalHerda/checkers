@@ -105,6 +105,8 @@ public:
     void playerWrite(CheckersModel::Player _player);
 
     QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
+    Player getPlayerForCheck(const QModelIndex &index);
+    bool isInsideBoard(int row, int col);
 
 signals:
     void gameOnChanged(bool _gameOn);
@@ -141,10 +143,8 @@ private:
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
 
-    bool isInsideBoard(int row, int col);
     bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
     bool isOpponentAt(const QModelIndex &index, Player playerForCheck);
-    Player getPlayerForCheck(const QModelIndex &index);
 };
 
 struct Piece {
