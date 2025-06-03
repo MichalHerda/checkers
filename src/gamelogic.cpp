@@ -322,5 +322,38 @@ void GameLogic::reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QP
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
+void GameLogic::setAllPiecesRange()
+{
+    for(int row = 0; row < m_rows; row++) {
+        for(int col = 0; col < m_columns; col++) {
+            QModelIndex index = m_model->index(row, col);
+            //qDebug() << "setAllPiecesRange. index: " << index << "row: " << rowNo << "column: "<< colNo;
 
+            if(m_model->isPiecePresent(index)) {
+                bool isWhite = m_model->getPieceColor(index);
+                bool isKing = m_model->getPieceType(index);
+
+                QList <QPair <char, int> > possibleMoves;
+
+                if(isKing) {
+                    possibleMoves = getKingMoves(index, isWhite);
+                }
+                else {
+                    possibleMoves = getManMoves(index, isWhite);
+                }
+
+                m_model->setData(index, QVariant::fromValue(possibleMoves), CheckersModel::RangeRole);
+                // set captureAvailableRole :
+                bool captureAvailable = isCaptureAvailable(index);
+                m_model->setData(index, QVariant::fromValue(captureAvailable), CheckersModel::CaptureAvailableRole);
+            }
+            else {
+                //qDebug() << "no piece";
+                m_model->setData(index, QVariantList(), CheckersModel::RangeRole);
+                m_model->setData(index, QVariant::fromValue(false), CheckersModel::CaptureAvailableRole);
+                m_model->setData(index, QVariant::fromValue(false), CheckersModel::MultiCaptureRole);
+            }
+        }
+    }
+}
 //***************************************************************************************************************************************************************************************************************************************
