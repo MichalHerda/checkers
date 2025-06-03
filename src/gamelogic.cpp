@@ -128,3 +128,199 @@ bool GameLogic::isOpponentAt(const QModelIndex &index, CheckersModel::Player pla
            ( (playerForCheck == CheckersModel::Player::black)  &&  ( m_model->getPieceColor(index)) );
 }
 //***************************************************************************************************************************************************************************************************************************************
+QList <QPair <char, int> > GameLogic::getManMoves(const QModelIndex &index, bool isWhite)
+{
+    QList <QPair <char, int> > possibleMoves {};
+    auto isCaptureAvailable = m_model->data(index, CheckersModel::CaptureAvailableRole);
+
+    int rowNo = index.row();
+    int colNo = index.column();
+    int direction = isWhite ? -1 : 1;
+    int captureDirection = (isWhite ? -2 : 2);
+
+    if (isCaptureAvailable == false) {
+        // Normalny ruch do przodu
+        QList<QPoint> moveOffsets = { {direction, -1}, {direction, 1} };
+
+        for (const QPoint& offset : moveOffsets) {
+            int newRow = rowNo + offset.x();
+            int newCol = colNo + offset.y();
+            if (m_model->isInsideBoard(newRow, newCol)) {
+                QModelIndex checkIndex = m_model->getIndex(newRow, newCol);
+                if (!m_model->isPiecePresent(checkIndex)) {
+                    QVariant move = m_model->data(checkIndex, CheckersModel::FieldNameRole);
+                    possibleMoves.push_back(move.value<QPair<char, int>>());
+                }
+            }
+        }
+    }
+    else {
+        // Bicie w 4 kierunkach
+        QList<QPoint> captureOffsets = { {captureDirection, -2}, {captureDirection, 2},
+                                        {-captureDirection, -2}, {-captureDirection, 2} };
+
+        for (const QPoint& offset : captureOffsets) {
+            int newRow = rowNo + offset.x();
+            int newCol = colNo + offset.y();
+            int middleRow = rowNo + offset.x() / 2;
+            int middleCol = colNo + offset.y() / 2;
+
+            if (m_model->isInsideBoard(newRow, newCol) && m_model->isInsideBoard(middleRow, middleCol)) {
+                QModelIndex targetIndex = m_model->getIndex(newRow, newCol);
+                QModelIndex middleIndex = m_model->getIndex(middleRow, middleCol);
+
+                if (!m_model->isPiecePresent(targetIndex)) { // cel musi być pusty
+                    if (m_model->isPiecePresent(middleIndex)) { // na środku musi być pionek
+                        bool middleIsWhite = m_model->getPieceColor(middleIndex);
+                        if (middleIsWhite != isWhite) { // i przeciwnika
+                            QVariant move = m_model->data(targetIndex, CheckersModel::FieldNameRole);
+                            possibleMoves.push_back(move.value<QPair<char, int>>());
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return possibleMoves;
+}
+//***************************************************************************************************************************************************************************************************************************************
+QList <QPair <char, int> > GameLogic::getKingMoves(const QModelIndex &index, bool isWhite)
+{
+    //qDebug() << "getKingMoves function: ";
+    QList <QPair <char, int> > possibleMoves {};
+    QList <QPair <char, int> > captureMoves {};
+
+    int rowNo = index.row();
+    int colNo = index.column();
+    bool captureAvailable = isCaptureAvailable(index);
+    CheckersModel::Player playerForCheck = m_model->getPlayerForCheck(index);
+
+    const int dr[] = {-1, -1, 1, 1}; // góra-lewo, góra-prawo, dół-lewo, dół-prawo
+    const int dc[] = {-1, 1, -1, 1};
+
+    for (int dir = 0; dir < 4; ++dir) {
+        int r = rowNo + dr[dir];
+        int c = colNo + dc[dir];
+        bool foundOpponent = false;
+
+        while (m_model->isInsideBoard(r, c)) {
+            QModelIndex currentIndex = m_model->getIndex(r, c);
+
+            if (!m_model->isPiecePresent(currentIndex)) {
+                //qDebug() << "   piece not present at " << currentIndex;
+                if (!foundOpponent) {
+                    if(!captureAvailable) {
+                        //qDebug() << "       opponent not found, capture not available, add: " << currentIndex;
+                        QVariant move = m_model->data(currentIndex, CheckersModel::FieldNameRole);
+                        possibleMoves.push_back(move.value <QPair <char, int> > ());
+                    }
+                    else {
+                        //qDebug() << "       opponent not found, capture available, no moves to add";
+                    }
+                }
+                else {
+                    if(!captureAvailable) {
+                        //qDebug() << "       opponent found at " << currentIndex << ", capture available, no moves to add";
+                    }
+                    else {
+                        //qDebug() << "       opponent found, capture available, add: " << currentIndex;
+                        QVariant move = m_model->data(currentIndex, CheckersModel::FieldNameRole);
+                        QPair <char, int> movePair = move.value <QPair <char, int> > ();
+                        captureMoves.push_back(movePair);
+                    }
+                }
+
+                r += dr[dir];
+                c += dc[dir];
+
+            }
+            else {
+                //qDebug() << "   piece present at " << currentIndex;
+                if (isOpponentAt(currentIndex, playerForCheck) && !foundOpponent) {
+                    //qDebug() << "       opponent found at: " << currentIndex;
+                    foundOpponent = true;
+                    r += dr[dir];
+                    c += dc[dir];
+                }
+                else {
+                    //qDebug() << "       your soldier or opponent at " << currentIndex << ", go to next iteration";
+                    break;
+                }
+            }
+        }
+    }
+    if(!captureAvailable) {
+        return possibleMoves;
+    }
+    else {
+        if(captureMoves.length() > 1) {
+            reduceToBestKingCaptures(index, captureMoves);
+        }
+        return captureMoves;
+    }
+}
+//***************************************************************************************************************************************************************************************************************************************
+void GameLogic::reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QPair<char, int> > &captureMoves)
+{
+    QList<QPair<char, int>> bestMoves;
+    int maxCaptureLength = 0;
+    int currentCaptureLength = 1;
+    QList<QModelIndex> indexesToCheck = QList<QModelIndex>();
+    QList<QModelIndex> pathMoves = QList<QModelIndex>();
+    QList<QModelIndex> checkedMoves = QList<QModelIndex>();
+
+    for (const auto &move : captureMoves) {
+        QPair<char, int> current = move;
+        QModelIndex idx = m_model->indexFromPair(current);
+        indexesToCheck.append(idx);
+    }
+
+    for(int idx = 0; idx < indexesToCheck.length(); idx++) {
+        currentCaptureLength = 1;
+        QModelIndex move = indexesToCheck.at(idx);
+        QVariant currentField = m_model->data(move, CheckersModel::FieldNameRole);
+        QPair<char, int> currentFieldPairValue = currentField.value<QPair<char, int>>();
+        bool canContinueCapture = false;
+
+        int row = move.row();
+        int col = move.column();
+        canContinueCapture = m_model->canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
+
+        if(!canContinueCapture) {
+            qDebug() << "nie ma możliwości dalszego bicia";
+            continue;
+        }
+        else {
+            qDebug() << "sprawdzam dalszą ścieżkę bicia";
+            int i = 0;
+            //for(int i = 0; i < pathMoves.length(); i++) {
+            while(i < pathMoves.length()) {
+                int row = pathMoves.at(i).row();
+                int col = pathMoves.at(i).column();
+                canContinueCapture = m_model->canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
+                if(!canContinueCapture) {
+                    checkedMoves.append(pathMoves.at(i));
+                    pathMoves.removeAt(i);
+                }
+                else {
+                    checkedMoves.append(pathMoves.at(i));
+                    currentCaptureLength++;
+                    i++;
+                }
+            }
+        }
+
+        if(currentCaptureLength > maxCaptureLength) {
+            bestMoves.clear();
+            bestMoves.append(currentFieldPairValue);
+        }
+
+        if(currentCaptureLength == maxCaptureLength) {
+            bestMoves.append(currentFieldPairValue);
+        }
+        captureMoves = bestMoves;
+    }
+}
+//***************************************************************************************************************************************************************************************************************************************
+
+//***************************************************************************************************************************************************************************************************************************************

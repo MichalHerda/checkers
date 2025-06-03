@@ -106,7 +106,10 @@ public:
 
     QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
     Player getPlayerForCheck(const QModelIndex &index);
+
     bool isInsideBoard(int row, int col);
+    QModelIndex indexFromPair(const QPair<char, int> &pos) const;
+    bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
 
 signals:
     void gameOnChanged(bool _gameOn);
@@ -138,12 +141,10 @@ private:
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
     void reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QPair<char, int>> &captureMoves);
-    QModelIndex indexFromPair(const QPair<char, int> &pos) const;
 
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
 
-    bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
     bool isOpponentAt(const QModelIndex &index, Player playerForCheck);
 };
 

@@ -40,6 +40,10 @@ private:
     int m_columns;
 
     CheckersModel* m_model;
+
+    QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
+    QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
+    void reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QPair<char, int>> &captureMoves);
 };
 
 #endif // GAMELOGIC_H
