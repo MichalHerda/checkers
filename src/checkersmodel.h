@@ -110,6 +110,7 @@ public:
     bool isInsideBoard(int row, int col);
     QModelIndex indexFromPair(const QPair<char, int> &pos) const;
     bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
+    void initializePieces();
 
 signals:
     void gameOnChanged(bool _gameOn);
@@ -130,7 +131,6 @@ private:
     void setRows(int row);
     void setPieceRows(int row);                                             // set custom rows number for piece (on game start)
 
-    void initializePieces();
     void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
     void setEmptyField(QModelIndex index);                                  // <---as in the function name
 

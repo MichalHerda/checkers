@@ -33,6 +33,9 @@ public:
     bool isCaptureAvailable(const QModelIndex &index);
     bool isOpponentAt(const QModelIndex &index, CheckersModel::Player playerForCheck);
     void setAllPiecesRange();
+    void resetModel();
+    void initializePieces();
+    void deselectAllFields();
 
 signals:
 
