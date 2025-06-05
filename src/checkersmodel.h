@@ -65,6 +65,8 @@ public:
     Q_INVOKABLE int getColumnsNo();
     Q_INVOKABLE int getRowsNo();
 
+    int getPieceRows();
+
     Q_INVOKABLE void resetModel();
     Q_INVOKABLE void printModel();
 
@@ -112,6 +114,9 @@ public:
     bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
     void initializePieces();
 
+    void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
+    void setEmptyField(QModelIndex index);                                  // <---as in the function name
+
 signals:
     void gameOnChanged(bool _gameOn);
     void playerChanged(CheckersModel::Player _player);
@@ -130,9 +135,6 @@ private:
     void setColumns(int col);                                               // set custom board size
     void setRows(int row);
     void setPieceRows(int row);                                             // set custom rows number for piece (on game start)
-
-    void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
-    void setEmptyField(QModelIndex index);                                  // <---as in the function name
 
     void setFieldsCoordinatesRole();
     void setFieldCenterRole();
