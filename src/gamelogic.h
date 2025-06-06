@@ -48,6 +48,7 @@ private:
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
     void reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QPair<char, int>> &captureMoves);
+    bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
 };
 
 #endif // GAMELOGIC_H

@@ -322,6 +322,48 @@ void GameLogic::reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QP
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
+bool GameLogic::canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves)
+{
+    const int dr[] = {-1, -1, 1, 1};
+    const int dc[] = {-1, 1, -1, 1};
+
+    CheckersModel::Player playerForCheck = m_model->getPlayerForCheck(initialKingIdx);
+
+    for (int dir = 0; dir < 4; ++dir) {
+        int r = row + dr[dir];
+        int c = col + dc[dir];
+        bool foundOpponent = false;
+
+        while (m_model->isInsideBoard(r, c)) {
+            QModelIndex currentIndex = m_model->getIndex(r, c);
+
+            if (checkedMoves.contains(currentIndex)) {
+                return false;
+            }
+
+            if (!m_model->isPiecePresent(currentIndex)) {
+                if (foundOpponent) {
+                    pathMoves.append(currentIndex);
+                    //return true;
+                }
+                r += dr[dir];
+                c += dc[dir];
+            }
+            else {
+                if (isOpponentAt(currentIndex, playerForCheck) && !foundOpponent) {
+                    foundOpponent = true;
+                    r += dr[dir];
+                    c += dc[dir];
+                }
+                else {
+                    break;
+                }
+            }
+        }
+    }
+    return !pathMoves.isEmpty();
+}
+//***************************************************************************************************************************************************************************************************************************************
 void GameLogic::setAllPiecesRange()
 {
     for(int row = 0; row < m_rows; row++) {
