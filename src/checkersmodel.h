@@ -65,6 +65,8 @@ public:
     Q_INVOKABLE int getColumnsNo();
     Q_INVOKABLE int getRowsNo();
 
+    int getPieceRows();
+
     Q_INVOKABLE void resetModel();
     Q_INVOKABLE void printModel();
 
@@ -87,7 +89,7 @@ public:
 
     Q_INVOKABLE void setAllPiecesRange();
 
-    Q_INVOKABLE bool mustCapture(Player player);
+    //Q_INVOKABLE bool mustCapture(Player player);
     Q_INVOKABLE bool isCaptureAvailable(const QModelIndex &index);
 
     Q_INVOKABLE void showScore();
@@ -105,6 +107,15 @@ public:
     void playerWrite(CheckersModel::Player _player);
 
     QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
+    Player getPlayerForCheck(const QModelIndex &index);
+
+    bool isInsideBoard(int row, int col);
+    QModelIndex indexFromPair(const QPair<char, int> &pos) const;
+    bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
+    void initializePieces();
+
+    void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
+    void setEmptyField(QModelIndex index);                                  // <---as in the function name
 
 signals:
     void gameOnChanged(bool _gameOn);
@@ -125,10 +136,6 @@ private:
     void setRows(int row);
     void setPieceRows(int row);                                             // set custom rows number for piece (on game start)
 
-    void initializePieces();
-    void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
-    void setEmptyField(QModelIndex index);                                  // <---as in the function name
-
     void setFieldsCoordinatesRole();
     void setFieldCenterRole();
     void setPiecesCoordinatesRole();
@@ -136,15 +143,11 @@ private:
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
     void reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QPair<char, int>> &captureMoves);
-    QModelIndex indexFromPair(const QPair<char, int> &pos) const;
 
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
 
-    bool isInsideBoard(int row, int col);
-    bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
     bool isOpponentAt(const QModelIndex &index, Player playerForCheck);
-    Player getPlayerForCheck(const QModelIndex &index);
 };
 
 struct Piece {

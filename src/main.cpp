@@ -19,6 +19,9 @@ int main(int argc, char *argv[])
     ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
 
     checkersModelInstance.resetModel();
+    //GameController gameController(&checkersModelInstance);
+
+    //qmlRegisterSingletonInstance("Checkers", 1, 0, "GameController", &gameController);
 
     qRegisterMetaType<CornersCoordinates>("CheckersModel::CornersCoordinates");
     qRegisterMetaType<Piece>("Piece");

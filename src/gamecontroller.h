@@ -2,7 +2,9 @@
 #define GAMECONTROLLER_H
 
 #include <QObject>
+#include <memory>
 #include "checkersmodel.h"
+#include "gamelogic.h"
 
 class GameController : public QObject
 {
@@ -17,11 +19,14 @@ public:
     Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE void changePlayer(double averageX, double averageY, bool mustCapture);
     Q_INVOKABLE bool mustCapture(CheckersModel::Player player);
+    Q_INVOKABLE void updateAllPiecesRange();
+    Q_INVOKABLE void resetModel();
 
 signals:
 
 private:
     CheckersModel* m_model;
+    std::unique_ptr<GameLogic> m_logic;
     QModelIndex m_modelIndexToMove;
     bool m_hasMultiCapture = false;
 };

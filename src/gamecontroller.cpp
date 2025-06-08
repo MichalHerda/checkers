@@ -2,7 +2,9 @@
 //***************************************************************************************************************************************************************************************************************************************
 GameController::GameController(CheckersModel* model, QObject *parent)
     : QObject{parent}, m_model(model)
-{}
+{
+    m_logic = std::make_unique<GameLogic>(model, model->getRowsNo(), model->getColumnsNo());
+}
 //***************************************************************************************************************************************************************************************************************************************
 GameController::GameController(QObject *parent)
 {
@@ -22,7 +24,7 @@ bool GameController::isMoveValid(QModelIndex index, double averageX, double aver
     qDebug() << "passed index range: "  << range;
 
     auto hasCapture = m_model -> data(index, CheckersModel::CaptureAvailableRole);
-    if(!hasCapture.toBool() && m_model->mustCapture(m_model->player)) {
+    if(!hasCapture.toBool() && mustCapture(m_model->player)) {
         return false;
     }
 
@@ -52,7 +54,7 @@ void GameController::executeMove(QModelIndex index, double averageX, double aver
 
     QVariant pieceData = m_model->data(index, CheckersModel::PieceRole);
 
-    bool isCapture = m_model->mustCapture(m_model->player);
+    bool isCapture = mustCapture(m_model->player);
 
     if(isCapture) {
         m_model->removePiece(index, m_modelIndexToMove);
@@ -112,6 +114,22 @@ void GameController::changePlayer(double averageX, double averageY, bool mustCap
 //***************************************************************************************************************************************************************************************************************************************
 bool GameController::mustCapture(CheckersModel::Player player)
 {
-    return m_model -> mustCapture(player);
+    if(m_logic) {
+        return m_logic -> mustCapture(player);
+    }
+    else {
+        qDebug() << "m_logic is nullptr!";
+        return false;
+    }
+}
+//***************************************************************************************************************************************************************************************************************************************
+void GameController::updateAllPiecesRange()
+{
+    m_logic->setAllPiecesRange();
+}
+//***************************************************************************************************************************************************************************************************************************************
+void GameController::resetModel()
+{
+    m_logic->resetModel();
 }
 //***************************************************************************************************************************************************************************************************************************************
