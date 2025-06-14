@@ -635,26 +635,6 @@ void CheckersModel::setAllPiecesRange()
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
-/*
-bool CheckersModel::mustCapture(Player player)
-{
-    for(int row = 0, arrayIdx = 0; row < m_rows; row++) {
-        for(int column = 0; column < m_columns; column++) {
-            QModelIndex index = getIndex(row, column);
-            bool isWhite = getPieceColor(index);
-            bool isCurrentPlayer = (player == Player::white && isWhite) || (player == Player::black && !isWhite);
-            if(isCurrentPlayer) {
-                bool captureAvailable = isCaptureAvailable(index);
-                if(captureAvailable) {
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-*/
-//***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::showScore()
 {
     qDebug() << "white score: " << m_whiteScore;

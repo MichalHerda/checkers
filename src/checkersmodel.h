@@ -88,8 +88,6 @@ public:
     Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
     Q_INVOKABLE void setAllPiecesRange();
-
-    //Q_INVOKABLE bool mustCapture(Player player);
     Q_INVOKABLE bool isCaptureAvailable(const QModelIndex &index);
 
     Q_INVOKABLE void showScore();

@@ -434,7 +434,7 @@ void GameLogic::resetModel()
     }
     m_model->CheckersModel::deselectAllFields();
     // place the pieces on the board
-    m_model->CheckersModel::initializePieces();
+    initializePieces();
     // set all pieces range:
     setAllPiecesRange();
 }
