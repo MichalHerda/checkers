@@ -194,6 +194,11 @@ QVariant CheckersModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 //***************************************************************************************************************************************************************************************************************************************
+void CheckersModel::setItem(int row, int col, QStandardItem *item)
+{
+    m_model.setItem(row, col, item);
+}
+//***************************************************************************************************************************************************************************************************************************************
 QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent) const
 {
     if(!m_model.hasIndex(row, column)) {
@@ -203,6 +208,7 @@ QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent)
     else {
         //qDebug() << "index is valid";
         return CheckersModel::createIndex(row, column);
+        //return m_model.index(row, column, parent);
     }
 }
 //***************************************************************************************************************************************************************************************************************************************

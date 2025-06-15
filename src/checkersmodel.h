@@ -71,6 +71,7 @@ public:
 
     Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     Q_INVOKABLE QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    void setItem(int row, int col, QStandardItem* item);
     Q_INVOKABLE QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     Q_INVOKABLE QModelIndex getIndex(int row, int column);
     Q_INVOKABLE void setTurn();

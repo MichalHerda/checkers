@@ -32,7 +32,7 @@ bool GameLogic::isCaptureAvailable(const QModelIndex &index)
 {
     qDebug() << "gameLogic isCaptureAvailable";
     if (!m_model->isPiecePresent(index)) {
-        //qDebug() << "isCaptureAvailable function. Piece not present";
+        qDebug() << "isCaptureAvailable function. Piece not present";
         return false;
     }
 
@@ -407,6 +407,8 @@ void GameLogic::resetModel()
     m_model->setRowCount(rowsNo);
     m_model->setColumnCount(columnsNo);
 
+    qDebug() << "reset model, rowsNo: " << rowsNo << ", columnsNo: " << columnsNo;
+
     //m_whiteScore = 0;
     //m_blackScore = 0;
 
@@ -415,14 +417,14 @@ void GameLogic::resetModel()
         for(int col = 0 ; col < columnsNo; col++) {
             char column = 'A' + col;
 
-            //qDebug() << "column: " << column << "row: " << row + 1 << "rowCoo: " << rowCoo;
+            qDebug() << "column: " << column << "row: " << row + 1 << "rowCoo: " << rowCoo;
 
             QStandardItem* item = new QStandardItem();
-            //qDebug()<<"item: " << item;
+            qDebug()<<"item: " << item;
             m_model->setItem(row, col, item);
 
             QModelIndex index = m_model->index(row, col);
-            //qDebug() << "index got: " << index;
+            qDebug() << "index got: " << index;
             QPair<char, int> coordinates(column, rowCoo);
             bool playable = (col + row) % 2 != 0;
 
