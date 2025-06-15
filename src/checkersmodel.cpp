@@ -207,8 +207,8 @@ QModelIndex CheckersModel::index(int row, int column, const QModelIndex &parent)
     }
     else {
         //qDebug() << "index is valid";
-        return CheckersModel::createIndex(row, column);
-        //return m_model.index(row, column, parent);
+        //return CheckersModel::createIndex(row, column);
+        return m_model.index(row, column, parent);
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
@@ -566,43 +566,6 @@ void CheckersModel::setEmptyField(QModelIndex index)
     setData(index, QVariant::fromValue(piece), PieceRole);
 }
 //***************************************************************************************************************************************************************************************************************************************
-/*
-void CheckersModel::setAllPiecesRange()
-{
-    for(int row = 0; row < m_rows; row++) {
-        for(int col = 0; col < m_columns; col++) {
-            QModelIndex index = m_model.index(row, col);
-            //qDebug() << "setAllPiecesRange. index: " << index << "row: " << rowNo << "column: "<< colNo;
-
-            if(isPiecePresent(index)) {
-                bool isWhite = getPieceColor(index);
-                bool isKing = getPieceType(index);
-
-                QList <QPair <char, int> > possibleMoves;
-
-                if(isKing) {
-                    possibleMoves = getKingMoves(index, isWhite);
-                }
-                else {
-                    possibleMoves = getManMoves(index, isWhite);
-                }
-
-                setData(index, QVariant::fromValue(possibleMoves), RangeRole);
-                // set captureAvailableRole :
-                bool captureAvailable = isCaptureAvailable(index);
-                setData(index, QVariant::fromValue(captureAvailable), CaptureAvailableRole);
-            }
-            else {
-                //qDebug() << "no piece";
-                setData(index, QVariantList(), RangeRole);
-                setData(index, QVariant::fromValue(false), CaptureAvailableRole);
-                setData(index, QVariant::fromValue(false), MultiCaptureRole);
-            }
-        }
-    }
-}
-*/
-//***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::showScore()
 {
     qDebug() << "white score: " << m_whiteScore;
@@ -736,84 +699,6 @@ QModelIndex CheckersModel::findFieldIndexForPieceCenter(const QPointF &pieceCent
     return QModelIndex();
 }
 //***************************************************************************************************************************************************************************************************************************************
-/*
-QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
-{
-    //qDebug() << "getKingMoves function: ";
-    QList <QPair <char, int> > possibleMoves {};
-    QList <QPair <char, int> > captureMoves {};
-
-    int rowNo = index.row();
-    int colNo = index.column();
-    bool captureAvailable = isCaptureAvailable(index);
-    Player playerForCheck = getPlayerForCheck(index);
-
-    const int dr[] = {-1, -1, 1, 1}; // góra-lewo, góra-prawo, dół-lewo, dół-prawo
-    const int dc[] = {-1, 1, -1, 1};
-
-    for (int dir = 0; dir < 4; ++dir) {
-        int r = rowNo + dr[dir];
-        int c = colNo + dc[dir];
-        bool foundOpponent = false;
-
-        while (isInsideBoard(r, c)) {
-            QModelIndex currentIndex = getIndex(r, c);
-
-            if (!isPiecePresent(currentIndex)) {
-                //qDebug() << "   piece not present at " << currentIndex;
-                if (!foundOpponent) {
-                    if(!captureAvailable) {
-                        //qDebug() << "       opponent not found, capture not available, add: " << currentIndex;
-                        QVariant move = data(currentIndex, FieldNameRole);
-                        possibleMoves.push_back(move.value <QPair <char, int> > ());
-                    }
-                    else {
-                        //qDebug() << "       opponent not found, capture available, no moves to add";
-                    }
-                }
-                else {
-                    if(!captureAvailable) {
-                        //qDebug() << "       opponent found at " << currentIndex << ", capture available, no moves to add";
-                    }
-                    else {
-                        //qDebug() << "       opponent found, capture available, add: " << currentIndex;
-                        QVariant move = data(currentIndex, FieldNameRole);
-                        QPair <char, int> movePair = move.value <QPair <char, int> > ();
-                        captureMoves.push_back(movePair);
-                    }
-                }
-
-                r += dr[dir];
-                c += dc[dir];
-
-            }
-            else {
-                //qDebug() << "   piece present at " << currentIndex;
-                if (isOpponentAt(currentIndex, playerForCheck) && !foundOpponent) {
-                    //qDebug() << "       opponent found at: " << currentIndex;
-                    foundOpponent = true;
-                    r += dr[dir];
-                    c += dc[dir];
-                }
-                else {
-                    //qDebug() << "       your soldier or opponent at " << currentIndex << ", go to next iteration";
-                    break;
-                }
-            }
-        }
-    }
-    if(!captureAvailable) {
-        return possibleMoves;
-    }
-    else {
-        if(captureMoves.length() > 1) {
-            reduceToBestKingCaptures(index, captureMoves);
-        }
-        return captureMoves;
-    }
-}
-*/
-//***************************************************************************************************************************************************************************************************************************************
 QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, bool isWhite)
 {
     QList <QPair <char, int> > possibleMoves {};
@@ -939,101 +824,6 @@ QModelIndex CheckersModel::indexFromPair(const QPair<char, int> &pos) const
     int row = 8 - pos.second;       // 8 -> 0, 7 -> 1, ..., 1 -> 7
     return m_model.index(row, col);
 }
-//***************************************************************************************************************************************************************************************************************************************
-/*
-bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
-{
-    if (!isPiecePresent(index)) {
-        //qDebug() << "isCaptureAvailable function. Piece not present";
-        return false;
-    }
-
-    bool isWhite = getPieceColor(index);
-    bool isKing = getPieceType(index);
-
-    Player playerForCheck = getPlayerForCheck(index);
-
-    int row = index.row();
-    int col = index.column();
-
-    const int dr[] = {-1, -1, 1, 1}; // góra-lewo, góra-prawo, dół-lewo, dół-prawo
-    const int dc[] = {-1, 1, -1, 1};
-
-    if (isKing) {
-        //qDebug() << "isCaptureAvailable Role KING, index: " << index << "player for check: " << playerForCheck;
-        for (int dir = 0; dir < 4; ++dir) {
-            int r = row + dr[dir];
-            int c = col + dc[dir];
-            bool foundOpponent = false;
-            QModelIndex opponentIdx = QModelIndex();
-            while (isInsideBoard(r, c)) {
-                //qDebug() << "r: " << r;
-                //qDebug() << "c: " << c;
-                QModelIndex nextIdx = m_model.index(r, c);
-                if (isPiecePresent(nextIdx) && !foundOpponent) {
-                    if (isOpponentAt(nextIdx, playerForCheck)) {
-                            //qDebug() << "opponent found at: " << nextIdx;
-                            opponentIdx = nextIdx;
-                            foundOpponent = true;
-                    }
-                    else {
-                            //qDebug() << "your soldier found at: " << nextIdx;
-                            break;
-                    }
-                    //else break;
-                }
-                else {
-                    if (foundOpponent) {
-                        int checkR = opponentIdx.row() + dr[dir];
-                        int checkC = opponentIdx.column() + dc[dir];
-                        QModelIndex checkIdx = m_model.index(checkR, checkC);
-                        //qDebug() << "nextIdx: " << checkIdx << "row: " << r << "column: " << c;
-                        if (isInsideBoard(r, c) &&
-                            !isPiecePresent(nextIdx) ) {
-                                //qDebug() << "empty field found: " << nextIdx << ", capture available for king";
-                                return true;
-                        }
-                        else if ( (isInsideBoard(r,c)) &&
-                                   isPiecePresent(nextIdx) ) {
-                                        //qDebug() << "piece present, cannot move " << nextIdx;
-                                        break;
-                        }
-                        else {
-                            //qDebug() << "neither empty field found nor piece present";
-                            break;
-                        }
-                    }
-                }
-                //qDebug() << "continue searching for next field...";
-                r += dr[dir];
-                c += dc[dir];
-            }
-        }
-    }
-    else {
-        //qDebug() << "isCaptureAvailable Role MAN";
-        for (int dir = 0; dir < 4; ++dir) {
-            int midR = row + dr[dir];
-            int midC = col + dc[dir];
-            int landR = row + 2 * dr[dir];
-            int landC = col + 2 * dc[dir];
-
-            if (isInsideBoard(landR, landC)) {
-                QModelIndex midIdx = m_model.index(midR, midC);
-                QModelIndex landIdx = m_model.index(landR, landC);
-
-                if (isPiecePresent(midIdx) &&
-                    getPieceColor(midIdx) != isWhite &&
-                    !isPiecePresent(landIdx)) {
-                    return true;
-                }
-            }
-        }
-    }
-
-    return false;
-}
-*/
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isInsideBoard(int row, int col)
 {
