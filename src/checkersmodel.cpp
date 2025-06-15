@@ -61,46 +61,6 @@ int CheckersModel::getPieceRows()
     return m_pieceRows;
 }
 //***************************************************************************************************************************************************************************************************************************************
-void CheckersModel::resetModel()
-{
-    m_model.setRowCount(m_rows);
-    m_model.setColumnCount(m_columns);
-
-    m_whiteScore = 0;
-    m_blackScore = 0;
-
-    //Initialize board coordinates and 'black' and 'white fields
-    for(int row = 0, rowCoo = 8; row < m_rows; row++, rowCoo--) {
-        for(int col = 0 ; col < m_columns; col++) {
-            char column = 'A' + col;
-
-            //qDebug() << "column: " << column << "row: " << row + 1 << "rowCoo: " << rowCoo;
-
-            QStandardItem* item = new QStandardItem();
-            //qDebug()<<"item: " << item;
-            m_model.setItem(row, col, item);
-
-            QModelIndex index = m_model.index(row, col);
-            //qDebug() << "index got: " << index;
-            QPair<char, int> coordinates(column, rowCoo);
-            bool playable = (col + row) % 2 != 0;
-
-            setData(index, QVariant::fromValue(coordinates), FieldNameRole);
-            setData(index, QVariant::fromValue(playable), IsPlayableRole);
-
-            //set all fields as not selected
-            //CheckersModel::selectField(index, false);
-            setData(index, false, CaptureAvailableRole);
-            setData(index, false, MultiCaptureRole);
-        }
-    }
-    CheckersModel::deselectAllFields();
-    // place the pieces on the board
-    CheckersModel::initializePieces();
-    // set all pieces range:
-    CheckersModel::setAllPiecesRange();
-}
-//***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid()) {
@@ -600,6 +560,7 @@ void CheckersModel::setEmptyField(QModelIndex index)
     setData(index, QVariant::fromValue(piece), PieceRole);
 }
 //***************************************************************************************************************************************************************************************************************************************
+/*
 void CheckersModel::setAllPiecesRange()
 {
     for(int row = 0; row < m_rows; row++) {
@@ -634,6 +595,7 @@ void CheckersModel::setAllPiecesRange()
         }
     }
 }
+*/
 //***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::showScore()
 {
@@ -768,6 +730,7 @@ QModelIndex CheckersModel::findFieldIndexForPieceCenter(const QPointF &pieceCent
     return QModelIndex();
 }
 //***************************************************************************************************************************************************************************************************************************************
+/*
 QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index, bool isWhite)
 {
     //qDebug() << "getKingMoves function: ";
@@ -843,6 +806,7 @@ QList <QPair <char, int> > CheckersModel::getKingMoves(const QModelIndex &index,
         return captureMoves;
     }
 }
+*/
 //***************************************************************************************************************************************************************************************************************************************
 QList <QPair <char, int> > CheckersModel::getManMoves(const QModelIndex &index, bool isWhite)
 {
@@ -970,6 +934,7 @@ QModelIndex CheckersModel::indexFromPair(const QPair<char, int> &pos) const
     return m_model.index(row, col);
 }
 //***************************************************************************************************************************************************************************************************************************************
+/*
 bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
 {
     if (!isPiecePresent(index)) {
@@ -1062,6 +1027,7 @@ bool CheckersModel::isCaptureAvailable(const QModelIndex &index)
 
     return false;
 }
+*/
 //***************************************************************************************************************************************************************************************************************************************
 bool CheckersModel::isInsideBoard(int row, int col)
 {

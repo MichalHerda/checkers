@@ -78,7 +78,7 @@ function getPiecesCoordinates(repeater, width, height, pieceSeparatorX, pieceSep
 }
 
 
-function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, repeater, pieceRepeater) {
+function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, repeater, pieceRepeater, GameController) {
 
     //console.log("centerAllPiecesOnFields function")
     //console.log("   pieceRepeater size: ", pieceRepeater.count)
@@ -128,7 +128,8 @@ function centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersT
                         pieceRepeater.itemAt(repeaterIndex).isKing = false;
                     }
 
-                    checkersModelInstance.setAllPiecesRange()
+                    //checkersModelInstance.setAllPiecesRange()
+                    GameController.setAllPiecesRange()
                 //}
                 //else {
                 //    console.log("piece not present, no item to center")
@@ -152,7 +153,7 @@ function displayCoordinates(coordinates) {
     }
 }
 
-function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme,
+function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, GameController,
                            fieldRep, pieceRep,
                            fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                            pieceSeparatorX, pieceSeparatorY) {
@@ -195,7 +196,8 @@ function updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme,
                 pieceRep.itemAt(no).border.color =  CheckersTheme.blackPieceBorderColor
             }
 
-            checkersModelInstance.setAllPiecesRange()
+            //checkersModelInstance.setAllPiecesRange()
+            GameController.setAllPiecesRange()
         }
     }
 }

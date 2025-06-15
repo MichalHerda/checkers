@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     GameSettingsManager gameSettingsManager;
     ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
 
-    checkersModelInstance.resetModel();
+    gameController.resetModel();
 
     qRegisterMetaType<CornersCoordinates>("CheckersModel::CornersCoordinates");
     qRegisterMetaType<Piece>("Piece");

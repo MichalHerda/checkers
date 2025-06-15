@@ -67,7 +67,6 @@ public:
 
     int getPieceRows();
 
-    Q_INVOKABLE void resetModel();
     Q_INVOKABLE void printModel();
 
     Q_INVOKABLE bool setData(const QModelIndex &index, const QVariant &value, int role) override;
@@ -87,8 +86,8 @@ public:
 
     Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
-    Q_INVOKABLE void setAllPiecesRange();
-    Q_INVOKABLE bool isCaptureAvailable(const QModelIndex &index);
+    //Q_INVOKABLE void setAllPiecesRange();
+    //Q_INVOKABLE bool isCaptureAvailable(const QModelIndex &index);
 
     Q_INVOKABLE void showScore();
 

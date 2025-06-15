@@ -32,7 +32,7 @@ Item {
     function handleVisibilityChanged() {
         console.log("handle visibility changed function")
         if(completed) {
-            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, GameController, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
     }
@@ -182,22 +182,22 @@ Item {
                             var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x
                             var fieldHeight = fieldRep.itemAt(checkersModelInstance.getColumnsNo()).y - fieldRep.itemAt(0).y
 
-                            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+                            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, GameController, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                                  pieceSeparatorX, pieceSeparatorY)
 
                             GameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
-                            Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
+                            Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
 
                             GameController.changePlayer(newAverageX, newAverageY, mustCapture)
                         }
                         else {
                             console.log("move not valid")
-                            Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
+                            Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController,)
                         }
                     }
                     else {
                         console.log("NOT YOUR COLOR !")
-                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep)
+                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController,)
                     }
                 }
             }
@@ -205,28 +205,28 @@ Item {
     }
 
     onReset:  {
-        checkersModelInstance.resetModel()
-        Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+        GameController.resetModel()
+        Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, GameController, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                              pieceSeparatorX, pieceSeparatorY)
     }
 
     onWidthChanged: {
         if(completed) {
-            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, GameController, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
     }
 
     onHeightChanged: {
         if(completed) {
-            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, GameController, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
         }
     }
 
     Component.onCompleted: {
         if(!completed) {
-            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
+            Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, GameController, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                                  pieceSeparatorX, pieceSeparatorY)
             completed = true
         }
