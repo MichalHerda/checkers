@@ -87,9 +87,6 @@ public:
 
     Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
-    //Q_INVOKABLE void setAllPiecesRange();
-    //Q_INVOKABLE bool isCaptureAvailable(const QModelIndex &index);
-
     Q_INVOKABLE void showScore();
 
     Q_PROPERTY (bool gameOn                    READ gameOnRead     WRITE gameOnWrite     NOTIFY gameOnChanged     )
@@ -109,7 +106,6 @@ public:
 
     bool isInsideBoard(int row, int col);
     QModelIndex indexFromPair(const QPair<char, int> &pos) const;
-    bool canKingContinueCaptureFrom(int row, int col, QModelIndex initialKingIdx, QList<QModelIndex> &pathMoves, QList<QModelIndex> &checkedMoves);
     void initializePieces();
 
     void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
@@ -140,7 +136,6 @@ private:
 
     QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
     QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
-    void reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QPair<char, int>> &captureMoves);
 
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;

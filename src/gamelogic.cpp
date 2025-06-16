@@ -30,9 +30,9 @@ bool GameLogic::mustCapture(CheckersModel::Player player)
 //***************************************************************************************************************************************************************************************************************************************
 bool GameLogic::isCaptureAvailable(const QModelIndex &index)
 {
-    qDebug() << "gameLogic isCaptureAvailable";
+    //qDebug() << "gameLogic isCaptureAvailable";
     if (!m_model->isPiecePresent(index)) {
-        qDebug() << "isCaptureAvailable function. Piece not present";
+        //qDebug() << "isCaptureAvailable function. Piece not present";
         return false;
     }
 
@@ -284,7 +284,7 @@ void GameLogic::reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QP
 
         int row = move.row();
         int col = move.column();
-        canContinueCapture = m_model->canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
+        canContinueCapture = canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
 
         if(!canContinueCapture) {
             qDebug() << "nie ma możliwości dalszego bicia";
@@ -297,7 +297,7 @@ void GameLogic::reduceToBestKingCaptures(const QModelIndex &initialIdx, QList<QP
             while(i < pathMoves.length()) {
                 int row = pathMoves.at(i).row();
                 int col = pathMoves.at(i).column();
-                canContinueCapture = m_model->canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
+                canContinueCapture = canKingContinueCaptureFrom(row, col, initialIdx, pathMoves, checkedMoves);
                 if(!canContinueCapture) {
                     checkedMoves.append(pathMoves.at(i));
                     pathMoves.removeAt(i);
