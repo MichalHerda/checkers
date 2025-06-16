@@ -32,7 +32,7 @@ bool GameLogic::isCaptureAvailable(const QModelIndex &index)
 {
     qDebug() << "gameLogic isCaptureAvailable";
     if (!m_model->isPiecePresent(index)) {
-        //qDebug() << "isCaptureAvailable function. Piece not present";
+        qDebug() << "isCaptureAvailable function. Piece not present";
         return false;
     }
 
@@ -366,8 +366,8 @@ bool GameLogic::canKingContinueCaptureFrom(int row, int col, QModelIndex initial
 //***************************************************************************************************************************************************************************************************************************************
 void GameLogic::setAllPiecesRange()
 {
-    for(int row = 0; row < m_rows; row++) {
-        for(int col = 0; col < m_columns; col++) {
+    for(int row = 0; row < m_model->getRowsNo(); row++) {
+        for(int col = 0; col < m_model->getColumnsNo(); col++) {
             QModelIndex index = m_model->index(row, col);
             //qDebug() << "setAllPiecesRange. index: " << index << "row: " << rowNo << "column: "<< colNo;
 
@@ -401,25 +401,30 @@ void GameLogic::setAllPiecesRange()
 //***************************************************************************************************************************************************************************************************************************************
 void GameLogic::resetModel()
 {
-    m_model->setRowCount(m_rows);
-    m_model->setColumnCount(m_columns);
+    int rowsNo = m_model->getRowsNo();
+    int columnsNo = m_model->getColumnsNo();
+
+    m_model->setRowCount(rowsNo);
+    m_model->setColumnCount(columnsNo);
+
+    qDebug() << "reset model, rowsNo: " << rowsNo << ", columnsNo: " << columnsNo;
 
     //m_whiteScore = 0;
     //m_blackScore = 0;
 
     //Initialize board coordinates and 'black' and 'white fields
-    for(int row = 0, rowCoo = 8; row < m_rows; row++, rowCoo--) {
-        for(int col = 0 ; col < m_columns; col++) {
+    for(int row = 0, rowCoo = 8; row < rowsNo; row++, rowCoo--) {
+        for(int col = 0 ; col < columnsNo; col++) {
             char column = 'A' + col;
 
-            //qDebug() << "column: " << column << "row: " << row + 1 << "rowCoo: " << rowCoo;
+            qDebug() << "column: " << column << "row: " << row + 1 << "rowCoo: " << rowCoo;
 
             QStandardItem* item = new QStandardItem();
-            //qDebug()<<"item: " << item;
+            qDebug()<<"item: " << item;
             m_model->setItem(row, col, item);
 
             QModelIndex index = m_model->index(row, col);
-            //qDebug() << "index got: " << index;
+            qDebug() << "index got: " << index;
             QPair<char, int> coordinates(column, rowCoo);
             bool playable = (col + row) % 2 != 0;
 
@@ -434,7 +439,7 @@ void GameLogic::resetModel()
     }
     m_model->CheckersModel::deselectAllFields();
     // place the pieces on the board
-    m_model->CheckersModel::initializePieces();
+    initializePieces();
     // set all pieces range:
     setAllPiecesRange();
 }
@@ -442,9 +447,13 @@ void GameLogic::resetModel()
 void GameLogic::initializePieces()
 {
 
+    int pieceRows = m_model->getPieceRows();
+    int rowsNo = m_model->getRowsNo();
+    int columnsNo = m_model->getColumnsNo();
+
     //SET BLACK PIECES:
-    for(int row = 0; row < m_model->getPieceRows(); row++ ) {
-        for(int col = 0; col < m_columns; col++) {
+    for(int row = 0; row < pieceRows; row++ ) {
+        for(int col = 0; col < columnsNo; col++) {
             QModelIndex index = m_model->index(row, col);
             QVariant playable = m_model->data(index, CheckersModel::IsPlayableRole);
             if(playable.toBool()){
@@ -459,8 +468,8 @@ void GameLogic::initializePieces()
     }
 
     //SET WHITE PIECES:
-    for(int row = m_rows - 1; row >= m_rows - m_model->getPieceRows(); row--){
-        for(int col = 0; col < m_columns; col++) {
+    for(int row = m_rows - 1; row >= rowsNo - pieceRows; row--){
+        for(int col = 0; col < columnsNo; col++) {
             QModelIndex index = m_model->index(row, col);
             QVariant playable = m_model->data(index, CheckersModel::IsPlayableRole);
             if(playable.toBool()){
@@ -472,8 +481,8 @@ void GameLogic::initializePieces()
         }
     }
     //SET EMPTY PIECES:
-    for(int row = m_model->getPieceRows(); row < m_rows - m_model->getPieceRows(); row++) {
-        for(int col = 0; col < m_columns; col++) {
+    for(int row = pieceRows; row < rowsNo - pieceRows; row++) {
+        for(int col = 0; col < columnsNo; col++) {
             QModelIndex index = m_model->index(row, col);
             m_model->setEmptyField(index);
         }

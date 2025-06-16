@@ -17,10 +17,12 @@ public:
     Q_INVOKABLE bool isMoveValid(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE void executeMove(QModelIndex index, double averageX, double averageY);
     Q_INVOKABLE void evaluatePromotionToKing(QModelIndex index, double averageX, double averageY);
+    Q_INVOKABLE bool isCaptureAvailable(const QModelIndex &index);
     Q_INVOKABLE void changePlayer(double averageX, double averageY, bool mustCapture);
     Q_INVOKABLE bool mustCapture(CheckersModel::Player player);
     Q_INVOKABLE void updateAllPiecesRange();
     Q_INVOKABLE void resetModel();
+    Q_INVOKABLE void setAllPiecesRange();
 
 signals:
 
