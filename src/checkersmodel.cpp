@@ -711,12 +711,6 @@ bool CheckersModel::isInsideBoard(int row, int col)
     return (row >= 0 && row < 8 && col >= 0 && col < 8);
 }
 //***************************************************************************************************************************************************************************************************************************************
-bool CheckersModel::isOpponentAt(const QModelIndex &index, Player playerForCheck)
-{
-    return ( (playerForCheck == Player::white)  &&  (!getPieceColor(index)) ) ||
-           ( (playerForCheck == Player::black)  &&  ( getPieceColor(index)) );
-}
-//***************************************************************************************************************************************************************************************************************************************
 CheckersModel::Player CheckersModel::getPlayerForCheck(const QModelIndex &index)
 {
     Player playerForCheck;

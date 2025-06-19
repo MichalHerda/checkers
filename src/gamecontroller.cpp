@@ -168,8 +168,8 @@ bool GameController::isCaptureAvailable(const QModelIndex &index)
                 //qDebug() << "c: " << c;
                 QModelIndex nextIdx = m_model->index(r, c);
                 if (m_model->isPiecePresent(nextIdx) && !foundOpponent) {
-                    if (m_model->isOpponentAt(nextIdx, playerForCheck)) {
-                        //qDebug() << "opponent found at: " << nextIdx;
+                    if (m_logic->isOpponentAt(nextIdx, playerForCheck)) {
+                        qDebug() << "opponent found at: " << nextIdx;
                         opponentIdx = nextIdx;
                         foundOpponent = true;
                     }

@@ -139,8 +139,6 @@ private:
 
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
-
-    bool isOpponentAt(const QModelIndex &index, Player playerForCheck);
 };
 
 struct Piece {
