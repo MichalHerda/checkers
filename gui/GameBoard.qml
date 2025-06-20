@@ -176,7 +176,7 @@ Item {
                     if(GameController.isPlayersOwnPiece(modelIndex)) {
                         console.log("players own piece")
                         if(GameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
-                            var mustCapture = GameController.mustCapture(checkersModelInstance.player)
+                            var mustCapture = GameController.mustCapture(GameController.player)
                             GameController.executeMove(modelIndex, newAverageX, newAverageY)
 
                             var fieldWidth = fieldRep.itemAt(1).x - fieldRep.itemAt(0).x

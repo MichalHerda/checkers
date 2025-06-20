@@ -70,8 +70,8 @@ Rectangle {
 
                 onClicked: {
                     root.isMainMenu = !root.isMainMenu
-                    checkersModelInstance.gameOn = true;
-                    checkersModelInstance.player = CheckersModel.Player.white
+                    GameController.gameOn = true;
+                    GameController.player = CheckersModel.Player.white
                 }
             }
 

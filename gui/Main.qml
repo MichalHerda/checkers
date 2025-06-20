@@ -181,11 +181,7 @@ Window {
         repeat: true
         running: true
         onTriggered: {
-            //console.log("gameSettingsManager.gameMode: ", gameSettingsManager.gameMode)
-            //console.log("gameSettingsManager.gameTime: ", gameSettingsManager.gameTime)
-            //console.log("checkersModelInstance.player: ", checkersModelInstance.player)
-            //console.log("checkersModelInstance.gameon: ", checkersModelInstance.gameOn)
-            //console.log("must capture, player", checkersModelInstance.player, ": ", checkersModelInstance.mustCapture(checkersModelInstance.player))
+
         }
     }
 

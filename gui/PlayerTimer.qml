@@ -110,7 +110,7 @@ Item {
         target: checkersModelInstance
          function onGameOnChanged() {
             console.log("GAME ON CHANGED !!!")
-            if (checkersModelInstance.gameOn) {
+            if (GameController.gameOn) {
                 countdownTimer.start()
             } else {
                 countdownTimer.stop()

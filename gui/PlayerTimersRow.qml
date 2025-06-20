@@ -13,9 +13,9 @@ Row {
         width: playerTimerWidth
         height: playerTimerHeight
         playerName: playerOneName
-        countdownTimer.running: (checkersModelInstance.player === CheckersModel.Player.white)
-        nameRect.border.color: (checkersModelInstance.player === CheckersModel.Player.white) ? CheckersTheme.uiBorderColor : CheckersTheme.backgroundColor
-        timeRect.border.color: (checkersModelInstance.player === CheckersModel.Player.white) ? CheckersTheme.uiBorderColor : CheckersTheme.backgroundColor
+        countdownTimer.running: (GameController.player === CheckersModel.Player.white)
+        nameRect.border.color: (GameController.player === CheckersModel.Player.white) ? CheckersTheme.uiBorderColor : CheckersTheme.backgroundColor
+        timeRect.border.color: (GameController.player === CheckersModel.Player.white) ? CheckersTheme.uiBorderColor : CheckersTheme.backgroundColor
     }
 
     Item {
@@ -29,9 +29,9 @@ Row {
         width: playerTimerWidth
         height: playerTimerHeight
         playerName: playerTwoName
-        countdownTimer.running: (checkersModelInstance.player === CheckersModel.Player.black)
-        nameRect.border.color: (checkersModelInstance.player === CheckersModel.Player.black) ? CheckersTheme.uiBorderColor : CheckersTheme.backgroundColor
-        timeRect.border.color: (checkersModelInstance.player === CheckersModel.Player.black) ? CheckersTheme.uiBorderColor : CheckersTheme.backgroundColor
+        countdownTimer.running: (GameController.player === CheckersModel.Player.black)
+        nameRect.border.color: (GameController.player === CheckersModel.Player.black) ? CheckersTheme.uiBorderColor : CheckersTheme.backgroundColor
+        timeRect.border.color: (GameController.player === CheckersModel.Player.black) ? CheckersTheme.uiBorderColor : CheckersTheme.backgroundColor
     }
 }
 

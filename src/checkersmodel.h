@@ -89,18 +89,6 @@ public:
 
     Q_INVOKABLE void showScore();
 
-    Q_PROPERTY (bool gameOn                    READ gameOnRead     WRITE gameOnWrite     NOTIFY gameOnChanged     )
-    Q_PROPERTY (CheckersModel::Player player   READ playerRead     WRITE playerWrite     NOTIFY playerChanged     )
-
-    bool gameOn = false;
-    CheckersModel::Player player = CheckersModel::Player::null;
-
-    bool gameOnRead()const;
-    CheckersModel::Player playerRead()const;
-
-    void gameOnWrite(bool gameOn);
-    void playerWrite(CheckersModel::Player _player);
-
     QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
     Player getPlayerForCheck(const QModelIndex &index);
 
@@ -112,8 +100,6 @@ public:
     void setEmptyField(QModelIndex index);                                  // <---as in the function name
 
 signals:
-    void gameOnChanged(bool _gameOn);
-    void playerChanged(CheckersModel::Player _player);
 
 private:
     int m_columns = 8;
@@ -133,9 +119,6 @@ private:
     void setFieldsCoordinatesRole();
     void setFieldCenterRole();
     void setPiecesCoordinatesRole();
-
-    QList <QPair <char, int> > getKingMoves(const QModelIndex &index, bool isWhite);
-    QList <QPair <char, int> > getManMoves(const QModelIndex &index, bool isWhite);
 
     QVector <CornersCoordinates> m_fieldsCoordinates;
     QVector <CornersCoordinates> m_piecesCoordinates;
