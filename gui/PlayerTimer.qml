@@ -107,7 +107,7 @@ Item {
 
     Connections {
         id: countdownTimerConnection
-        target: checkersModelInstance
+        target: GameController
          function onGameOnChanged() {
             console.log("GAME ON CHANGED !!!")
             if (GameController.gameOn) {

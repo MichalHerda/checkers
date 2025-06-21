@@ -94,7 +94,6 @@ public:
 
     bool isInsideBoard(int row, int col);
     QModelIndex indexFromPair(const QPair<char, int> &pos) const;
-    void initializePieces();
 
     void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
     void setEmptyField(QModelIndex index);                                  // <---as in the function name
