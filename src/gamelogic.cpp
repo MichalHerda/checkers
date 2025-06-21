@@ -437,7 +437,7 @@ void GameLogic::resetModel()
             m_model->setData(index, false, CheckersModel::MultiCaptureRole);
         }
     }
-    m_model->CheckersModel::deselectAllFields();
+    deselectAllFields();
     // place the pieces on the board
     initializePieces();
     // set all pieces range:
@@ -488,6 +488,16 @@ void GameLogic::initializePieces()
         }
     }
 
+}
+//***************************************************************************************************************************************************************************************************************************************
+void GameLogic::deselectAllFields()
+{
+    for(int i = 0; i < m_columns; i++) {
+        for(int j = 0; j < m_rows; j++) {
+            QModelIndex index = m_model->index(j, i);
+            m_model->setData(index, false, CheckersModel::IsSelectedRole);
+        }
+    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 void GameLogic::showScore()

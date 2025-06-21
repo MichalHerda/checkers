@@ -79,7 +79,6 @@ public:
     Q_INVOKABLE QStandardItem* getItem(QModelIndex index);
 
     Q_INVOKABLE void selectField(QModelIndex index, bool selected = true);
-    Q_INVOKABLE void deselectAllFields();
 
     Q_INVOKABLE void updateFieldsCoordinates(const QVariantList &fieldsCoordinates);
     Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
@@ -93,8 +92,8 @@ public:
     bool isInsideBoard(int row, int col);
     QModelIndex indexFromPair(const QPair<char, int> &pos) const;
 
-    void setPiece(QModelIndex index, Player player, Type type = Type::man); // function for initialization for board area with pieces
-    void setEmptyField(QModelIndex index);                                  // <---as in the function name
+    void setPiece(QModelIndex index, Player player, Type type = Type::man);
+    void setEmptyField(QModelIndex index);
 
 signals:
 
@@ -106,9 +105,9 @@ private:
     QStandardItemModel m_model;
     Player m_turn;
 
-    void setColumns(int col);                                               // set custom board size
+    void setColumns(int col);
     void setRows(int row);
-    void setPieceRows(int row);                                             // set custom rows number for piece (on game start)
+    void setPieceRows(int row);
 
     void setFieldsCoordinatesRole();
     void setFieldCenterRole();

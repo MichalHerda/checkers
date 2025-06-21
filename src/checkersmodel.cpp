@@ -269,16 +269,6 @@ void CheckersModel::selectField(QModelIndex index, bool selected)
     setData(index, QVariant::fromValue(selected), IsSelectedRole);
 }
 //***************************************************************************************************************************************************************************************************************************************
-void CheckersModel::deselectAllFields()
-{
-    for(int i = 0; i < m_columns; i++) {
-        for(int j = 0; j < m_rows; j++) {
-            QModelIndex index = m_model.index(j, i);
-            m_model.setData(index, false, IsSelectedRole);
-        }
-    }
-}
-//***************************************************************************************************************************************************************************************************************************************
 void CheckersModel::updateFieldsCoordinates(const QVariantList &fieldsCoordinates)
 {
     //qDebug() << "updateFieldsCoordinates function";

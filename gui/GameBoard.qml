@@ -77,31 +77,10 @@ Item {
                     onClicked: {
                         console.log("model index: ", modelIndex)
                         console.log("capture available role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
-                        //console.log("multi capture role for idx ", modelIndex, ": ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
                         console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
                         console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
                         console.log("is king: ", checkersModelInstance.getPieceType(modelIndex))
                         console.log("score: \n", GameController.showScore())
-                    /*
-                        checkersModelInstance.deselectAllFields()
-                        console.log("1.model index: ", modelIndex)
-                        checkersModelInstance.setData(modelIndex, !checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole), CheckersModel.IsSelectedRole)
-                        console.log("2.model index: ", modelIndex)
-                        //checkersModelInstance.itemChanged(item)
-                        //console.log("3.model index: ", modelIndex)              // TODO: why modelIndex dissappears here ??????????????????????????????????????????????????
-
-                        console.log("model index: ", modelIndex)
-                        console.log("index: ", index)
-                        console.log("FieldNameRole: ", checkersModelInstance.data(modelIndex, CheckersModel.FieldNameRole))
-                        console.log("IsPlayableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole))
-                        console.log("PieceRole: ", checkersModelInstance.data(modelIndex, CheckersModel.PieceRole))
-                        console.log("RangeRole: ", checkersModelInstance.data(modelIndex, CheckersModel.RangeRole))
-                        //console.log("CaptureAvailableRole: ", checkersModelInstance.data(modelIndex, CheckersModel.CaptureAvailableRole))
-                        //console.log("MultiCaptureRole: ", checkersModelInstance.data(modelIndex, CheckersModel.MultiCaptureRole))
-                        console.log("IsSelectedRole: ", checkersModelInstance.data(modelIndex, CheckersModel.IsSelectedRole))
-                    */
-                        //setFieldsCoordinates(fieldRep)
-                        //getCoo(rec)
                     }
                 }
             }
@@ -192,12 +171,12 @@ Item {
                         }
                         else {
                             console.log("move not valid")
-                            Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController,)
+                            Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
                         }
                     }
                     else {
                         console.log("NOT YOUR COLOR !")
-                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController,)
+                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
                     }
                 }
             }
