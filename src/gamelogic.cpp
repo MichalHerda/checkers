@@ -399,6 +399,75 @@ void GameLogic::setAllPiecesRange()
     }
 }
 //***************************************************************************************************************************************************************************************************************************************
+void GameLogic::removePiece(QModelIndex from, QModelIndex to)
+{
+    qDebug() << "capture! remove pieces between: " << from << " and " << to;
+
+    bool isKing = m_model->getPieceType(from);
+    qDebug() << "isKing: " << isKing;
+
+    if(!isKing) {
+        qDebug() << "man captures";
+        //znajdź większy index dla row i column:
+        int maxRow = std::max(from.row(), to.row());
+        int maxCol = std::max(from.column(), to.column());
+        int minRow = std::min(from.row(), to.row());
+        int minCol = std::min(from.column(), to.column());
+
+        qDebug() << "maxRow: " << maxRow << ", minRow: " << minRow;
+        qDebug() << "maxCol: " << maxCol << ", minCol: " << minCol;
+
+        //nie wiem, czy to rozwiązanie jest na dłużej, ale w pewnych okolicznościach usuwało pionki
+        //gdy różnica między kolumnami/rzędami wynosiła 1, stąd poniższa instrukcja "if":
+
+        if(maxRow - minRow < 2 || maxCol - minCol < 2) {
+            return;
+        }
+
+        int removeRow = (from.row() + to.row()) / 2;
+        int removeCol = (from.column() + to.column()) / 2;
+
+        QModelIndex indexToRemove = m_model->getIndex(removeRow, removeCol);
+        qDebug() << "indexToRemove (MAN): " << indexToRemove;
+
+        m_model->setEmptyField(indexToRemove);
+    }
+    else {
+        qDebug() << "king captures";
+        int fromRow = from.row();
+        int fromCol = from.column();
+        int toRow = to.row();
+        int toCol = to.column();
+
+        int dRow = (toRow - fromRow) > 0 ? 1 : -1;
+        int dCol = (toCol - fromCol) > 0 ? 1 : -1;
+
+        int row = fromRow + dRow;
+        int col = fromCol + dCol;
+
+        while (row != toRow && col != toCol) {
+            QModelIndex current = m_model->getIndex(row, col);
+
+            if (m_model->isPiecePresent(current)) {
+                // Znaleziono figurę przeciwnika do zbicia
+                qDebug() << "indexToRemove (KING): " << current;
+                m_model->setEmptyField(current);
+                return;
+            }
+
+            row += dRow;
+            col += dCol;
+        }
+    }
+
+    if(m_model->getPieceColor(from)) {
+        m_blackScore--;
+    }
+    else {
+        m_whiteScore--;
+    }
+}
+//***************************************************************************************************************************************************************************************************************************************
 void GameLogic::resetModel()
 {
     int rowsNo = m_model->getRowsNo();

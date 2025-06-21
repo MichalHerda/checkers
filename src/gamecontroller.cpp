@@ -75,7 +75,7 @@ void GameController::executeMove(QModelIndex index, double averageX, double aver
     bool isCapture = mustCapture(player);
 
     if(isCapture) {
-        m_model->removePiece(index, m_modelIndexToMove);
+        m_logic->removePiece(index, m_modelIndexToMove);
     }
 
     m_model->setData(m_modelIndexToMove, pieceData, CheckersModel::PieceRole);

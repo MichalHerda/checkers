@@ -82,7 +82,6 @@ public:
 
     Q_INVOKABLE void updateFieldsCoordinates(const QVariantList &fieldsCoordinates);
     Q_INVOKABLE void updatePiecesCoordinates(const QVariantList &fieldsCoordinates);
-    Q_INVOKABLE void removePiece(QModelIndex from, QModelIndex to);
 
     Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
