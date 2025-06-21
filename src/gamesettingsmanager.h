@@ -33,7 +33,9 @@ public:
     Q_PROPERTY(GameSettingsManager::GameMode gameMode READ gameModeRead WRITE gameModeWrite NOTIFY gameModeChanged)
     Q_PROPERTY(GameSettingsManager::GameTime gameTime READ gameTimeRead WRITE gameTimeWrite NOTIFY gameTimeChanged)
 
-    GameSettingsManager::GameMode gameMode = GameSettingsManager::GameMode::humanVsHumanHotSeat;
+    Q_INVOKABLE bool isHumanVsComputerMode();
+
+    GameSettingsManager::GameMode gameMode = GameSettingsManager::GameMode::humanVsComputer;
     GameSettingsManager::GameTime gameTime = GameSettingsManager::GameTime::minutes5;
 
     GameSettingsManager::GameMode gameModeRead()const;

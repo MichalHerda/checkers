@@ -168,6 +168,10 @@ Item {
                             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
 
                             GameController.changePlayer(newAverageX, newAverageY, mustCapture)
+                            if(gameSettingsManager.isHumanVsComputerMode()) {
+                                console.log("time for computer player turn")
+                                ComputerPlayer.makeMove()
+                            }
                         }
                         else {
                             console.log("move not valid")

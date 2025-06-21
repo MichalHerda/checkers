@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 
     GameSettingsManager gameSettingsManager;
     ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
+    qmlRegisterSingletonInstance("Checkers", 1, 0, "ComputerPlayer", &computerPlayer);
 
     gameController.resetModel();
 

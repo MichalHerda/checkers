@@ -11,14 +11,14 @@ public:
     explicit ComputerPlayer(QObject *parent = nullptr);
     explicit ComputerPlayer(CheckersModel *model, CheckersModel::Player playerColor);
 
-    void makeMove();
+    Q_INVOKABLE void makeMove();
 signals:
 
 private:
     CheckersModel* m_model;
     CheckersModel::Player m_playerColor;
 
-    QModelIndexList getAllValidMoves();
+    QModelIndexList getAllMovablePieces();
 };
 
 #endif // COMPUTERPLAYER_H

@@ -4,6 +4,11 @@ GameSettingsManager::GameSettingsManager(QObject *parent)
     : QObject{parent}
 {}
 //***************************************************************************************************************************************************************************************************************************************
+bool GameSettingsManager::isHumanVsComputerMode()
+{
+    return gameMode == GameMode::humanVsComputer;
+}
+//***************************************************************************************************************************************************************************************************************************************
 GameSettingsManager::GameMode GameSettingsManager::gameModeRead() const
 {
     return gameMode;
