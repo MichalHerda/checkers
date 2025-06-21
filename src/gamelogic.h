@@ -36,12 +36,16 @@ public:
     void resetModel();
     void initializePieces();
     void deselectAllFields();
+    void showScore();
 
 signals:
 
 private:
     int m_rows;
     int m_columns;
+
+    int m_whiteScore = 0;
+    int m_blackScore = 0;
 
     CheckersModel* m_model;
 

@@ -409,8 +409,8 @@ void GameLogic::resetModel()
 
     qDebug() << "reset model, rowsNo: " << rowsNo << ", columnsNo: " << columnsNo;
 
-    //m_whiteScore = 0;
-    //m_blackScore = 0;
+    m_whiteScore = 0;
+    m_blackScore = 0;
 
     //Initialize board coordinates and 'black' and 'white fields
     for(int row = 0, rowCoo = 8; row < rowsNo; row++, rowCoo--) {
@@ -458,11 +458,11 @@ void GameLogic::initializePieces()
             QVariant playable = m_model->data(index, CheckersModel::IsPlayableRole);
             if(playable.toBool()){
                 m_model->setPiece(index, CheckersModel::Player::black);
-                //m_blackScore++;
+                m_blackScore++;
             }
             else {
                 m_model->setEmptyField(index);
-                //m_whiteScore++;
+                m_whiteScore++;
             }
         }
     }
@@ -488,5 +488,11 @@ void GameLogic::initializePieces()
         }
     }
 
+}
+//***************************************************************************************************************************************************************************************************************************************
+void GameLogic::showScore()
+{
+    qDebug() << "white score: " << m_whiteScore;
+    qDebug() << "black score: " << m_blackScore;
 }
 //***************************************************************************************************************************************************************************************************************************************

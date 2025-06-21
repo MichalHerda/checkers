@@ -35,6 +35,7 @@ public:
     Q_INVOKABLE void updateAllPiecesRange();
     Q_INVOKABLE void resetModel();
     Q_INVOKABLE void setAllPiecesRange();
+    Q_INVOKABLE void showScore();
 
 signals:
     void gameOnChanged(bool _gameOn);
@@ -45,6 +46,7 @@ private:
     std::unique_ptr<GameLogic> m_logic;
     QModelIndex m_modelIndexToMove;
     bool m_hasMultiCapture = false;
+
 };
 
 #endif // GAMECONTROLLER_H

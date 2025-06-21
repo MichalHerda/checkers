@@ -87,8 +87,6 @@ public:
 
     Q_INVOKABLE QModelIndex getModelIndexFromGivenCoordinates(double averageX, double averageY);
 
-    Q_INVOKABLE void showScore();
-
     QModelIndex findFieldIndexForPieceCenter(const QPointF &pieceCenter);
     Player getPlayerForCheck(const QModelIndex &index);
 
@@ -104,9 +102,6 @@ private:
     int m_columns = 8;
     int m_rows = 8;
     int m_pieceRows = 3;
-
-    int m_whiteScore = 0;
-    int m_blackScore = 0;
 
     QStandardItemModel m_model;
     Player m_turn;
