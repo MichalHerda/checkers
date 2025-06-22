@@ -5,6 +5,7 @@
 #include "gamesettingsmanager.h"
 #include "computerplayer.h"
 #include "gamecontroller.h"
+#include "gamelogic.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +17,14 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonInstance("Checkers", 1, 0, "GameController", &gameController);
 
     GameSettingsManager gameSettingsManager;
-    ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
+    int rows = checkersModelInstance.getRowsNo();
+    int columns = checkersModelInstance.getColumnsNo();
+
+    GameLogic gameLogic(&checkersModelInstance, rows, columns);
+
+    //ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
+    ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black, &gameController, &gameLogic);
+
     qmlRegisterSingletonInstance("Checkers", 1, 0, "ComputerPlayer", &computerPlayer);
 
     gameController.resetModel();

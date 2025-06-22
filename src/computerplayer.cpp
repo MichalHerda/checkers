@@ -10,12 +10,66 @@ ComputerPlayer::ComputerPlayer(CheckersModel *model, CheckersModel::Player playe
     Q_ASSERT(m_model);
 }
 //***************************************************************************************************************************************************************************************************************************************
+ComputerPlayer::ComputerPlayer(CheckersModel *model,
+                               CheckersModel::Player playerColor,
+                               GameController *controller,
+                               GameLogic *logic,
+                               QObject *parent)
+    : QObject(parent),
+    m_model(model),
+    m_playerColor(playerColor),
+    m_gameController(controller),
+    m_logic(logic)
+{}
+//***************************************************************************************************************************************************************************************************************************************
+
 void ComputerPlayer::makeMove()
 {
     //getAllMovablePieces();
     QPair<QModelIndex, QPair<char, int> > randomMove = getRandomMove();
     qDebug() << "random move got: " << randomMove;
+
+    QPair<char, int> targetPair = randomMove.second;
+    char targetColumn = randomMove.second.first;
+    int targetRow = randomMove.second.second;
+    qDebug() << "target pair: " << targetPair;
+    qDebug() << "target column: " << targetColumn << ", target row: " << targetRow;
+    QModelIndex indexTarget = m_model->indexFromPair(targetPair);
+    qDebug() << "index from pair (target)" << indexTarget;
+    QModelIndex indexToMove = randomMove.first;
+    qDebug() << "index to move: " << indexToMove;
+
+    m_gameController->setModelIndexToMove(indexToMove);
+
+    QVariant emptyPieceData = m_model->data(indexToMove, CheckersModel::PieceRole);
+
+    QVariant pieceData = m_model->data(indexTarget, CheckersModel::PieceRole);
+
+    m_model->setData(indexToMove, pieceData, CheckersModel::PieceRole);
+    m_model->setData(indexTarget, emptyPieceData, CheckersModel::PieceRole);
+
+    m_gameController->setAllPiecesRange();
+
 }
+/*
+void ComputerPlayer::makeMove()
+{
+    QPair<QModelIndex, QPair<char, int> > randomMove = getRandomMove();
+    QModelIndex indexToMove = randomMove.first;
+    QPair<char, int> targetPair = randomMove.second;
+    QModelIndex indexTarget = m_model->indexFromPair(targetPair);
+
+    qDebug() << "Moving piece from" << indexToMove << "to" << indexTarget;
+
+    QVariant pieceData = m_model->data(indexToMove, CheckersModel::PieceRole);
+    QVariant emptyPieceData; // lub specjalny typ oznaczający pusty
+
+    m_model->setData(indexToMove, emptyPieceData, CheckersModel::PieceRole);  // wyczyść źródło
+    m_model->setData(indexTarget, pieceData, CheckersModel::PieceRole);       // ustaw cel
+
+    m_gameController->setAllPiecesRange(); // aktualizacja możliwych ruchów
+}
+*/
 //***************************************************************************************************************************************************************************************************************************************
 QModelIndexList ComputerPlayer::getAllMovablePieces()
 {

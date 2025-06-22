@@ -171,6 +171,8 @@ Item {
                             if(gameSettingsManager.isHumanVsComputerMode()) {
                                 console.log("time for computer player turn")
                                 ComputerPlayer.makeMove()
+                                Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
+                                GameController.changePlayer(newAverageX, newAverageY, mustCapture)
                             }
                         }
                         else {

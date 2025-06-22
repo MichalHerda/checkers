@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QRandomGenerator>
 #include "checkersmodel.h"
+#include "gamecontroller.h"
 
 class ComputerPlayer : public QObject
 {
@@ -11,12 +12,19 @@ class ComputerPlayer : public QObject
 public:
     explicit ComputerPlayer(QObject *parent = nullptr);
     explicit ComputerPlayer(CheckersModel *model, CheckersModel::Player playerColor);
+    explicit ComputerPlayer(CheckersModel *model,
+                            CheckersModel::Player playerColor,
+                            GameController *controller,
+                            GameLogic *logic,
+                            QObject *parent = nullptr);
 
     Q_INVOKABLE void makeMove();
 signals:
 
 private:
     CheckersModel* m_model;
+    GameController* m_gameController;
+    GameLogic* m_logic;
     CheckersModel::Player m_playerColor;
 
     QModelIndexList getAllMovablePieces();
