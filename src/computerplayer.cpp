@@ -1,25 +1,21 @@
 #include "computerplayer.h"
-
+//***************************************************************************************************************************************************************************************************************************************
 ComputerPlayer::ComputerPlayer(QObject *parent)
     : QObject{parent}
 {}
-/*
-ComputerPlayer::ComputerPlayer(CheckersModel *model, CheckersModel::Player playerColor)
-{
-
-}
-*/
+//***************************************************************************************************************************************************************************************************************************************
 ComputerPlayer::ComputerPlayer(CheckersModel *model, CheckersModel::Player playerColor)
     : m_model(model), m_playerColor(playerColor)
 {
-    Q_ASSERT(m_model); // zabezpieczenie — wywali się tu, jeśli model był nullptr
+    Q_ASSERT(m_model);
 }
-
+//***************************************************************************************************************************************************************************************************************************************
 void ComputerPlayer::makeMove()
 {
-    getAllMovablePieces();
+    //getAllMovablePieces();
+    getRandomMove();
 }
-
+//***************************************************************************************************************************************************************************************************************************************
 QModelIndexList ComputerPlayer::getAllMovablePieces()
 {
     QModelIndexList movablePieces = {};
@@ -42,3 +38,29 @@ QModelIndexList ComputerPlayer::getAllMovablePieces()
     }
     return movablePieces;
 }
+//***************************************************************************************************************************************************************************************************************************************
+QPair<QModelIndex, QPair<char, int> > ComputerPlayer::getRandomMove()
+{
+    QModelIndexList movablePieces = getAllMovablePieces();
+    if (movablePieces.isEmpty()) {
+        return {};
+    }
+
+    int pieceIdx = QRandomGenerator::global()->bounded(movablePieces.size());
+    QModelIndex selectedPiece = movablePieces.at(pieceIdx);
+    qDebug() << "drawn piece: " << selectedPiece;
+
+    QVariant rangeVar = m_model->data(selectedPiece, CheckersModel::RangeRole);
+    QVariantList rangeList = rangeVar.toList();
+
+    if (rangeList.isEmpty()) {
+        return {}; // it shouldn't happen
+    }
+
+    int moveIdx = QRandomGenerator::global()->bounded(rangeList.size());
+    QPair<char, int> move = qvariant_cast<QPair<char, int>>(rangeList.at(moveIdx));
+    qDebug() << "drawn move, piece: " << selectedPiece << ", move: " << move;
+
+    return { selectedPiece, move };
+}
+//***************************************************************************************************************************************************************************************************************************************

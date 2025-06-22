@@ -2,6 +2,7 @@
 #define COMPUTERPLAYER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "checkersmodel.h"
 
 class ComputerPlayer : public QObject
@@ -19,6 +20,7 @@ private:
     CheckersModel::Player m_playerColor;
 
     QModelIndexList getAllMovablePieces();
+    QPair<QModelIndex, QPair<char, int>> getRandomMove();
 };
 
 #endif // COMPUTERPLAYER_H
