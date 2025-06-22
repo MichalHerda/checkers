@@ -13,7 +13,8 @@ ComputerPlayer::ComputerPlayer(CheckersModel *model, CheckersModel::Player playe
 void ComputerPlayer::makeMove()
 {
     //getAllMovablePieces();
-    getRandomMove();
+    QPair<QModelIndex, QPair<char, int> > randomMove = getRandomMove();
+    qDebug() << "random move got: " << randomMove;
 }
 //***************************************************************************************************************************************************************************************************************************************
 QModelIndexList ComputerPlayer::getAllMovablePieces()
@@ -30,7 +31,7 @@ QModelIndexList ComputerPlayer::getAllMovablePieces()
                 QVariantList list = range.toList();
                 if (!list.isEmpty() && !m_model->getPieceColor(idx)) {
                     movablePieces.append(idx);
-                    qDebug() << "Movable piece at:" << idx << "range:" << list;
+                    //qDebug() << "Movable piece at:" << idx << "range:" << list;
                 }
             }
 

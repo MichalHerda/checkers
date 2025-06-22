@@ -66,19 +66,20 @@ bool GameController::isMoveValid(QModelIndex index, double averageX, double aver
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::executeMove(QModelIndex index, double averageX, double averageY)
 {
-    m_modelIndexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
+    setModelIndexToMove(m_model->getModelIndexFromGivenCoordinates(averageX, averageY));
+    QModelIndex indexToMove = getModelIndexToMove();
 
-    QVariant emptyPieceData = m_model->data(m_modelIndexToMove, CheckersModel::PieceRole);
+    QVariant emptyPieceData = m_model->data(indexToMove, CheckersModel::PieceRole);
 
     QVariant pieceData = m_model->data(index, CheckersModel::PieceRole);
 
     bool isCapture = mustCapture(player);
 
     if(isCapture) {
-        m_logic->removePiece(index, m_modelIndexToMove);
+        m_logic->removePiece(index, indexToMove);
     }
 
-    m_model->setData(m_modelIndexToMove, pieceData, CheckersModel::PieceRole);
+    m_model->setData(indexToMove, pieceData, CheckersModel::PieceRole);
     m_model->setData(index, emptyPieceData, CheckersModel::PieceRole);
 
     setAllPiecesRange();
@@ -159,6 +160,16 @@ void GameController::setAllPiecesRange()
 void GameController::showScore()
 {
     m_logic->showScore();
+}
+//***************************************************************************************************************************************************************************************************************************************
+void GameController::setModelIndexToMove(QModelIndex idx)
+{
+    m_modelIndexToMove = idx;
+}
+//***************************************************************************************************************************************************************************************************************************************
+QModelIndex GameController::getModelIndexToMove()
+{
+    return m_modelIndexToMove;
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool GameController::isCaptureAvailable(const QModelIndex &index)

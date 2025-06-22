@@ -37,6 +37,9 @@ public:
     Q_INVOKABLE void setAllPiecesRange();
     Q_INVOKABLE void showScore();
 
+    void setModelIndexToMove(QModelIndex idx);
+    QModelIndex getModelIndexToMove();
+
 signals:
     void gameOnChanged(bool _gameOn);
     void playerChanged(CheckersModel::Player _player);
