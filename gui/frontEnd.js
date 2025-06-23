@@ -221,3 +221,13 @@ function calcultaePieceCenterY(pieceRep, pieceHeight, index) {
     var newAverageY = ( newCooLeftUpY + newCooRightUpY + newCooLeftBottomY + newCooRightBottomY ) / 4
     return newAverageY
 }
+
+function findPieceIndexInRepeater(pieceRep, targetModelIndex) {
+    for (let i = 0; i < pieceRep.count; i++) {
+        if (pieceRep.itemAt(i).modelIndex === targetModelIndex) {
+            return i;
+        }
+    }
+    return -1;
+}
+

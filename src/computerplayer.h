@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE void makeMove();
     Q_INVOKABLE void makeCapture();
     Q_INVOKABLE CheckersModel::Player getComputerPlayer();
+    Q_INVOKABLE QModelIndex getMovedPieceNewIndex();
 signals:
 
 private:
@@ -28,7 +29,9 @@ private:
     GameController* m_gameController;
     GameLogic* m_logic;
     CheckersModel::Player m_playerColor;
+    QModelIndex m_movedPieceNewIndex;
 
+    void setMovedPieceNewIndex(QModelIndex movedPieceNewIndex);
     QModelIndexList getAllMovablePieces();
     QModelIndexList getAllCapturePieces();
     QPair<QModelIndex, QPair<char, int>> getRandomMove();

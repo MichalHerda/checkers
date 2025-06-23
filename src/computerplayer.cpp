@@ -45,6 +45,7 @@ void ComputerPlayer::makeMove()
 
     m_model->setData(indexToMove, pieceData, CheckersModel::PieceRole);
     m_model->setData(indexTarget, emptyPieceData, CheckersModel::PieceRole);
+    setMovedPieceNewIndex(indexTarget);
 
     m_gameController->setAllPiecesRange();
 }
@@ -81,6 +82,7 @@ void ComputerPlayer::makeCapture()
 
     m_model->setData(indexToMove, pieceData, CheckersModel::PieceRole);
     m_model->setData(indexTarget, emptyPieceData, CheckersModel::PieceRole);
+    setMovedPieceNewIndex(indexTarget);
 
     m_gameController->setAllPiecesRange();
     m_logic->removePiece(indexToMove, indexTarget);
@@ -90,6 +92,16 @@ void ComputerPlayer::makeCapture()
 CheckersModel::Player ComputerPlayer::getComputerPlayer()
 {
     return m_playerColor;
+}
+//***************************************************************************************************************************************************************************************************************************************
+QModelIndex ComputerPlayer::getMovedPieceNewIndex()
+{
+    return m_movedPieceNewIndex;
+}
+//***************************************************************************************************************************************************************************************************************************************
+void ComputerPlayer::setMovedPieceNewIndex(QModelIndex movedPieceNewIndex)
+{
+    m_movedPieceNewIndex = movedPieceNewIndex;
 }
 //***************************************************************************************************************************************************************************************************************************************
 QModelIndexList ComputerPlayer::getAllMovablePieces()
