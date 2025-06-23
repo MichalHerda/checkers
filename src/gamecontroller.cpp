@@ -87,6 +87,7 @@ void GameController::executeMove(QModelIndex index, double averageX, double aver
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, double averageY)
 {
+    qDebug() << "evaluate promotion to king, averageX: " << averageX << "averageY: " << averageY << "index: " << index;
     QModelIndex modelIndexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
     bool hasMultiCapture = isCaptureAvailable(m_modelIndexToMove);
 

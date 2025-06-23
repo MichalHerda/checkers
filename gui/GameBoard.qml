@@ -170,11 +170,12 @@ Item {
                             GameController.changePlayer(newAverageX, newAverageY, mustCapture)
                             mustCapture = GameController.mustCapture(GameController.player)
 
-                            if(gameSettingsManager.isHumanVsComputerMode()) {
+                            if(gameSettingsManager.isHumanVsComputerMode() && GameController.player === ComputerPlayer.getComputerPlayer()) {
                                 console.log("time for computer player turn")
                                 if(!mustCapture) {
                                     console.log("computer player has no capture")
                                     ComputerPlayer.makeMove()
+                                    GameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
                                     Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
                                     GameController.changePlayer(newAverageX, newAverageY, mustCapture)
                                 }
@@ -185,6 +186,9 @@ Item {
                                         Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
                                         //GameController.changePlayer(newAverageX, newAverageY, mustCapture)
                                         mustCapture = GameController.mustCapture(GameController.player)
+                                        if(!mustCapture) {
+                                            GameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
+                                        }
                                     }
                                     GameController.changePlayer(newAverageX, newAverageY, mustCapture)
                                 }

@@ -20,6 +20,7 @@ public:
 
     Q_INVOKABLE void makeMove();
     Q_INVOKABLE void makeCapture();
+    Q_INVOKABLE CheckersModel::Player getComputerPlayer();
 signals:
 
 private:
