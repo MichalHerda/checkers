@@ -19,6 +19,7 @@ public:
                             QObject *parent = nullptr);
 
     Q_INVOKABLE void makeMove();
+    Q_INVOKABLE void makeCapture();
 signals:
 
 private:
@@ -28,6 +29,7 @@ private:
     CheckersModel::Player m_playerColor;
 
     QModelIndexList getAllMovablePieces();
+    QModelIndexList getAllCapturePieces();
     QPair<QModelIndex, QPair<char, int>> getRandomMove();
 };
 

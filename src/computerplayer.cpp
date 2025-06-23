@@ -22,10 +22,8 @@ ComputerPlayer::ComputerPlayer(CheckersModel *model,
     m_logic(logic)
 {}
 //***************************************************************************************************************************************************************************************************************************************
-
 void ComputerPlayer::makeMove()
 {
-    //getAllMovablePieces();
     QPair<QModelIndex, QPair<char, int> > randomMove = getRandomMove();
     qDebug() << "random move got: " << randomMove;
 
@@ -49,27 +47,45 @@ void ComputerPlayer::makeMove()
     m_model->setData(indexTarget, emptyPieceData, CheckersModel::PieceRole);
 
     m_gameController->setAllPiecesRange();
-
 }
-/*
-void ComputerPlayer::makeMove()
+//***************************************************************************************************************************************************************************************************************************************
+void ComputerPlayer::makeCapture()
 {
-    QPair<QModelIndex, QPair<char, int> > randomMove = getRandomMove();
-    QModelIndex indexToMove = randomMove.first;
-    QPair<char, int> targetPair = randomMove.second;
+    QModelIndexList capturePieces = getAllCapturePieces();
+    if (capturePieces.isEmpty()) {
+        qDebug() << "capturePieces empty";
+        return;
+    }
+    qDebug() << "capture pieces: " << capturePieces;
+
+    int randomIndex = QRandomGenerator::global()->bounded(capturePieces.size());
+    QModelIndex indexToMove = capturePieces[randomIndex];
+    qDebug() << "index to move: " << indexToMove;
+
+    QVariant rangeData = m_model->data(indexToMove, CheckersModel::RangeRole);
+    QVariantList rangeList = rangeData.toList();
+
+    if(rangeList.isEmpty()) return;
+
+    int randomMoveIndex = QRandomGenerator::global()->bounded(rangeList.size());
+    QPair<char, int> targetPair = rangeList[randomMoveIndex].value<QPair<char, int>>();
     QModelIndex indexTarget = m_model->indexFromPair(targetPair);
+    qDebug() << "index target: "  << indexTarget;
 
-    qDebug() << "Moving piece from" << indexToMove << "to" << indexTarget;
+    //
+    m_gameController->setModelIndexToMove(indexToMove);
 
-    QVariant pieceData = m_model->data(indexToMove, CheckersModel::PieceRole);
-    QVariant emptyPieceData; // lub specjalny typ oznaczający pusty
+    QVariant emptyPieceData = m_model->data(indexToMove, CheckersModel::PieceRole);
 
-    m_model->setData(indexToMove, emptyPieceData, CheckersModel::PieceRole);  // wyczyść źródło
-    m_model->setData(indexTarget, pieceData, CheckersModel::PieceRole);       // ustaw cel
+    QVariant pieceData = m_model->data(indexTarget, CheckersModel::PieceRole);
 
-    m_gameController->setAllPiecesRange(); // aktualizacja możliwych ruchów
+    m_model->setData(indexToMove, pieceData, CheckersModel::PieceRole);
+    m_model->setData(indexTarget, emptyPieceData, CheckersModel::PieceRole);
+
+    m_gameController->setAllPiecesRange();
+    m_logic->removePiece(indexToMove, indexTarget);
+
 }
-*/
 //***************************************************************************************************************************************************************************************************************************************
 QModelIndexList ComputerPlayer::getAllMovablePieces()
 {
@@ -92,6 +108,27 @@ QModelIndexList ComputerPlayer::getAllMovablePieces()
         }
     }
     return movablePieces;
+}
+//***************************************************************************************************************************************************************************************************************************************
+QModelIndexList ComputerPlayer::getAllCapturePieces()
+{
+    QModelIndexList capturePieces = {};
+
+    for(int row = 0; row < m_model->getRowsNo(); row++) {
+        for(int column = 0; column < m_model->getColumnsNo(); column++) {
+            QModelIndex idx = m_model->index(row, column);
+            QVariant isCaptureAvailable = m_model->data(idx, CheckersModel::CaptureAvailableRole);
+            qDebug() << "isCaptureAvailableRole, index: " << idx << ": " << isCaptureAvailable;
+            //if(isCaptureAvailable.canConvert<QVariantList>()) {
+                if(isCaptureAvailable.toBool() == true) {
+                    capturePieces.append(idx);
+                }
+            //}
+        }
+    }
+
+
+    return capturePieces;
 }
 //***************************************************************************************************************************************************************************************************************************************
 QPair<QModelIndex, QPair<char, int> > ComputerPlayer::getRandomMove()

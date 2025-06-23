@@ -168,11 +168,26 @@ Item {
                             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
 
                             GameController.changePlayer(newAverageX, newAverageY, mustCapture)
+                            mustCapture = GameController.mustCapture(GameController.player)
+
                             if(gameSettingsManager.isHumanVsComputerMode()) {
                                 console.log("time for computer player turn")
-                                ComputerPlayer.makeMove()
-                                Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
-                                GameController.changePlayer(newAverageX, newAverageY, mustCapture)
+                                if(!mustCapture) {
+                                    console.log("computer player has no capture")
+                                    ComputerPlayer.makeMove()
+                                    Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
+                                    GameController.changePlayer(newAverageX, newAverageY, mustCapture)
+                                }
+                                else {
+                                    while(mustCapture) {
+                                        console.log("computer must capture")
+                                        ComputerPlayer.makeCapture()
+                                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
+                                        //GameController.changePlayer(newAverageX, newAverageY, mustCapture)
+                                        mustCapture = GameController.mustCapture(GameController.player)
+                                    }
+                                    GameController.changePlayer(newAverageX, newAverageY, mustCapture)
+                                }
                             }
                         }
                         else {
