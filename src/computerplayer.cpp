@@ -24,6 +24,16 @@ ComputerPlayer::ComputerPlayer(CheckersModel *model,
 //***************************************************************************************************************************************************************************************************************************************
 void ComputerPlayer::makeMove()
 {
+    // Losowanie opóźnienia od 1000 do 3000 ms
+    int delayMs = QRandomGenerator::global()->bounded(1000, 3001); // górna granica wyłączna
+    qDebug() << "Computer move delayed by (ms): " << delayMs;
+
+    // Nie blokuje GUI – wykona performMove po opóźnieniu
+    QTimer::singleShot(delayMs, this, &ComputerPlayer::performMove);
+}
+//***************************************************************************************************************************************************************************************************************************************
+void ComputerPlayer::performMove()
+{
     QPair<QModelIndex, QPair<char, int> > randomMove = getRandomMove();
     qDebug() << "random move got: " << randomMove;
 
@@ -51,6 +61,16 @@ void ComputerPlayer::makeMove()
 }
 //***************************************************************************************************************************************************************************************************************************************
 void ComputerPlayer::makeCapture()
+{
+    // Losowanie opóźnienia od 1000 do 3000 ms
+    int delayMs = QRandomGenerator::global()->bounded(1000, 3001); // górna granica wyłączna
+    qDebug() << "Computer move delayed by (ms): " << delayMs;
+
+    // Nie blokuje GUI – wykona performMove po opóźnieniu
+    QTimer::singleShot(delayMs, this, &ComputerPlayer::performCapture);
+}
+//***************************************************************************************************************************************************************************************************************************************
+void ComputerPlayer::performCapture()
 {
     QModelIndexList capturePieces = getAllCapturePieces();
     if (capturePieces.isEmpty()) {

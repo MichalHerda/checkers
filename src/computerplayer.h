@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QRandomGenerator>
+#include <QTimer>
 #include "checkersmodel.h"
 #include "gamecontroller.h"
 
@@ -31,6 +32,8 @@ private:
     CheckersModel::Player m_playerColor;
     QModelIndex m_movedPieceNewIndex;
 
+    void performMove();
+    void performCapture();
     void setMovedPieceNewIndex(QModelIndex movedPieceNewIndex);
     QModelIndexList getAllMovablePieces();
     QModelIndexList getAllCapturePieces();
