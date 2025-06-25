@@ -212,7 +212,7 @@ function calculatePieceCenterX(pieceRep,  pieceWidth, index) {
     return newAverageX
 }
 
-function calcultaePieceCenterY(pieceRep, pieceHeight, index) {
+function calculatePieceCenterY(pieceRep, pieceHeight, index) {
     var newCooLeftUpY = pieceRep.itemAt(index).y
     var newCooRightUpY = pieceRep.itemAt(index).y
     var newCooLeftBottomY = pieceRep.itemAt(index).y + pieceHeight

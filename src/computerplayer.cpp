@@ -22,6 +22,18 @@ ComputerPlayer::ComputerPlayer(CheckersModel *model,
     m_logic(logic)
 {}
 //***************************************************************************************************************************************************************************************************************************************
+QModelIndex ComputerPlayer::indexMovedRead() const
+{
+    return indexMoved;
+}
+//***************************************************************************************************************************************************************************************************************************************
+void ComputerPlayer::indexMovedWrite(QModelIndex _indexMoved)
+{
+    qDebug() << "indexMoved write: " << _indexMoved;
+    indexMoved = _indexMoved;
+    emit indexMovedChanged(_indexMoved);
+}
+//***************************************************************************************************************************************************************************************************************************************
 void ComputerPlayer::makeMove()
 {
     // Losowanie opóźnienia od 1000 do 3000 ms
@@ -46,6 +58,8 @@ void ComputerPlayer::performMove()
     qDebug() << "index from pair (target)" << indexTarget;
     QModelIndex indexToMove = randomMove.first;
     qDebug() << "index to move: " << indexToMove;
+    //emit indexMovedChanged(indexToMove);
+    indexMovedWrite(indexToMove);
 
     m_gameController->setModelIndexToMove(indexToMove);
 
@@ -57,7 +71,9 @@ void ComputerPlayer::performMove()
     m_model->setData(indexTarget, emptyPieceData, CheckersModel::PieceRole);
     setMovedPieceNewIndex(indexTarget);
 
+    emit moveCompleted();
     m_gameController->setAllPiecesRange();
+    //emit moveCompleted();
 }
 //***************************************************************************************************************************************************************************************************************************************
 void ComputerPlayer::makeCapture()
@@ -106,6 +122,7 @@ void ComputerPlayer::performCapture()
 
     m_gameController->setAllPiecesRange();
     m_logic->removePiece(indexToMove, indexTarget);
+    emit captureCompleted();
 
 }
 //***************************************************************************************************************************************************************************************************************************************

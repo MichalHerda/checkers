@@ -109,7 +109,7 @@ Item {
         id: countdownTimerConnection
         target: GameController
          function onGameOnChanged() {
-            console.log("GAME ON CHANGED !!!")
+            //console.log("GAME ON CHANGED !!!")
             if (GameController.gameOn) {
                 countdownTimer.start()
             } else {

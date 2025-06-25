@@ -54,7 +54,7 @@ Rectangle {
                      for (var i = 0; i < model.length; i++) {
                            if (model[i].value === gameSettingsManager.gameMode)
                                currentIndex = i;
-                               console.log("current index ", currentIndex)
+                               //console.log("current index ", currentIndex)
                      }
                      initializing = false;
                 }
@@ -105,7 +105,7 @@ Rectangle {
                      for (var i = 0; i < model.length; i++) {
                            if (model[i].value === gameSettingsManager.gameTime)
                                currentIndex = i;
-                               console.log("current index ", currentIndex)
+                               //console.log("current index ", currentIndex)
                      }
                      initializing = false;
                 }

@@ -19,11 +19,22 @@ public:
                             GameLogic *logic,
                             QObject *parent = nullptr);
 
+    Q_PROPERTY (QModelIndex indexMoved  READ indexMovedRead WRITE indexMovedWrite NOTIFY indexMovedChanged)
+
+    QModelIndex indexMoved = QModelIndex();
+    QModelIndex indexMovedRead()const;
+    void indexMovedWrite(QModelIndex _indexMoved);
+
     Q_INVOKABLE void makeMove();
     Q_INVOKABLE void makeCapture();
     Q_INVOKABLE CheckersModel::Player getComputerPlayer();
     Q_INVOKABLE QModelIndex getMovedPieceNewIndex();
+
+    bool completed = false;
 signals:
+    void moveCompleted();
+    void captureCompleted();
+    void indexMovedChanged(QModelIndex _indexMoved);
 
 private:
     CheckersModel* m_model;

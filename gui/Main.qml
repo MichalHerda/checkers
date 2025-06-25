@@ -186,7 +186,7 @@ Window {
     }
 
     onVisibilityChanged: {
-        console.log("Zmieniono visibility:")
+        //console.log("Zmieniono visibility:")
         widthStash = root.width
         heightStash = root.height
         if(visibility === Window.Maximized) {
