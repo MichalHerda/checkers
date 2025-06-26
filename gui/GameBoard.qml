@@ -257,13 +257,14 @@ Item {
             //GameController.changePlayer(newAverageX, newAverageY, mustCapture)
             let newAverageX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndex)
             let newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndex)
-            let mustCapture = GameController.mustCapture(GameController.player)
+            let mustCapture = GameController.mustCapture(ComputerPlayer.getComputerPlayer())
 
             if(!mustCapture) {
                 GameController.evaluatePromotionToKing(ComputerPlayer.indexMoved, newAverageX, newAverageY)
             }
             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
-            mustCapture = GameController.mustCapture(GameController.player)
+            console.log("onCaptureCompleted, player: ", GameController.player)
+            mustCapture = GameController.mustCapture(ComputerPlayer.getComputerPlayer())
             if(mustCapture) {
                 ComputerPlayer.makeCapture()
             }

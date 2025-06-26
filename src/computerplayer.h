@@ -49,6 +49,7 @@ private:
     QModelIndexList getAllMovablePieces();
     QModelIndexList getAllCapturePieces();
     QPair<QModelIndex, QPair<char, int>> getRandomMove();
+    bool isComputerPlayerColor(QModelIndex idx);
 };
 
 #endif // COMPUTERPLAYER_H

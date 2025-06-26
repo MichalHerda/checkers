@@ -174,13 +174,12 @@ QModelIndexList ComputerPlayer::getAllCapturePieces()
             QVariant isCaptureAvailable = m_model->data(idx, CheckersModel::CaptureAvailableRole);
             qDebug() << "isCaptureAvailableRole, index: " << idx << ": " << isCaptureAvailable;
             //if(isCaptureAvailable.canConvert<QVariantList>()) {
-                if(isCaptureAvailable.toBool() == true) {
+                if(isCaptureAvailable.toBool() == true && isComputerPlayerColor(idx)) {
                     capturePieces.append(idx);
                 }
             //}
         }
     }
-
 
     return capturePieces;
 }
@@ -208,5 +207,19 @@ QPair<QModelIndex, QPair<char, int> > ComputerPlayer::getRandomMove()
     qDebug() << "drawn move, piece: " << selectedPiece << ", move: " << move;
 
     return { selectedPiece, move };
+}
+//***************************************************************************************************************************************************************************************************************************************
+bool ComputerPlayer::isComputerPlayerColor(QModelIndex idx)
+{
+    bool isBlack = !m_model->getPieceColor(idx);
+    bool isWhite = m_model->getPieceColor(idx);
+
+    if(getComputerPlayer() == CheckersModel::Player::white) {
+        return isWhite;
+    }
+    if(getComputerPlayer() == CheckersModel::Player::black) {
+        return isBlack;
+    }
+    return false;
 }
 //***************************************************************************************************************************************************************************************************************************************
