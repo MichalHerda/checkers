@@ -24,8 +24,10 @@ public:
 
     QModelIndex indexMoved = QModelIndex();
     QModelIndex indexTarget = QModelIndex();
+
     QModelIndex indexMovedRead()const;
     QModelIndex indexTargetRead()const;
+
     void indexMovedWrite(QModelIndex _indexMoved);
     void indexTargetWrite(QModelIndex _indexTarget);
 

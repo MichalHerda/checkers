@@ -34,6 +34,7 @@ qt_add_qml_module(appCheckers
         QML_FILES gui/PlayerTimer.qml
         QML_FILES gui/PlayerTimersRow.qml
         QML_FILES gui/Options.qml
+        QML_FILES gui/EndGameDialog.qml
         RESOURCES resources.qrc
         SOURCES src/gamesettingsmanager.h src/gamesettingsmanager.cpp
         SOURCES src/computerplayer.h src/computerplayer.cpp

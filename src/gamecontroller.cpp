@@ -19,6 +19,11 @@ CheckersModel::Player GameController::playerRead()const {
     return player;
 }
 //***************************************************************************************************************************************************************************************************************************************
+CheckersModel::Player GameController::winnerRead() const
+{
+    return winner;
+}
+//***************************************************************************************************************************************************************************************************************************************
 void GameController::gameOnWrite(bool _gameOn) {
     gameOn = _gameOn;
     emit gameOnChanged(_gameOn);
@@ -27,6 +32,12 @@ void GameController::gameOnWrite(bool _gameOn) {
 void GameController::playerWrite(CheckersModel::Player _player) {
     player = _player;
     emit playerChanged(_player);
+}
+//***************************************************************************************************************************************************************************************************************************************
+void GameController::winnerWrite(CheckersModel::Player _winner)
+{
+    winner = _winner;
+    emit winnerChanged(_winner);
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool GameController::isPlayersOwnPiece(const QModelIndex idx)
@@ -167,6 +178,24 @@ void GameController::setAllPiecesRange()
 void GameController::showScore()
 {
     m_logic->showScore();
+}
+//***************************************************************************************************************************************************************************************************************************************
+void GameController::checkForWinner()
+{
+    if(m_logic->getWhiteScore() == 0) {
+        winnerWrite(CheckersModel::Player::black);
+        return;
+    }
+    if(m_logic->getBlackScore() == 0) {
+        winnerWrite(CheckersModel::Player::white);
+        return;
+    }
+    winnerWrite(CheckersModel::Player::null);
+}
+//***************************************************************************************************************************************************************************************************************************************
+bool GameController::isGameOver()
+{
+    return winner != CheckersModel::Player::null;
 }
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::setModelIndexToMove(QModelIndex idx)

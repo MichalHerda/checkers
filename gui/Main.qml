@@ -173,6 +173,14 @@ Window {
                 checkersGameBoard.emitReset()
             }
         }
+
+        EndGameDialog {
+            id: endGameDialog
+            width: root.width * 0.3
+            height: root.height * 0.15
+            visible: GameController.isGameOver()
+            anchors.centerIn: parent
+        }
     }
 
     Timer {

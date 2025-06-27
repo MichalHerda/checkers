@@ -243,6 +243,7 @@ Item {
             //let pieceIndex = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexMoved)
             GameController.evaluatePromotionToKing(ComputerPlayer.indexMoved, newAverageTargetX, newAverageTargetY)
             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
+            GameController.checkForWinner();
             GameController.changePlayer(newAverageTargetX, newAverageTargetY, mustCapture)
         }
     }
@@ -277,6 +278,7 @@ Item {
                 ComputerPlayer.makeCapture()
             }
             else {
+                GameController.checkForWinner();
                 GameController.changePlayer(newAverageX, newAverageY, mustCapture)
             }
         }

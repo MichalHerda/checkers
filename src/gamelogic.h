@@ -38,6 +38,8 @@ public:
     void initializePieces();
     void deselectAllFields();
     void showScore();
+    int getWhiteScore();
+    int getBlackScore();
 
 signals:
 
