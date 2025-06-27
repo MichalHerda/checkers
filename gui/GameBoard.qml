@@ -238,7 +238,7 @@ Item {
             let newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndex)
             let newAverageTargetX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndexTarget)
             let newAverageTargetY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndexTarget)
-            let mustCapture = GameController.mustCapture(GameController.player)
+            let mustCapture = false //GameController.mustCapture(GameController.player)
             //let modelIndex = ComputerPlayer.getMovedPieceNewIndex()
             //let pieceIndex = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexMoved)
             GameController.evaluatePromotionToKing(ComputerPlayer.indexMoved, newAverageTargetX, newAverageTargetY)

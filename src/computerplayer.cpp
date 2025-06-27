@@ -127,6 +127,7 @@ void ComputerPlayer::performCapture()
     QPair<char, int> targetPair = rangeList[randomMoveIndex].value<QPair<char, int>>();
     QModelIndex indexTarget = m_model->indexFromPair(targetPair);
     qDebug() << "index target: "  << indexTarget;
+    indexTargetWrite(indexTarget);
 
     //
     m_gameController->setModelIndexToMove(indexToMove);
