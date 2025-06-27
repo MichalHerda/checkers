@@ -19,11 +19,15 @@ public:
                             GameLogic *logic,
                             QObject *parent = nullptr);
 
-    Q_PROPERTY (QModelIndex indexMoved  READ indexMovedRead WRITE indexMovedWrite NOTIFY indexMovedChanged)
+    Q_PROPERTY (QModelIndex indexMoved   READ indexMovedRead  WRITE indexMovedWrite  NOTIFY indexMovedChanged)
+    Q_PROPERTY (QModelIndex indexTarget  READ indexTargetRead WRITE indexTargetWrite NOTIFY indexTargetChanged)
 
     QModelIndex indexMoved = QModelIndex();
+    QModelIndex indexTarget = QModelIndex();
     QModelIndex indexMovedRead()const;
+    QModelIndex indexTargetRead()const;
     void indexMovedWrite(QModelIndex _indexMoved);
+    void indexTargetWrite(QModelIndex _indexTarget);
 
     Q_INVOKABLE void makeMove();
     Q_INVOKABLE void makeCapture();
@@ -35,6 +39,7 @@ signals:
     void moveCompleted();
     void captureCompleted();
     void indexMovedChanged(QModelIndex _indexMoved);
+    void indexTargetChanged(QModelIndex _indexTarget);
 
 private:
     CheckersModel* m_model;

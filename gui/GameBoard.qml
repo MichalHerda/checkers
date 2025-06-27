@@ -153,8 +153,8 @@ Item {
                     var newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, index)
 
                     if(GameController.isPlayersOwnPiece(modelIndex)) {
-                        console.log("players own piece")
-                        console.log("index: ", index)
+                        //console.log("players own piece")
+                        //console.log("index: ", index)
                         if(GameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
                             var mustCapture = GameController.mustCapture(GameController.player)
                             GameController.executeMove(modelIndex, newAverageX, newAverageY)
@@ -231,15 +231,19 @@ Item {
             console.log("Ruch zakończony!")
             console.log("indexMoved variable onMoveCompleted: ", ComputerPlayer.indexMoved)
             let repIndex = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexMoved)
+            let repIndexTarget = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexTarget)
             console.log("repIndex, onMoveCompleted", repIndex)
+            console.log("repIndexTarget, onMoveCompleted", repIndexTarget)
             let newAverageX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndex)
             let newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndex)
+            let newAverageTargetX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndexTarget)
+            let newAverageTargetY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndexTarget)
             let mustCapture = GameController.mustCapture(GameController.player)
             //let modelIndex = ComputerPlayer.getMovedPieceNewIndex()
             //let pieceIndex = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexMoved)
-            GameController.evaluatePromotionToKing(ComputerPlayer.indexMoved, newAverageX, newAverageY)
+            GameController.evaluatePromotionToKing(ComputerPlayer.indexMoved, newAverageTargetX, newAverageTargetY)
             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
-            GameController.changePlayer(newAverageX, newAverageY, mustCapture)
+            GameController.changePlayer(newAverageTargetX, newAverageTargetY, mustCapture)
         }
     }
 
@@ -250,17 +254,21 @@ Item {
             console.log("bicie zakończone")
             console.log("indexMoved variable onCaptureCompleted: ", ComputerPlayer.indexMoved)
             let repIndex = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexMoved)
+            let repIndexTarget = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexTarget)
             console.log("repIndex, onCaptureCompleted", repIndex)
+            console.log("repIndexTarget, onCaptureCompleted", repIndexTarget)
             //modelIndex = ComputerPlayer.getMovedPieceNewIndex()
             //let pieceIndex = Js.findPieceIndexInRepeater(pieceRep, modelIndex)
 
             //GameController.changePlayer(newAverageX, newAverageY, mustCapture)
             let newAverageX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndex)
             let newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndex)
+            let newAverageTargetX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndexTarget)
+            let newAverageTargetY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndexTarget)
             let mustCapture = GameController.mustCapture(ComputerPlayer.getComputerPlayer())
 
             if(!mustCapture) {
-                GameController.evaluatePromotionToKing(ComputerPlayer.indexMoved, newAverageX, newAverageY)
+                GameController.evaluatePromotionToKing(ComputerPlayer.indexTarget, newAverageTargetX, newAverageTargetY)
             }
             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
             console.log("onCaptureCompleted, player: ", GameController.player)

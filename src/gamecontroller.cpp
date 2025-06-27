@@ -89,7 +89,13 @@ void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, 
 {
     qDebug() << "evaluate promotion to king, averageX: " << averageX << "averageY: " << averageY << "index: " << index;
     QModelIndex modelIndexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
+    qDebug() << "modelIndexToMove: " << modelIndexToMove;
     bool hasMultiCapture = isCaptureAvailable(m_modelIndexToMove);
+    qDebug() << "hasMultiCapture: " << hasMultiCapture;
+    qDebug() << "_hasMultiCapture: " << m_hasMultiCapture;
+    qDebug() << "player: " << player;
+    qDebug() << "getPieceType: " << m_model->getPieceType(index);
+    qDebug() << "row: " << modelIndexToMove.row();
 
     if(!m_hasMultiCapture) {
         if(player == CheckersModel::Player::white &&

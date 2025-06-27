@@ -27,11 +27,23 @@ QModelIndex ComputerPlayer::indexMovedRead() const
     return indexMoved;
 }
 //***************************************************************************************************************************************************************************************************************************************
+QModelIndex ComputerPlayer::indexTargetRead() const
+{
+    return indexTarget;
+}
+//***************************************************************************************************************************************************************************************************************************************
 void ComputerPlayer::indexMovedWrite(QModelIndex _indexMoved)
 {
     qDebug() << "indexMoved write: " << _indexMoved;
     indexMoved = _indexMoved;
     emit indexMovedChanged(_indexMoved);
+}
+//***************************************************************************************************************************************************************************************************************************************
+void ComputerPlayer::indexTargetWrite(QModelIndex _indexTarget)
+{
+    qDebug() << "indexTarget write: " << _indexTarget;
+    indexTarget = _indexTarget;
+    emit indexTargetChanged(_indexTarget);
 }
 //***************************************************************************************************************************************************************************************************************************************
 void ComputerPlayer::makeMove()
@@ -55,6 +67,7 @@ void ComputerPlayer::performMove()
     qDebug() << "target pair: " << targetPair;
     qDebug() << "target column: " << targetColumn << ", target row: " << targetRow;
     QModelIndex indexTarget = m_model->indexFromPair(targetPair);
+    indexTargetWrite(indexTarget);
     qDebug() << "index from pair (target)" << indexTarget;
     QModelIndex indexToMove = randomMove.first;
     qDebug() << "index to move: " << indexToMove;
@@ -62,7 +75,13 @@ void ComputerPlayer::performMove()
     indexMovedWrite(indexToMove);
 
     m_gameController->setModelIndexToMove(indexToMove);
-
+    /*
+    // TODO: poprawić później !!!!!!!!!!!!!!!!!!!!!!!!!
+    if(isComputerPlayerColor(indexTarget)) {
+        qDebug() << "computer player color";
+        m_gameController->setModelIndexToMove(indexTarget);
+    }
+    */
     QVariant emptyPieceData = m_model->data(indexToMove, CheckersModel::PieceRole);
 
     QVariant pieceData = m_model->data(indexTarget, CheckersModel::PieceRole);
@@ -172,7 +191,7 @@ QModelIndexList ComputerPlayer::getAllCapturePieces()
         for(int column = 0; column < m_model->getColumnsNo(); column++) {
             QModelIndex idx = m_model->index(row, column);
             QVariant isCaptureAvailable = m_model->data(idx, CheckersModel::CaptureAvailableRole);
-            qDebug() << "isCaptureAvailableRole, index: " << idx << ": " << isCaptureAvailable;
+            //qDebug() << "isCaptureAvailableRole, index: " << idx << ": " << isCaptureAvailable;
             //if(isCaptureAvailable.canConvert<QVariantList>()) {
                 if(isCaptureAvailable.toBool() == true && isComputerPlayerColor(idx)) {
                     capturePieces.append(idx);
