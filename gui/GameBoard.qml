@@ -276,6 +276,7 @@ Item {
             mustCapture = GameController.mustCapture(ComputerPlayer.getComputerPlayer())
             if(mustCapture) {
                 ComputerPlayer.makeCapture()
+                GameController.checkForWinner();
             }
             else {
                 GameController.checkForWinner();

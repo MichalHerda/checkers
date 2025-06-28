@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
 
     GameLogic gameLogic(&checkersModelInstance, rows, columns);
 
-    //ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black);
     ComputerPlayer computerPlayer(&checkersModelInstance, CheckersModel::Player::black, &gameController, &gameLogic);
 
     qmlRegisterSingletonInstance("Checkers", 1, 0, "ComputerPlayer", &computerPlayer);

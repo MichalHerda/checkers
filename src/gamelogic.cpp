@@ -398,6 +398,7 @@ void GameLogic::setAllPiecesRange()
 void GameLogic::removePiece(QModelIndex from, QModelIndex to)
 {
     qDebug() << "capture! remove pieces between: " << from << " and " << to;
+    qDebug() << "removePiece, whiteScore: " << getWhiteScore() << ", blackScore: " << getBlackScore();
 
     bool isKing = m_model->getPieceType(from);
     qDebug() << "isKing: " << isKing;
@@ -455,13 +456,6 @@ void GameLogic::removePiece(QModelIndex from, QModelIndex to)
             col += dCol;
         }
     }
-
-    if(m_model->getPieceColor(from)) {
-        m_blackScore--;
-    }
-    else {
-        m_whiteScore--;
-    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 void GameLogic::resetModel()
@@ -471,11 +465,6 @@ void GameLogic::resetModel()
 
     m_model->setRowCount(rowsNo);
     m_model->setColumnCount(columnsNo);
-
-    //qDebug() << "reset model, rowsNo: " << rowsNo << ", columnsNo: " << columnsNo;
-
-    m_whiteScore = 0;
-    m_blackScore = 0;
 
     //Initialize board coordinates and 'black' and 'white fields
     for(int row = 0, rowCoo = 8; row < rowsNo; row++, rowCoo--) {
@@ -511,7 +500,6 @@ void GameLogic::resetModel()
 //***************************************************************************************************************************************************************************************************************************************
 void GameLogic::initializePieces()
 {
-
     int pieceRows = m_model->getPieceRows();
     int rowsNo = m_model->getRowsNo();
     int columnsNo = m_model->getColumnsNo();
@@ -523,11 +511,9 @@ void GameLogic::initializePieces()
             QVariant playable = m_model->data(index, CheckersModel::IsPlayableRole);
             if(playable.toBool()){
                 m_model->setPiece(index, CheckersModel::Player::black);
-                m_blackScore++;
             }
             else {
                 m_model->setEmptyField(index);
-                m_whiteScore++;
             }
         }
     }
@@ -567,17 +553,35 @@ void GameLogic::deselectAllFields()
 //***************************************************************************************************************************************************************************************************************************************
 void GameLogic::showScore()
 {
-    qDebug() << "white score: " << m_whiteScore;
-    qDebug() << "black score: " << m_blackScore;
+    qDebug() << "white score: " << getWhiteScore();
+    qDebug() << "black score: " << getBlackScore();
 }
 //***************************************************************************************************************************************************************************************************************************************
 int GameLogic::getWhiteScore()
 {
-    return m_whiteScore;
+    int whiteScore = 0;
+    for(int i = 0; i < m_columns; i++) {
+        for(int j = 0; j < m_rows; j++ ) {
+            QModelIndex index = m_model->index(j, i);
+            if(m_model->getPieceColor(index) && m_model->isPiecePresent(index)) {
+                whiteScore++;
+            }
+        }
+    }
+    return whiteScore;
 }
 //***************************************************************************************************************************************************************************************************************************************
 int GameLogic::getBlackScore()
 {
-    return m_blackScore;
+    int blackScore = 0;
+    for(int i = 0; i < m_columns; i++) {
+        for(int j = 0; j < m_rows; j++ ) {
+            QModelIndex index = m_model->index(j, i);
+            if(!m_model->getPieceColor(index) && m_model->isPiecePresent(index)) {
+                blackScore++;
+            }
+        }
+    }
+    return blackScore;
 }
 //***************************************************************************************************************************************************************************************************************************************

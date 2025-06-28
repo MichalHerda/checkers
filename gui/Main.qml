@@ -185,11 +185,13 @@ Window {
 
     Timer {
         id: debugTimer
-        interval: 5000
+        interval: 10000
         repeat: true
         running: true
         onTriggered: {
-
+            console.log("isGameOver: ", GameController.isGameOver())
+            console.log("winner: ", GameController.winner)
+            console.log("score: ", GameController.showScore())
         }
     }
 

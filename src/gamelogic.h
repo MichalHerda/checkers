@@ -4,24 +4,6 @@
 #include <QObject>
 #include "checkersmodel.h"
 
-/*
-    mustCapture(Player player)
-
-    isCaptureAvailable(const QModelIndex &index)
-
-    getManMoves(...)
-
-    getKingMoves(...)
-
-    isOpponentAt(...)
-
-    getPlayerForCheck(...)
-
-    canKingContinueCaptureFrom(...)
-
-    reduceToBestKingCaptures(...)
-*/
-
 class GameLogic : public QObject
 {
     Q_OBJECT
@@ -46,9 +28,6 @@ signals:
 private:
     int m_rows;
     int m_columns;
-
-    int m_whiteScore = 0;
-    int m_blackScore = 0;
 
     CheckersModel* m_model;
 

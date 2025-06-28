@@ -182,6 +182,8 @@ void GameController::showScore()
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::checkForWinner()
 {
+    qDebug() << "checkForWinner";
+    showScore();
     if(m_logic->getWhiteScore() == 0) {
         winnerWrite(CheckersModel::Player::black);
         return;
