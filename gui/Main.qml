@@ -179,6 +179,7 @@ Window {
             width: root.width * 0.3
             height: root.height * 0.15
             visible: !GameController.gameOn && checkersGameBoard.visible
+            //visible: checkersGameBoard.visible
             anchors.centerIn: parent
         }
     }

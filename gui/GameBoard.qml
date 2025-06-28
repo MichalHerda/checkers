@@ -153,8 +153,6 @@ Item {
                     var newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, index)
 
                     if(GameController.isPlayersOwnPiece(modelIndex)) {
-                        //console.log("players own piece")
-                        //console.log("index: ", index)
                         if(GameController.isMoveValid(modelIndex, newAverageX, newAverageY)) {
                             var mustCapture = GameController.mustCapture(GameController.player)
                             GameController.executeMove(modelIndex, newAverageX, newAverageY)
@@ -173,41 +171,11 @@ Item {
                             mustCapture = GameController.mustCapture(GameController.player)
 
                             if(gameSettingsManager.isHumanVsComputerMode() && GameController.player === ComputerPlayer.getComputerPlayer()) {
-                                //console.log("time for computer player turn")
-                                let newAverageX = Js.calculatePieceCenterX(pieceRep, pieceWidth, index)
-                                let newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, index)
-
                                 if(!mustCapture) {
-                                    //console.log("computer player has no capture")
-                                    //console.log("index before makeMove() : ", index)
                                     ComputerPlayer.makeMove()
-                                    //console.log("index after makeMove() : ", index)
-                                    //console.log("indexMoved variable: ", ComputerPlayer.indexMoved)
-                                    /*
-                                    modelIndex = ComputerPlayer.getMovedPieceNewIndex()
-                                    let pieceIndex = Js.findPieceIndexInRepeater(pieceRep, modelIndex)
-                                    GameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
-                                    Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
-                                    GameController.changePlayer(newAverageX, newAverageY, mustCapture)
-                                    */
                                 }
                                 else {
-                                    //while(mustCapture) {
-                                        //console.log("computer must capture")
-                                        //console.log("index: ", index)
-                                        ComputerPlayer.makeCapture()
-                                        /*
-                                        modelIndex = ComputerPlayer.getMovedPieceNewIndex()
-                                        let pieceIndex = Js.findPieceIndexInRepeater(pieceRep, modelIndex)
-                                        Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
-                                        //GameController.changePlayer(newAverageX, newAverageY, mustCapture)
-                                        mustCapture = GameController.mustCapture(GameController.player)
-                                        if(!mustCapture) {
-                                            GameController.evaluatePromotionToKing(modelIndex, newAverageX, newAverageY)
-                                        }
-                                        */
-                                    //}
-                                    //GameController.changePlayer(newAverageX, newAverageY, mustCapture)
+                                    ComputerPlayer.makeCapture()
                                 }
                             }
                         }
@@ -229,19 +197,13 @@ Item {
         target: ComputerPlayer
 
         function onMoveCompleted() {
-            //console.log("Ruch zakończony!")
-            //console.log("indexMoved variable onMoveCompleted: ", ComputerPlayer.indexMoved)
             let repIndex = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexMoved)
             let repIndexTarget = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexTarget)
-            //console.log("repIndex, onMoveCompleted", repIndex)
-            //console.log("repIndexTarget, onMoveCompleted", repIndexTarget)
             let newAverageX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndex)
             let newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndex)
             let newAverageTargetX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndexTarget)
             let newAverageTargetY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndexTarget)
             let mustCapture = false //GameController.mustCapture(GameController.player)
-            //let modelIndex = ComputerPlayer.getMovedPieceNewIndex()
-            //let pieceIndex = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexMoved)
             GameController.evaluatePromotionToKing(ComputerPlayer.indexMoved, newAverageTargetX, newAverageTargetY)
             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
             GameController.checkForWinner();
@@ -253,27 +215,17 @@ Item {
         target: ComputerPlayer
 
         function onCaptureCompleted() {
-            //console.log("bicie zakończone")
-            //console.log("indexMoved variable onCaptureCompleted: ", ComputerPlayer.indexMoved)
             let repIndex = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexMoved)
             let repIndexTarget = Js.findPieceIndexInRepeater(pieceRep, ComputerPlayer.indexTarget)
-            //console.log("repIndex, onCaptureCompleted", repIndex)
-            //console.log("repIndexTarget, onCaptureCompleted", repIndexTarget)`
-            //modelIndex = ComputerPlayer.getMovedPieceNewIndex()
-            //let pieceIndex = Js.findPieceIndexInRepeater(pieceRep, modelIndex)
-
-            //GameController.changePlayer(newAverageX, newAverageY, mustCapture)
             let newAverageX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndex)
             let newAverageY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndex)
             let newAverageTargetX = Js.calculatePieceCenterX(pieceRep, pieceWidth, repIndexTarget)
             let newAverageTargetY = Js.calculatePieceCenterY(pieceRep, pieceHeight, repIndexTarget)
             let mustCapture = GameController.mustCapture(ComputerPlayer.getComputerPlayer())
-
             if(!mustCapture) {
                 GameController.evaluatePromotionToKing(ComputerPlayer.indexTarget, newAverageTargetX, newAverageTargetY)
             }
             Js.centerAllPiecesOnFields(checkersModelInstance, CheckersModel, CheckersTheme, fieldRep, pieceRep, GameController)
-            //console.log("onCaptureCompleted, player: ", GameController.player)
             mustCapture = GameController.mustCapture(ComputerPlayer.getComputerPlayer())
             if(mustCapture) {
                 ComputerPlayer.makeCapture()
@@ -288,6 +240,7 @@ Item {
 
     onReset:  {
         GameController.resetModel()
+        endGameDialog.visible = false;
         Js.updateCoordinates(checkersModelInstance, CheckersModel, CheckersTheme, GameController, fieldRep, pieceRep, fieldWidth, fieldHeight, pieceWidth, pieceHeight,
                              pieceSeparatorX, pieceSeparatorY)
     }
