@@ -50,7 +50,7 @@ void ComputerPlayer::makeMove()
 {
     // Losowanie opóźnienia od 1000 do 3000 ms
     int delayMs = QRandomGenerator::global()->bounded(1000, 3001); // górna granica wyłączna
-    qDebug() << "Computer move delayed by (ms): " << delayMs;
+    //qDebug() << "Computer move delayed by (ms): " << delayMs;
 
     // Nie blokuje GUI – wykona performMove po opóźnieniu
     QTimer::singleShot(delayMs, this, &ComputerPlayer::performMove);
@@ -59,18 +59,18 @@ void ComputerPlayer::makeMove()
 void ComputerPlayer::performMove()
 {
     QPair<QModelIndex, QPair<char, int> > randomMove = getRandomMove();
-    qDebug() << "random move got: " << randomMove;
+    //qDebug() << "random move got: " << randomMove;
 
     QPair<char, int> targetPair = randomMove.second;
     char targetColumn = randomMove.second.first;
     int targetRow = randomMove.second.second;
-    qDebug() << "target pair: " << targetPair;
-    qDebug() << "target column: " << targetColumn << ", target row: " << targetRow;
+    //qDebug() << "target pair: " << targetPair;
+    //qDebug() << "target column: " << targetColumn << ", target row: " << targetRow;
     QModelIndex indexTarget = m_model->indexFromPair(targetPair);
     indexTargetWrite(indexTarget);
-    qDebug() << "index from pair (target)" << indexTarget;
+    //qDebug() << "index from pair (target)" << indexTarget;
     QModelIndex indexToMove = randomMove.first;
-    qDebug() << "index to move: " << indexToMove;
+    //qDebug() << "index to move: " << indexToMove;
     //emit indexMovedChanged(indexToMove);
     indexMovedWrite(indexToMove);
 
@@ -99,7 +99,7 @@ void ComputerPlayer::makeCapture()
 {
     // Losowanie opóźnienia od 1000 do 3000 ms
     int delayMs = QRandomGenerator::global()->bounded(1000, 3001); // górna granica wyłączna
-    qDebug() << "Computer move delayed by (ms): " << delayMs;
+    //qDebug() << "Computer move delayed by (ms): " << delayMs;
 
     // Nie blokuje GUI – wykona performMove po opóźnieniu
     QTimer::singleShot(delayMs, this, &ComputerPlayer::performCapture);
@@ -112,11 +112,11 @@ void ComputerPlayer::performCapture()
         qDebug() << "capturePieces empty";
         return;
     }
-    qDebug() << "capture pieces: " << capturePieces;
+    //qDebug() << "capture pieces: " << capturePieces;
 
     int randomIndex = QRandomGenerator::global()->bounded(capturePieces.size());
     QModelIndex indexToMove = capturePieces[randomIndex];
-    qDebug() << "index to move: " << indexToMove;
+    //qDebug() << "index to move: " << indexToMove;
 
     QVariant rangeData = m_model->data(indexToMove, CheckersModel::RangeRole);
     QVariantList rangeList = rangeData.toList();
@@ -126,7 +126,7 @@ void ComputerPlayer::performCapture()
     int randomMoveIndex = QRandomGenerator::global()->bounded(rangeList.size());
     QPair<char, int> targetPair = rangeList[randomMoveIndex].value<QPair<char, int>>();
     QModelIndex indexTarget = m_model->indexFromPair(targetPair);
-    qDebug() << "index target: "  << indexTarget;
+    //qDebug() << "index target: "  << indexTarget;
     indexTargetWrite(indexTarget);
 
     //
@@ -213,7 +213,7 @@ QPair<QModelIndex, QPair<char, int> > ComputerPlayer::getRandomMove()
 
     int pieceIdx = QRandomGenerator::global()->bounded(movablePieces.size());
     QModelIndex selectedPiece = movablePieces.at(pieceIdx);
-    qDebug() << "drawn piece: " << selectedPiece;
+    //qDebug() << "drawn piece: " << selectedPiece;
 
     QVariant rangeVar = m_model->data(selectedPiece, CheckersModel::RangeRole);
     QVariantList rangeList = rangeVar.toList();
@@ -224,7 +224,7 @@ QPair<QModelIndex, QPair<char, int> > ComputerPlayer::getRandomMove()
 
     int moveIdx = QRandomGenerator::global()->bounded(rangeList.size());
     QPair<char, int> move = qvariant_cast<QPair<char, int>>(rangeList.at(moveIdx));
-    qDebug() << "drawn move, piece: " << selectedPiece << ", move: " << move;
+    //qDebug() << "drawn move, piece: " << selectedPiece << ", move: " << move;
 
     return { selectedPiece, move };
 }

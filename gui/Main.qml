@@ -178,7 +178,7 @@ Window {
             id: endGameDialog
             width: root.width * 0.3
             height: root.height * 0.15
-            visible: GameController.isGameOver()
+            visible: !GameController.gameOn && checkersGameBoard.visible
             anchors.centerIn: parent
         }
     }
@@ -191,7 +191,8 @@ Window {
         onTriggered: {
             console.log("isGameOver: ", GameController.isGameOver())
             console.log("winner: ", GameController.winner)
-            console.log("score: ", GameController.showScore())
+            console.log("gameOn: ", GameController.gameOn)
+            GameController.showScore()
         }
     }
 

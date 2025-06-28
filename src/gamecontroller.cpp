@@ -48,9 +48,9 @@ bool GameController::isPlayersOwnPiece(const QModelIndex idx)
 //***************************************************************************************************************************************************************************************************************************************
 bool GameController::isMoveValid(QModelIndex index, double averageX, double averageY)
 {
-    qDebug() << "isMoveValid, index passed: " << index;
+    //qDebug() << "isMoveValid, index passed: " << index;
     QVariantList range = m_model -> data(index, CheckersModel::RangeRole).toList();
-    qDebug() << "passed index range: "  << range;
+    //qDebug() << "passed index range: "  << range;
 
     auto hasCapture = m_model -> data(index, CheckersModel::CaptureAvailableRole);
     if(!hasCapture.toBool() && mustCapture(player)) {
@@ -59,19 +59,19 @@ bool GameController::isMoveValid(QModelIndex index, double averageX, double aver
 
     QPointF pieceCenter(averageX, averageY);
     QModelIndex targetFieldIndex = m_model->findFieldIndexForPieceCenter(pieceCenter);
-    qDebug() << "piece center is now inside field: " << targetFieldIndex;
+    //qDebug() << "piece center is now inside field: " << targetFieldIndex;
 
     std::pair<char, int> targetCoordinate = m_model->data(targetFieldIndex, CheckersModel::FieldNameRole).value<std::pair<char, int>>();
-    qDebug() << "target coordinate: " << targetCoordinate;
+    //qDebug() << "target coordinate: " << targetCoordinate;
     for (const QVariant &item : range) {
         std::pair<char, int> rangeCoordinate = item.value<std::pair<char, int>>();
         if (rangeCoordinate == targetCoordinate) {
-            qDebug() << "Pole docelowe znajduje się w zakresie ruchu pionka.";
+            //qDebug() << "Pole docelowe znajduje się w zakresie ruchu pionka.";
             return true;
         }
     }
 
-    qDebug() << "Pole docelowe nie znajduje się w zakresie pionka";
+    //qDebug() << "Pole docelowe nie znajduje się w zakresie pionka";
     return false;
 }
 //***************************************************************************************************************************************************************************************************************************************
@@ -98,17 +98,17 @@ void GameController::executeMove(QModelIndex index, double averageX, double aver
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, double averageY)
 {
-    qDebug() << "evaluate promotion to king, averageX: " << averageX << "averageY: " << averageY << "index: " << index;
+    //qDebug() << "evaluate promotion to king, averageX: " << averageX << "averageY: " << averageY << "index: " << index;
     QModelIndex modelIndexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
-    qDebug() << "modelIndexToMove: " << modelIndexToMove;
+    //qDebug() << "modelIndexToMove: " << modelIndexToMove;
     bool hasMultiCapture = isCaptureAvailable(m_modelIndexToMove);
-    qDebug() << "hasMultiCapture: " << hasMultiCapture;
-    qDebug() << "_hasMultiCapture: " << m_hasMultiCapture;
-    qDebug() << "player: " << player;
-    qDebug() << "getPieceType: " << m_model->getPieceType(index);
-    qDebug() << "row: " << modelIndexToMove.row();
+    //qDebug() << "hasMultiCapture: " << hasMultiCapture;
+    //qDebug() << "_hasMultiCapture: " << m_hasMultiCapture;
+    //qDebug() << "player: " << player;
+    //qDebug() << "getPieceType: " << m_model->getPieceType(index);
+    //qDebug() << "row: " << modelIndexToMove.row();
 
-    if(!m_hasMultiCapture) {
+    if(!hasMultiCapture) {
         if(player == CheckersModel::Player::white &&
             m_model->getPieceType(index) == false &&
             modelIndexToMove.row() == 0) {
@@ -129,13 +129,13 @@ void GameController::evaluatePromotionToKing(QModelIndex index,double averageX, 
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::changePlayer(double averageX, double averageY, bool mustCapture)
 {
-    qDebug() << "CHANGE PLAYER: ";
-    qDebug() << "   player: " << player;
+    //qDebug() << "CHANGE PLAYER: ";
+    //qDebug() << "   player: " << player;
     QModelIndex indexToMove = m_model->getModelIndexFromGivenCoordinates(averageX, averageY);
-    qDebug() << "   indexToMove: " << indexToMove;
-    qDebug() << "   isCapture: " << mustCapture;
+    //qDebug() << "   indexToMove: " << indexToMove;
+    //qDebug() << "   isCapture: " << mustCapture;
     bool hasMultiCapture = isCaptureAvailable(indexToMove);
-    qDebug() << "   hasMultiCapture: " << hasMultiCapture;
+    //qDebug() << "   hasMultiCapture: " << hasMultiCapture;
 
     if(!hasMultiCapture || !mustCapture) {
         if(player == CheckersModel::Player::white) {
@@ -167,6 +167,7 @@ void GameController::updateAllPiecesRange()
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::resetModel()
 {
+    gameOnWrite(true);
     m_logic->resetModel();
 }
 //***************************************************************************************************************************************************************************************************************************************
@@ -183,21 +184,34 @@ void GameController::showScore()
 void GameController::checkForWinner()
 {
     qDebug() << "checkForWinner";
+    qDebug() << "   whiteScore: " << m_logic->getWhiteScore();
+    qDebug() << "   blackScore: " << m_logic->getBlackScore();
     showScore();
     if(m_logic->getWhiteScore() == 0) {
+        qDebug() << "winner: black";
         winnerWrite(CheckersModel::Player::black);
         return;
     }
     if(m_logic->getBlackScore() == 0) {
+        qDebug() << "winner: white";
         winnerWrite(CheckersModel::Player::white);
         return;
     }
+    qDebug() << "winner: null";
     winnerWrite(CheckersModel::Player::null);
 }
 //***************************************************************************************************************************************************************************************************************************************
 bool GameController::isGameOver()
 {
-    return winner != CheckersModel::Player::null;
+    if(winner != CheckersModel::Player::null) {
+        qDebug() << "gameOver true";
+        gameOnWrite(false);
+        return true;
+    }
+    else {
+        qDebug() << "gameOver false";
+        return false;
+    }
 }
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::setModelIndexToMove(QModelIndex idx)

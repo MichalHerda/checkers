@@ -522,7 +522,7 @@ void CheckersModel::setPiecesCoordinatesRole()
 //***************************************************************************************************************************************************************************************************************************************
 QModelIndex CheckersModel::findFieldIndexForPieceCenter(const QPointF &pieceCenter)
 {
-    qDebug() << "findFieldIndexForPieceCenter function: ";
+    //qDebug() << "findFieldIndexForPieceCenter function: ";
 
     int count = 0;
 
@@ -545,14 +545,14 @@ QModelIndex CheckersModel::findFieldIndexForPieceCenter(const QPointF &pieceCent
                 pieceCenter.x() <= fieldCorners.bottomRight.x() &&
                 pieceCenter.y() >= fieldCorners.topLeft.y() &&
                 pieceCenter.y() <= fieldCorners.bottomRight.y()) {
-                qDebug() << "FIELD INDEX FOR PIECE CENTER FOUND: " << data(fieldIndex, FieldNameRole);
+                //Debug() << "FIELD INDEX FOR PIECE CENTER FOUND: " << data(fieldIndex, FieldNameRole);
                 return fieldIndex;
             }
 
             count++;
         }
     }
-    qDebug() << "WARNING: fieldindex for piece center not found !";
+    //qDebug() << "WARNING: fieldindex for piece center not found !";
     return QModelIndex();
 }
 //***************************************************************************************************************************************************************************************************************************************
