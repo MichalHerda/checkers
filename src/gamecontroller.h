@@ -57,6 +57,7 @@ private:
     QModelIndex m_modelIndexToMove;
     bool m_hasMultiCapture = false;
 
+    bool isPlayerBlocked(CheckersModel::Player player);
 };
 
 #endif // GAMECONTROLLER_H

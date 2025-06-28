@@ -187,12 +187,12 @@ void GameController::checkForWinner()
     qDebug() << "   whiteScore: " << m_logic->getWhiteScore();
     qDebug() << "   blackScore: " << m_logic->getBlackScore();
     showScore();
-    if(m_logic->getWhiteScore() == 0) {
+    if(m_logic->getWhiteScore() == 0 || isPlayerBlocked(CheckersModel::Player::white)) {
         qDebug() << "winner: black";
         winnerWrite(CheckersModel::Player::black);
         return;
     }
-    if(m_logic->getBlackScore() == 0) {
+    if(m_logic->getBlackScore() == 0 || isPlayerBlocked(CheckersModel::Player::black)) {
         qDebug() << "winner: white";
         winnerWrite(CheckersModel::Player::white);
         return;
@@ -212,6 +212,29 @@ bool GameController::isGameOver()
         qDebug() << "gameOver false";
         return false;
     }
+}
+//***************************************************************************************************************************************************************************************************************************************
+bool GameController::isPlayerBlocked(CheckersModel::Player player)
+{
+    //int blackScore = 0;
+    for(int i = 0; i < m_model->getColumnsNo(); i++) {
+        for(int j = 0; j < m_model->getRowsNo(); j++ ) {
+            QModelIndex index = m_model->index(j, i);
+            if(player == CheckersModel::Player::white) {
+                QVariantList range = m_model -> data(index, CheckersModel::RangeRole).toList();
+                if(!range.empty() && m_model->getPieceColor(index)) {
+                    return false;
+                }
+            }
+            if(player == CheckersModel::Player::black) {
+                QVariantList range = m_model -> data(index, CheckersModel::RangeRole).toList();
+                if(!range.empty() && !m_model->getPieceColor(index)) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
 }
 //***************************************************************************************************************************************************************************************************************************************
 void GameController::setModelIndexToMove(QModelIndex idx)
