@@ -23,23 +23,23 @@ qt_add_qml_module(appCheckers
     VERSION 1.0
     QML_FILES
         gui/Main.qml
-        QML_FILES gui/Singleton/CheckersTheme.qml
-        RESOURCES
-        SOURCES src/checkersmodel.h src/checkersmodel.cpp
-        QML_FILES gui/GameBoard.qml
-        QML_FILES gui/Piece.qml
-        QML_FILES gui/frontEnd.js
-        SOURCES
-        QML_FILES gui/Menu.qml
-        QML_FILES gui/PlayerTimer.qml
-        QML_FILES gui/PlayerTimersRow.qml
-        QML_FILES gui/Options.qml
-        QML_FILES gui/EndGameDialog.qml
-        RESOURCES resources.qrc
-        SOURCES src/gamesettingsmanager.h src/gamesettingsmanager.cpp
-        SOURCES src/computerplayer.h src/computerplayer.cpp
-        SOURCES src/gamecontroller.h src/gamecontroller.cpp
-        SOURCES src/gamelogic.h src/gamelogic.cpp
+        gui/Singleton/CheckersTheme.qml
+        gui/GameBoard.qml
+        gui/Piece.qml
+        gui/frontEnd.js
+        gui/Menu.qml
+        gui/PlayerTimer.qml
+        gui/PlayerTimersRow.qml
+        gui/Options.qml
+        gui/EndGameDialog.qml
+    SOURCES
+        src/checkersmodel.h src/checkersmodel.cpp
+        src/gamesettingsmanager.h src/gamesettingsmanager.cpp
+        src/computerplayer.h src/computerplayer.cpp
+        src/gamecontroller.h src/gamecontroller.cpp
+        src/gamelogic.h src/gamelogic.cpp
+    RESOURCES
+        resources.qrc
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -56,6 +56,7 @@ set_target_properties(appCheckers PROPERTIES
 target_link_libraries(appCheckers
     PRIVATE Qt6::Quick
 )
+target_include_directories(appCheckers PRIVATE src)
 
 include(GNUInstallDirs)
 install(TARGETS appCheckers
