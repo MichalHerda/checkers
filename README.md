@@ -145,6 +145,7 @@ This is a **simple, non-heuristic AI**, suitable for MVP gameplay.
 
 ## 🔗 High-Level Integration
 
+‘’’
 QML / JS
    ↓
 GameController
@@ -152,7 +153,7 @@ GameController
 GameLogic + CheckersModel
    ↑
 ComputerPlayer
-
+‘’’
 
 ---
 
