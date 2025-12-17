@@ -62,14 +62,14 @@ Item {
                 color: checkersModelInstance.data(modelIndex, CheckersModel.IsPlayableRole) === true  ?
                        CheckersTheme.playableFieldColor :
                        CheckersTheme.notPlayableFieldColor
-
+/*
                 Text {
                     anchors.centerIn: parent
                     font.pixelSize: 8
                     text: "R: " + rec.row + ", C: " + rec.column
                     color: "black"
                 }
-
+*/
                 Button {
                     id: testButton
                     anchors.fill: parent
