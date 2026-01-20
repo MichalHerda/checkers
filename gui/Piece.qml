@@ -4,8 +4,6 @@ Rectangle {
     id: piece
     property bool isKing: false
     property alias kingSign: kingSign
-    height: parent.height * 0.7
-    width: height
     radius: 180
     color: "black"
     border {
